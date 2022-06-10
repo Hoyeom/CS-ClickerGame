@@ -53,6 +53,7 @@ namespace Manager
         {
             if(obj == null)
                 return;
+
             Object.Destroy(obj);
         }
         

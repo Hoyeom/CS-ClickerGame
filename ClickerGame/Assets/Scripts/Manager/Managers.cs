@@ -11,12 +11,14 @@ namespace Manager
         private static ResourceManager s_resource = new ResourceManager();
         private static SceneManagerEx s_scene = new SceneManagerEx();
         private static SoundManager s_sound = new SoundManager();
+        private static DataManager s_data = new DataManager();
         private static UIManager s_ui = new UIManager();
 
         
         public static ResourceManager Resource { get { Initialize(); return s_resource; } }
         public static SceneManagerEx Scene { get { Initialize(); return s_scene; } }
         public static SoundManager Sound {get { Initialize(); return s_sound; }}
+        public static DataManager Data {get { Initialize(); return s_data; }}
         public static UIManager UI { get { Initialize(); return s_ui; } }
         
         
@@ -43,6 +45,7 @@ namespace Manager
         
         private static void ManagersInitialize()
         {
+            s_data.Initialize();
             s_scene.Initialize();
             s_sound.Initialize();
             s_ui.Initialize();

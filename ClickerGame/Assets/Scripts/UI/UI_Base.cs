@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
 namespace UI
@@ -12,6 +14,9 @@ namespace UI
         private void Start() => Initialize();
         protected abstract void Initialize();
 
+        protected void BindText(Type type) => Bind<TextMeshProUGUI>(type);
+        protected void BindImage(Type type) => Bind<Image>(type);
+        
         protected void Bind<T>(Type type) where T : Object
         {
             string[] names = Enum.GetNames(type);
@@ -27,6 +32,10 @@ namespace UI
             }
         }
 
+        
+        protected TextMeshProUGUI GetText(int index) => Get<TextMeshProUGUI>(index);
+        protected Image GetImage(int index) => Get<Image>(index);
+        
         protected T Get<T>(int index) where T : Object
         {
             Object[] objects = null;
@@ -36,7 +45,7 @@ namespace UI
             return objects[index] as T;
         }
 
-        public static void BindEvent(GameObject go,Action action,Define.UIEvent type = Define.UIEvent.Click)
+        public static GameObject BindEvent(GameObject go,Action action,Define.UIEvent type = Define.UIEvent.Click)
         {
             UI_EventHandler evt = Utils.GetOrAddComponent<UI_EventHandler>(go);
 
@@ -59,6 +68,8 @@ namespace UI
                     evt.OnUpHandler += action;
                     break;
             }
+
+            return go;
         }
     }
 }

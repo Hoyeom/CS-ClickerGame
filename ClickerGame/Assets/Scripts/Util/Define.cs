@@ -24,4 +24,15 @@ public class Define
          Effect,
          Speech
      }
+     
+     public enum Tab
+     {
+         Enemy,
+         Upgrade,
+         Craft,
+         Shop
+     }
+
+     public static readonly Color ActiveTabColor = new Color(0.3098039f, 0.454902f, 0.9647059f);
+     public static readonly Color DefaultTabColor = new Color(0.7686275f, 0.7921569f, 0.8196079f);
 }

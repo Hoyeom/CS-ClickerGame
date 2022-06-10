@@ -84,7 +84,7 @@ namespace Manager
             return sceneUI;
         }
 
-        public T ShowPopup<T>(string name = null, Transform parent = null) where T : UI_Popup
+        public T ShowPopupUI<T>(string name = null, Transform parent = null) where T : UI_Popup
         {
             if (string.IsNullOrEmpty(name))
                 name = typeof(T).Name;
