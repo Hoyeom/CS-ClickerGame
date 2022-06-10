@@ -1,4 +1,6 @@
-﻿namespace Manager
+﻿using System.Collections.Generic;
+
+namespace Manager
 {
     public class DataManager
     {

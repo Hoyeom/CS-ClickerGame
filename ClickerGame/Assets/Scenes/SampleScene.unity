@@ -362,7 +362,7 @@ GameObject:
   - component: {fileID: 1975039292}
   - component: {fileID: 1975039293}
   m_Layer: 0
-  m_Name: Scene
+  m_Name: '@GameScene'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

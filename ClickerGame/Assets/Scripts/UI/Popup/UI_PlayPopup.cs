@@ -90,7 +90,7 @@ public class UI_PlayPopup : UI_Popup
         
         TabInit();
         
-        RemoveAllTabContent();
+        // RemoveAllTabContent();
         
         SelectTab();
     }
