@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7655948153066139756}
   - component: {fileID: 7655948153066139757}
   - component: {fileID: 7655948153066139758}
+  - component: {fileID: -1456109527434074580}
   m_Layer: 0
   m_Name: SubItem_Upgrade
   m_TagString: Untagged
@@ -95,6 +96,18 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.050980393}
   m_EffectDistance: {x: 0, y: -7}
   m_UseGraphicAlpha: 1
+--- !u!114 &-1456109527434074580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7655948153066139752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c8c883f592ba724b9c9b61b1921cf30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7655948153106471141
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,3 +1,3 @@
-﻿ID|IconPath|CostType|PriceText
-610001|910007|Cash|810008
-610002|910007|Coin|1000
+﻿ID,IconPath,CostType,EngPrice,KorPrice,RewardType,Reward
+610001,910007,Cash,399,4900,Ads,0
+610002,910007,Ads,0,0,Coin,1000

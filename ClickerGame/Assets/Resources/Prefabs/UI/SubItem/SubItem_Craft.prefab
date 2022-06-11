@@ -88,8 +88,9 @@ GameObject:
   - component: {fileID: 3519634915806674080}
   - component: {fileID: 3519634915806674078}
   - component: {fileID: 3519634915806674079}
+  - component: {fileID: 7850780960757410328}
   m_Layer: 0
-  m_Name: SubItem_Inventory
+  m_Name: SubItem_Craft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -157,6 +158,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7850780960757410328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3519634915806674081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9696f497b9443e448a4c7447330d004d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3519634915883012251
 GameObject:
   m_ObjectHideFlags: 0

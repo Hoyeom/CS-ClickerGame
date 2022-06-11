@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Data;
 using Manager;
 using TMPro;
+using UI;
 using UI.Popup;
 using UnityEngine;
 using UnityEngine.UI;
@@ -79,6 +82,11 @@ public class UI_PlayPopup : UI_Popup
 
     private Dictionary<Define.Tab, Tab> tabs = new Dictionary<Define.Tab, Tab>();
 
+    private List<SubItem_Boss> _bosses = new List<SubItem_Boss>();
+    private List<SubItem_Craft> _craft = new List<SubItem_Craft>();
+    private List<SubItem_Shop> _shops = new List<SubItem_Shop>();
+    private List<SubItem_Upgrade> _upgrades = new List<SubItem_Upgrade>();
+
     protected override void Initialize()
     {
         base.Initialize();
@@ -90,7 +98,65 @@ public class UI_PlayPopup : UI_Popup
         
         TabInit();
         RemoveAllTabContent();
+        AddTabContents();
         SelectTab();
+    }
+
+    private void AddTabContents()
+    {
+        MakeSubItem(Define.Tab.Boss);
+        MakeSubItem(Define.Tab.Craft);
+        MakeSubItem(Define.Tab.Upgrade);
+        MakeSubItem(Define.Tab.Shop);
+
+    }
+
+    private void MakeSubItem(Define.Tab tab)
+    {
+        Transform root = tabs[tab].Content;;
+        switch (tab)
+        {
+            case Define.Tab.Boss:
+                _bosses.Clear();
+                foreach (MonsterData data in Managers.Data.Monster.Values.Where(data => data.MonsterType == Define.MonsterType.Boss))
+                {
+                    SubItem_Boss subItem = 
+                        Managers.UI.MakeSubItem<SubItem_Boss>(root);
+                    _bosses.Add(subItem);
+                    subItem.SetInfo(data);
+                }
+                break;
+            case Define.Tab.Craft:
+                _craft.Clear();
+                foreach (WeaponData data in Managers.Data.Weapon.Values)
+                {
+                    SubItem_Craft subItem = 
+                        Managers.UI.MakeSubItem<SubItem_Craft>(root);
+                    _craft.Add(subItem);
+                    subItem.SetInfo(data);
+                }
+                break;
+            case Define.Tab.Shop:
+                _shops.Clear();
+                foreach (ShopData data in Managers.Data.Shop.Values)
+                {
+                    SubItem_Shop subItem = 
+                        Managers.UI.MakeSubItem<SubItem_Shop>(root);
+                    _shops.Add(subItem);
+                    subItem.SetInfo(data);
+                }
+                break;
+            case Define.Tab.Upgrade:
+                _upgrades.Clear();
+                foreach (UpgradeData data in Managers.Data.Upgrade.Values)
+                {
+                    SubItem_Upgrade subItem = 
+                        Managers.UI.MakeSubItem<SubItem_Upgrade>(root);
+                    _upgrades.Add(subItem);
+                    subItem.SetInfo(data);
+                }
+                break;
+        }
     }
 
     private void TabInit()

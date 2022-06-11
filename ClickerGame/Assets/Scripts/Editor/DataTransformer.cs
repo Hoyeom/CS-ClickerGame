@@ -6,6 +6,7 @@ using System.Reflection;
 using Data;
 using UnityEditor;
 using UnityEngine;
+// using Excel = Microsoft.Office.Interop.Excel;
 
 public class DataTransformer : EditorWindow
 {
@@ -20,7 +21,6 @@ public class DataTransformer : EditorWindow
     private static void LoadAllData()
     {
         LoadData<StatusData>(Define.Table.Status,1);
-        LoadData<BossData>(Define.Table.Boss, 1);
         LoadData<MonsterData>(Define.Table.Monster, 1);
         LoadData<UpgradeData>(Define.Table.Upgrade, 1);
         LoadData<WeaponData>(Define.Table.Weapon, 1);
@@ -29,7 +29,22 @@ public class DataTransformer : EditorWindow
         LoadData<PathData>(Define.Table.Path, 1);
     }
 
+    /*[MenuItem("Parser/ExcelToCsv")]
+    private static void ExcelToCsv()
+    {
+        Excel.Application xlApp = new Excel.ApplicationClass();
+        Excel.Workbook xlWorkBook = xlApp.Workbooks.Open($"{TablePath}ExcelData.xlsx");
+        xlApp.Visible = true;
+        foreach (Excel.Worksheet sheet in xlWorkBook.Worksheets)
+        {
+            Debug.Log(sheet.Name);
+            sheet.Select();
+            // xlWorkBook.SaveAs($"{sheet.Name}.csv", Excel.XlFileFormat.xlCSVUTF8,AccessMode: Excel.XlSaveAsAccessMode.xlNoChange);
+        }
+        xlWorkBook.Close(false);
 
+    }*/
+    
     private static void LoadData<T>(Define.Table table = Define.Table.None, int fieldLine = 2)
         where T : ScriptableObject, ITableSetter
     {
@@ -42,11 +57,11 @@ public class DataTransformer : EditorWindow
         for (int i = 0; i < fieldLine - 1; i++)
             reader.ReadLine();
 
-        string[] fieldNames = reader.ReadLine().Split('|');
-
+        string[] fieldNames = reader.ReadLine().Split(',');
+        
         while (!reader.EndOfStream)
         {
-            string[] data = reader.ReadLine().Split('|');
+            string[] data = reader.ReadLine().Split(',');
             T sO = ScriptableObject.CreateInstance<T>();
             SetData(sO, data, fieldNames);
             

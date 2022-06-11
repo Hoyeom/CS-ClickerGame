@@ -6,9 +6,11 @@ namespace Data
     {
         public int ID;
         public int IconPath;
-        public Define.CostType CostType;
-        public int PriceText;
-
+        public Define.Cost CostType;
+        public int EngPrice;
+        public int KorPrice;
+        public Define.Cost RewardType;
+        public int Reward;
 
         public int GetID() => ID;
     }

@@ -15,4 +15,7 @@ MonoBehaviour:
   ID: 610001
   IconPath: 910007
   CostType: 0
-  PriceText: 810008
+  EngPrice: 399
+  KorPrice: 4900
+  RewardType: 2
+  Reward: 0

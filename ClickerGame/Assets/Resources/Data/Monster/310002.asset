@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: 310002
   m_EditorClassIdentifier: 
   ID: 310002
+  MonsterType: 0
+  MonsterIcon: 0
   Health: 150
   AttackPower: 20
   DefencePower: 10

@@ -30,7 +30,7 @@ public class Define
          Boss,
          Upgrade,
          Craft,
-         Shop
+         Shop,
      }
      
      public enum AssetType
@@ -38,24 +38,31 @@ public class Define
          Sprite
      }
      
-     public enum CostType
+     public enum Cost
      {
          Cash,
-         Coin
+         Coin,
+         Ads
      }
      
      public enum Table
      {
          None = 0,
          Status = 1,
-         Boss = 2,
-         Monster = 3,
+         Monster = 2,
+         _ = 3,
          Upgrade = 4,
          Weapon = 5,
          Shop = 6,
-         Null = 7,
+         __ = 7,
          String = 8,
          Path = 9
+     }
+     
+     public enum MonsterType
+     {
+         Unknown,
+         Boss
      }
      
      public enum Language

@@ -14,5 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 610002
   IconPath: 910007
-  CostType: 1
-  PriceText: 1000
+  CostType: 2
+  EngPrice: 0
+  KorPrice: 0
+  RewardType: 1
+  Reward: 1000

@@ -8,7 +8,6 @@ namespace Manager
     public class DataManager
     {
         public Dictionary<int, StatusData> Status =new Dictionary<int, StatusData>();
-        public Dictionary<int, BossData> Boss = new Dictionary<int, BossData>();
         public Dictionary<int, MonsterData> Monster = new Dictionary<int, MonsterData>();
         public Dictionary<int, UpgradeData> Upgrade = new Dictionary<int, UpgradeData>();
         public Dictionary<int, WeaponData> Weapon = new Dictionary<int, WeaponData>();
@@ -21,7 +20,6 @@ namespace Manager
         public void Initialize()
         {
             Status = LoadData<int,StatusData>();
-            Boss = LoadData<int,BossData>();
             Monster = LoadData<int,MonsterData>();
             Upgrade = LoadData<int,UpgradeData>();
             Weapon = LoadData<int,WeaponData>();
