@@ -1,4 +1,5 @@
 ﻿using System;
+using Data;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -23,6 +24,20 @@ namespace Manager
             }
 
             return Resources.Load<T>(path);
+        }
+
+        public T[] LoadData<T>() where T : ScriptableObject,ITableSetter
+        {
+            string dataName = typeof(T).Name;
+
+            int index = dataName.IndexOf("Data");
+
+            if (index > 0)
+                dataName = dataName.Remove(index, 4);
+            
+            Debug.Log($"Complete Load {dataName}");
+            
+            return Resources.LoadAll<T>($"Data/{dataName}");
         }
 
         private void PathNullException(string path)

@@ -35,11 +35,13 @@ public class UI_TitlePopup : UI_Popup
         startButton = Get<GameObject>((int) GameObjects.StartButton)
             .BindEvent(GameStart, Define.UIEvent.Up)
             .SetActiveChain(false);
+        
+        GetText((int)Texts.StartButtonText).text = 
+            Managers.Data.GetText((int) Define.UITextID.StartGame);
 
         touchToPlay = GetText((int) Texts.TouchToPlay);
+        touchToPlay.text = Managers.Data.GetText((int) Define.UITextID.TouchToPlay);
         touchToPlay.gameObject.BindEvent(PopButtons);
-        
-        
     }
 
     void PopButtons()

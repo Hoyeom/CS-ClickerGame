@@ -89,9 +89,7 @@ public class UI_PlayPopup : UI_Popup
         Bind<Transform>(typeof(Transforms));
         
         TabInit();
-        
-        // RemoveAllTabContent();
-        
+        RemoveAllTabContent();
         SelectTab();
     }
 
@@ -108,7 +106,7 @@ public class UI_PlayPopup : UI_Popup
             Tab tab = tabs[tabType];
             switch (tabType)
             {
-                case Define.Tab.Enemy:
+                case Define.Tab.Boss:
                     tab.Scroll = Get<GameObject>((int) GameObjects.EnemyList);
                     tab.ButtonImage = GetImage((int) Images.EnemyTabButton);
                     tab.Content = Get<Transform>((int) Transforms.EnemyContent);
@@ -134,6 +132,27 @@ public class UI_PlayPopup : UI_Popup
         }
     }
 
+    private void AddSubItem(Define.Tab tab)
+    {
+        Transform root = tabs[tab].Content;
+
+        switch (tab)
+        {
+            case Define.Tab.Boss:
+                
+                break;
+            case Define.Tab.Upgrade:
+                
+                break;
+            case Define.Tab.Craft:
+                
+                break;
+            case Define.Tab.Shop:
+                
+                break;
+        }
+    }
+    
     private void RemoveAllTabContent()
     {
         foreach (Tab tab in tabs.Values)
@@ -143,11 +162,17 @@ public class UI_PlayPopup : UI_Popup
         }
     }
     
-    private void SelectTab(Define.Tab tab = Define.Tab.Enemy)
+    private void SelectTab(Define.Tab tab = Define.Tab.Boss)
     {
         foreach (Tab t in tabs.Values)
             t.SetActive(false);
-        _tableText.text = tab.ToString();
+        _tableText.text = tab switch
+        {
+            Define.Tab.Boss => Managers.Data.GetText((int)Define.UITextID.Boss),
+            Define.Tab.Upgrade => Managers.Data.GetText((int)Define.UITextID.Upgrade),
+            Define.Tab.Craft => Managers.Data.GetText((int)Define.UITextID.Craft),
+            Define.Tab.Shop => Managers.Data.GetText((int)Define.UITextID.Shop),
+        };
         tabs[tab].SetActive(true, _focus);
     }
 }
