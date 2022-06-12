@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2aa16529cb3a49b2b24791e9596e078d, type: 3}
-  m_Name: 510003
+  m_Name: 510002
   m_EditorClassIdentifier: 
-  ID: 510003
-  IconID: 910003
-  Level: 3
-  AttackPower: 20
+  ID: 510002
+  IconID: 910002
+  IconBorderID: 950002
+  Level: 2
+  AttackPower: 10

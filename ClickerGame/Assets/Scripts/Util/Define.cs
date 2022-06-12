@@ -55,7 +55,7 @@ public class Define
          Monster = 2,
          _ = 3,
          Upgrade = 4,
-         Weapon = 5,
+         Craft = 5,
          Shop = 6,
          StartStatus = 7,
          String = 8,

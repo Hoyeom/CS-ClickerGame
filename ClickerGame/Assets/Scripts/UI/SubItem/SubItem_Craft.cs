@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Data;
+using Manager;
 using TMPro;
 using UI;
 using UnityEngine;
@@ -25,6 +26,7 @@ public class SubItem_Craft : UI_Base
     private Image lockIcon;
     private Image itemIcon;
     private Image levelBorder;
+    private Image border;
 
     private TextMeshProUGUI levelText;
     
@@ -41,6 +43,7 @@ public class SubItem_Craft : UI_Base
         itemIcon = GetImage((int) Images.ItemIcon);
         levelBorder = GetImage((int) Images.LevelBorder);
         levelText = GetText((int) Texts.LevelText);
+        border = GetComponent<Image>();
         
         lockIcon.SetActive(true);
         levelBorder.SetActive(false);
@@ -51,8 +54,8 @@ public class SubItem_Craft : UI_Base
         return true;
     }
     
-    public void SetInfo(WeaponData data)
+    public void SetInfo(CraftData data)
     {
-        
+        border.sprite = Managers.Data.LoadPathData<Sprite>(data.IconBorderID);
     }
 }

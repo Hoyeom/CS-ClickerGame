@@ -12,3 +12,5 @@
 940001,Sprite,Art/Sprite/Upgrade/AttackPower
 940002,Sprite,Art/Sprite/Upgrade/DeffencePower
 940003,Sprite,Art/Sprite/Upgrade/HealthUp
+950001,Sprite,Art/Sprite/Craft/DisableBorder
+950002,Sprite,Art/Sprite/Craft/EnableBorder

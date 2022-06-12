@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2aa16529cb3a49b2b24791e9596e078d, type: 3}
-  m_Name: 510004
+  m_Script: {fileID: 11500000, guid: 6e7fca1fd8dd4743baa76aa1916f54b1, type: 3}
+  m_Name: 950002
   m_EditorClassIdentifier: 
-  ID: 510004
-  IconID: 910004
-  Level: 4
-  AttackPower: 40
+  ID: 950002
+  AssetType: 0
+  Path: Art/Sprite/Craft/EnableBorder

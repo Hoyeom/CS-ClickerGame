@@ -31,7 +31,8 @@ public class UI_PlayPopup : UI_Popup
 
     enum Texts
     {
-        TableText
+        TableText,
+        CoinText
     }
 
     enum Transforms
@@ -69,6 +70,7 @@ public class UI_PlayPopup : UI_Popup
 
     private RectTransform _focus;
     private TextMeshProUGUI _tableText;
+    private TextMeshProUGUI _coinText;
 
     private Dictionary<Define.Tab, Tab> tabs = new Dictionary<Define.Tab, Tab>();
 
@@ -81,11 +83,15 @@ public class UI_PlayPopup : UI_Popup
     {
         if (base.Initialize() == false)
             return false;
-
+        
         Bind<GameObject>(typeof(GameObjects));
         BindImage(typeof(Images));
         BindText(typeof(Texts));
         Bind<Transform>(typeof(Transforms));
+
+        _coinText = GetText((int) Texts.CoinText);
+        _coinText.text = 0.ToString();
+        // TODO
         
         TabInit();
         RemoveAllTabContent();
@@ -102,7 +108,6 @@ public class UI_PlayPopup : UI_Popup
         MakeSubItem(Define.Tab.Upgrade);
         MakeSubItem(Define.Tab.Shop);
     }
-
     private void MakeSubItem(Define.Tab tab)
     {
         Transform root = tabs[tab].Content;;
@@ -124,6 +129,7 @@ public class UI_PlayPopup : UI_Popup
                 {
                     SubItem_Craft subItem = 
                         Managers.UI.MakeSubItem<SubItem_Craft>(root);
+                    subItem.SetInfo(Managers.Data.Craft.First().Value);
                     _craft.Add(subItem);
                 }
                 break;
@@ -149,7 +155,6 @@ public class UI_PlayPopup : UI_Popup
                 break;
         }
     }
-
     private void TabInit()
     {
         _focus = Get<GameObject>((int) GameObjects.TabFocus).transform as RectTransform;
@@ -188,7 +193,6 @@ public class UI_PlayPopup : UI_Popup
             tabs[tabType].ButtonImage.gameObject.BindEvent(delegate { SelectTab(tabType); });
         }
     }
-
     private void RemoveAllTabContent()
     {
         foreach (Tab tab in tabs.Values)
@@ -197,7 +201,6 @@ public class UI_PlayPopup : UI_Popup
                 Managers.Resource.Destroy(tab.Content.GetChild(i).gameObject);   
         }
     }
-    
     private void SelectTab(Define.Tab tab = Define.Tab.Boss)
     {
         foreach (Tab t in tabs.Values)

@@ -7,6 +7,8 @@ namespace Manager
     {
         private static Managers s_instance = null;
         public static Managers Instance { get => s_instance; }
+
+        private static GameManager s_game = new GameManager();
         
         private static ResourceManager s_resource = new ResourceManager();
         private static SceneManagerEx s_scene = new SceneManagerEx();
@@ -14,6 +16,7 @@ namespace Manager
         private static DataManager s_data = new DataManager();
         private static UIManager s_ui = new UIManager();
 
+        public static GameManager Game { get { Initialize(); return s_game; } }
         
         public static ResourceManager Resource { get { Initialize(); return s_resource; } }
         public static SceneManagerEx Scene { get { Initialize(); return s_scene; } }
@@ -46,6 +49,7 @@ namespace Manager
         private static void ManagersInitialize()
         {
             s_data.Initialize();
+            s_game.Initialize();
             s_scene.Initialize();
             s_sound.Initialize();
             s_ui.Initialize();

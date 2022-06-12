@@ -35,7 +35,7 @@ public class DataTransformer : EditorWindow
         LoadData<StatusData>(Define.Table.Status,1);
         LoadData<MonsterData>(Define.Table.Monster, 1);
         LoadData<UpgradeData>(Define.Table.Upgrade, 1);
-        LoadData<WeaponData>(Define.Table.Weapon, 1);
+        LoadData<CraftData>(Define.Table.Craft, 1);
         LoadData<ShopData>(Define.Table.Shop, 1);
         LoadData<StartStatus>(Define.Table.StartStatus, 1);
         LoadData<StringData>(Define.Table.String, 1);

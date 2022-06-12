@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 510005
   IconID: 910005
+  IconBorderID: 950002
   Level: 5
   AttackPower: 80
