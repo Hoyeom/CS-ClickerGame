@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 510006
   m_EditorClassIdentifier: 
   ID: 510006
-  IconPath: 910006
+  IconID: 910006
   Level: 6
   AttackPower: 160

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Data;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Manager
 {
@@ -61,6 +62,13 @@ namespace Manager
             
         }
 
+        public T LoadPathData<T>(int id) where T : Object
+        {
+            if(Path.TryGetValue(id,out PathData data))
+                return Managers.Resource.Load<T>(data.Path);
+            return null;
+        }
+        
         private Dictionary<int,T> LoadData<TKey,T>() where T : ScriptableObject, ITableSetter
         {
             Dictionary<int, T> dic = new Dictionary<int, T>();

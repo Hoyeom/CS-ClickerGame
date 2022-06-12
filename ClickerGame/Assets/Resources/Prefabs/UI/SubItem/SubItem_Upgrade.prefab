@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 7655948153106471146}
   - component: {fileID: 7655948153106471147}
   m_Layer: 0
-  m_Name: Character
+  m_Name: UpgradeIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -454,7 +454,7 @@ GameObject:
   - component: {fileID: 8228032864262662372}
   - component: {fileID: 8228032864262662373}
   m_Layer: 0
-  m_Name: Btn_Rectangle04_Light_Green
+  m_Name: CostButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -615,7 +615,7 @@ GameObject:
   - component: {fileID: 8228032864714363428}
   - component: {fileID: 8228032864714363429}
   m_Layer: 0
-  m_Name: UpIcon
+  m_Name: UpArrowIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -692,7 +692,7 @@ GameObject:
   - component: {fileID: 8228032864714993484}
   - component: {fileID: 8228032864714993485}
   m_Layer: 0
-  m_Name: Icon
+  m_Name: CostIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -788,7 +788,7 @@ GameObject:
   - component: {fileID: 8228032864923689108}
   - component: {fileID: 8228032864923689109}
   m_Layer: 0
-  m_Name: Text
+  m_Name: CostText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

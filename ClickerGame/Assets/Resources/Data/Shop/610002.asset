@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 610002
   m_EditorClassIdentifier: 
   ID: 610002
-  IconPath: 920001
+  IconID: 920001
   CostType: 2
   EngPrice: 0
   KorPrice: 0

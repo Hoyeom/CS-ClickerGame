@@ -6,9 +6,12 @@ using UnityEngine;
 
 public class SubItem_Shop : UI_Base
 {
-    protected override void Initialize()
+    public override bool Initialize()
     {
-        
+        if (base.Initialize() == false)
+            return false;
+
+        return true;
     }
     
     public void SetInfo(ShopData data)

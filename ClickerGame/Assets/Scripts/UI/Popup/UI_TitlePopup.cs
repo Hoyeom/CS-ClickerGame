@@ -25,9 +25,10 @@ public class UI_TitlePopup : UI_Popup
     private TextMeshProUGUI touchToPlay;
 
 
-    protected override void Initialize()
+    public override bool Initialize()
     {
-        base.Initialize();
+        if (base.Initialize() == false)
+            return false;
         
         Bind<GameObject>(typeof(GameObjects));
         BindText(typeof(Texts));
@@ -42,6 +43,8 @@ public class UI_TitlePopup : UI_Popup
         touchToPlay = GetText((int) Texts.TouchToPlay);
         touchToPlay.text = Managers.Data.GetText((int) Define.UITextID.TouchToPlay);
         touchToPlay.gameObject.BindEvent(PopButtons);
+
+        return true;
     }
 
     void PopButtons()

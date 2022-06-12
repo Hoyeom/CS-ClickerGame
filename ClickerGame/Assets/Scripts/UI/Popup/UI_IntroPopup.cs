@@ -12,13 +12,17 @@ public class UI_IntroPopup : UI_Popup
         Background,
     }
     
-    protected override void Initialize()
+    public override bool Initialize()
     {
-        base.Initialize();
+        if (base.Initialize() == false)
+            return false;
+        
         Bind<GameObject>(typeof(GameObjects));
 
         Get<GameObject>((int) GameObjects.Background)
             .BindEvent(SkipIntro);
+
+        return true;
     }
 
     private void SkipIntro()

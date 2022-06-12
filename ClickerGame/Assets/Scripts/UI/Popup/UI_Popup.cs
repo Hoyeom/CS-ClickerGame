@@ -4,9 +4,14 @@ namespace UI.Popup
 {
     public abstract class UI_Popup : UI_Base
     {
-        protected override void Initialize()
+        public override bool Initialize()
         {
+            if (base.Initialize() == false)
+                return false;
+            
             Managers.UI.SetCanvas(gameObject, true);
+
+            return true;
         }
 
         public virtual void ClosePopupUI()

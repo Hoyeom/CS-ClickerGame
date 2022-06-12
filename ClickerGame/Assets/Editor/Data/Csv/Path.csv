@@ -7,3 +7,8 @@
 910006,Sprite,Art/Sprite/Weapon/BattleAxe
 920001,Sprite,Art/Sprite/Shop/AdRemove
 930001,Sprite,Art/Sprite/Boss/Boss0
+930002,Sprite,Art/Sprite/Boss/Boss1
+930003,Sprite,Art/Sprite/Boss/Boss2
+940001,Sprite,Art/Sprite/Upgrade/AttackPower
+940002,Sprite,Art/Sprite/Upgrade/DeffencePower
+940003,Sprite,Art/Sprite/Upgrade/HealthUp

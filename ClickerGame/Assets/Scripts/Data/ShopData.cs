@@ -5,7 +5,7 @@ namespace Data
     public class ShopData : ScriptableObject,ITableSetter
     {
         public int ID;
-        public int IconPath;
+        public int IconID;
         public Define.Cost CostType;
         public int EngPrice;
         public int KorPrice;

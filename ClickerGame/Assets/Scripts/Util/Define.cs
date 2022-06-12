@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -71,6 +72,13 @@ public class Define
          Kor
      }
 
+     public enum UpgradeType
+     {
+         Weapon,
+         Defence,
+         Health
+     }
+     
      public enum UITextID
      {
          TouchToPlay = 810001,

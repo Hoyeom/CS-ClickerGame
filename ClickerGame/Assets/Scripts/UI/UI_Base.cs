@@ -7,16 +7,28 @@ using Object = UnityEngine.Object;
 
 namespace UI
 {
-    public abstract class UI_Base : MonoBehaviour
+    public class UI_Base : MonoBehaviour
     {
         private Dictionary<Type, Object[]> _objects = new Dictionary<Type, Object[]>();
 
-        private void Start() => Initialize();
-        protected abstract void Initialize();
+        protected bool _init = false;
+        
+        private void Start()
+        {
+            Initialize();
+        }
+
+        public virtual bool Initialize()
+        {
+            if(_init) return false;
+            
+            return _init = true;
+        }
 
         protected void BindText(Type type) => Bind<TextMeshProUGUI>(type);
         protected void BindImage(Type type) => Bind<Image>(type);
-        
+
+
         protected void Bind<T>(Type type) where T : Object
         {
             string[] names = Enum.GetNames(type);

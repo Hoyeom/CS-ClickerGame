@@ -47,16 +47,6 @@ public class UI_PlayPopup : UI_Popup
         public Transform Content;
         public GameObject Scroll;
         public Image ButtonImage;
-        private Button button;
-
-        public Button Button
-        {
-            get
-            {
-                button ??= ButtonImage.GetComponent<Button>();
-                return button;
-            }
-        }
 
         public void SetActive(bool value,RectTransform focus = default)
         {
@@ -87,9 +77,10 @@ public class UI_PlayPopup : UI_Popup
     private List<SubItem_Shop> _shops = new List<SubItem_Shop>();
     private List<SubItem_Upgrade> _upgrades = new List<SubItem_Upgrade>();
 
-    protected override void Initialize()
+    public override bool Initialize()
     {
-        base.Initialize();
+        if (base.Initialize() == false)
+            return false;
 
         Bind<GameObject>(typeof(GameObjects));
         BindImage(typeof(Images));
@@ -100,6 +91,8 @@ public class UI_PlayPopup : UI_Popup
         RemoveAllTabContent();
         AddTabContents();
         SelectTab();
+
+        return true;
     }
 
     private void AddTabContents()
@@ -108,7 +101,6 @@ public class UI_PlayPopup : UI_Popup
         MakeSubItem(Define.Tab.Craft);
         MakeSubItem(Define.Tab.Upgrade);
         MakeSubItem(Define.Tab.Shop);
-
     }
 
     private void MakeSubItem(Define.Tab tab)
@@ -162,7 +154,7 @@ public class UI_PlayPopup : UI_Popup
     private void TabInit()
     {
         _focus = Get<GameObject>((int) GameObjects.TabFocus).transform as RectTransform;
-        
+
         _tableText = GetText((int) Texts.TableText);
 
         foreach (Define.Tab tabType in Enum.GetValues(typeof(Define.Tab)))
@@ -193,32 +185,11 @@ public class UI_PlayPopup : UI_Popup
                     tab.Content = Get<Transform>((int) Transforms.ShopContent);
                     break;
             }
-            
-            tabs[tabType].Button.onClick.AddListener((delegate { SelectTab(tabType); }));
+
+            tabs[tabType].ButtonImage.gameObject.BindEvent(delegate { SelectTab(tabType); });
         }
     }
 
-    private void AddSubItem(Define.Tab tab)
-    {
-        Transform root = tabs[tab].Content;
-
-        switch (tab)
-        {
-            case Define.Tab.Boss:
-                
-                break;
-            case Define.Tab.Upgrade:
-                
-                break;
-            case Define.Tab.Craft:
-                
-                break;
-            case Define.Tab.Shop:
-                
-                break;
-        }
-    }
-    
     private void RemoveAllTabContent()
     {
         foreach (Tab tab in tabs.Values)

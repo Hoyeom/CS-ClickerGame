@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 610001
   m_EditorClassIdentifier: 
   ID: 610001
-  IconPath: 910007
+  IconID: 910007
   CostType: 0
   EngPrice: 399
   KorPrice: 4900

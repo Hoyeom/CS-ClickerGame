@@ -35,7 +35,7 @@ namespace Manager
             if (index > 0)
                 dataName = dataName.Remove(index, 4);
             
-            Debug.Log($"Complete Load {dataName}");
+            // Debug.Log($"Complete Load {dataName}");
             
             return Resources.LoadAll<T>($"Data/{dataName}");
         }

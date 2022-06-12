@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 510002
   m_EditorClassIdentifier: 
   ID: 510002
-  IconPath: 910002
+  IconID: 910002
   Level: 2
   AttackPower: 10

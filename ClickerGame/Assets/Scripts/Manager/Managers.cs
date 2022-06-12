@@ -26,7 +26,7 @@ namespace Manager
 
         private void Awake() => name = Name;
         private void Start() => Initialize();
-        
+
         private static void Initialize()
         {
             if(s_instance != null) return;

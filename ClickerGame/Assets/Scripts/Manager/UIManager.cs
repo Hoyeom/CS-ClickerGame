@@ -66,7 +66,11 @@ namespace Manager
             go.transform.localScale = Vector3.one;
             go.transform.localPosition = prefab.transform.position;
 
-            return Utils.GetOrAddComponent<T>(go);
+            T component = Utils.GetOrAddComponent<T>(go);
+            
+            component.Initialize();
+
+            return component;
         }
         
         

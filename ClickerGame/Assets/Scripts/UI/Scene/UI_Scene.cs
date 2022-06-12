@@ -4,9 +4,13 @@ namespace UI.Scene
 {
     public abstract class UI_Scene : UI_Base
     {
-        protected override void Initialize()
+        public override bool Initialize()
         {
+            if (base.Initialize() == false)
+                return false;
             Managers.UI.SetCanvas(gameObject, false);
+
+            return true;
         }
     }
 }
