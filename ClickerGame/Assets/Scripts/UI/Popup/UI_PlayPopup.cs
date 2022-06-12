@@ -120,12 +120,11 @@ public class UI_PlayPopup : UI_Popup
                 break;
             case Define.Tab.Craft:
                 _craft.Clear();
-                foreach (WeaponData data in Managers.Data.Weapon.Values)
+                for (int i = 0; i < Define.MaxInventorySlot; i++)
                 {
                     SubItem_Craft subItem = 
                         Managers.UI.MakeSubItem<SubItem_Craft>(root);
                     _craft.Add(subItem);
-                    subItem.SetInfo(data);
                 }
                 break;
             case Define.Tab.Shop:

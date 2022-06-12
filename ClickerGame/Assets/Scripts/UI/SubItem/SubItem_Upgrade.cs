@@ -44,9 +44,9 @@ public class SubItem_Upgrade : UI_Base
     
     public void SetInfo(UpgradeData data)
     {
-        costText.text = data.Cost.ToString();
-        currentText.text = data.CurValue.ToString();
-        nextText.text = data.UpgradeValue.ToString();
+        costText.text = data.Price.ToString();
+        // currentText.text = 
+        nextText.text = data.IncreaseStat.ToString();
         upgradeIcon.sprite = Managers.Data.LoadPathData<Sprite>(data.IconID);
     }
     

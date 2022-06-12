@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Define
 {
+    public const int MaxInventorySlot = 20;
+    
     public enum Scene
     {
         Unknown,
@@ -55,7 +57,7 @@ public class Define
          Upgrade = 4,
          Weapon = 5,
          Shop = 6,
-         __ = 7,
+         StartStatus = 7,
          String = 8,
          Path = 9
      }

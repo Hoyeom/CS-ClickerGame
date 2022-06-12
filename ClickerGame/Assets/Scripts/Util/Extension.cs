@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UI;
 using UnityEngine;
+using UnityEngine.UI;
 
 public static class Extension
 {
@@ -12,6 +14,12 @@ public static class Extension
     public static GameObject BindEvent(this GameObject go, Action action, Define.UIEvent type = Define.UIEvent.Click)
         => UI_Base.BindEvent(go, action, type);
 
+    public static void SetActive(this Image image, bool value)
+        => image.gameObject.SetActive(value);
+    
+    public static void SetActive(this TextMeshProUGUI text, bool value)
+        => text.gameObject.SetActive(value);
+    
     public static GameObject SetActiveChain(this GameObject go, bool value)
     {
         go.SetActive(value);

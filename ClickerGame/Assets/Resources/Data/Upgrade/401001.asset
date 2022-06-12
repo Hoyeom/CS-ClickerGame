@@ -15,6 +15,5 @@ MonoBehaviour:
   ID: 401001
   UpgradeType: 0
   IconID: 940001
-  CurValue: 10
-  UpgradeValue: 5
-  Cost: 100
+  Price: 5000
+  IncreaseStat: 5

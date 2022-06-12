@@ -1,12 +1,15 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using Data;
 using UnityEditor;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 public class DataTransformer : EditorWindow
 {
+    private static readonly string ExternalExePath = $"{Application.dataPath}/Editor/Data/ExcelToCsv.exe";  
     private static readonly string TablePath = $"{Application.dataPath}/Editor/Data/Csv/";
     private static readonly string SavePath = $"{Application.dataPath}/Resources/Data/";
     private static readonly string AssetPath = $"Assets/Resources/Data/";
@@ -14,15 +17,27 @@ public class DataTransformer : EditorWindow
 
     private static readonly string Format = ".csv";
 
+    [MenuItem("Parser/ExcelToCsv")]
+    private static void ExcelToCsv()
+    {
+        Process p = new Process();
+        p.StartInfo.UseShellExecute = true;
+        p.StartInfo.FileName = ExternalExePath;
+
+        p.Start();
+    }
+    
     [MenuItem("Parser/LoadAllData")]
     private static void LoadAllData()
     {
         CreatePath();
+        
         LoadData<StatusData>(Define.Table.Status,1);
         LoadData<MonsterData>(Define.Table.Monster, 1);
         LoadData<UpgradeData>(Define.Table.Upgrade, 1);
         LoadData<WeaponData>(Define.Table.Weapon, 1);
         LoadData<ShopData>(Define.Table.Shop, 1);
+        LoadData<StartStatus>(Define.Table.StartStatus, 1);
         LoadData<StringData>(Define.Table.String, 1);
         LoadData<PathData>(Define.Table.Path, 1);
     }

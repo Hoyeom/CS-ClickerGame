@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3519634915604117542}
   - component: {fileID: 3519634915604117543}
   m_Layer: 0
-  m_Name: Level
+  m_Name: LevelBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -182,7 +182,7 @@ GameObject:
   - component: {fileID: 3519634915883012248}
   - component: {fileID: 3519634915883012249}
   m_Layer: 0
-  m_Name: Text_Value
+  m_Name: LevelText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -409,7 +409,7 @@ GameObject:
   - component: {fileID: 3519634916107557444}
   - component: {fileID: 3519634916107557445}
   m_Layer: 0
-  m_Name: Icon_Lock
+  m_Name: LockIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -485,7 +485,7 @@ GameObject:
   - component: {fileID: 3519634916127448597}
   - component: {fileID: 3519634916127448598}
   m_Layer: 0
-  m_Name: Notify_New
+  m_Name: NotifyNew
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,4 +1,4 @@
-﻿ID,UpgradeType,IconID,CurValue,UpgradeValue,Cost
-401001,Weapon,940001,10,5,100
-401002,Defence,940002,5,30,600
-401003,Health,940003,10,5,800
+﻿ID,UpgradeType,IconID,Price,IncreaseStat
+401001,Weapon,940001,5000,5
+401002,Defence,940002,10000,1
+401003,Health,940003,2500,10

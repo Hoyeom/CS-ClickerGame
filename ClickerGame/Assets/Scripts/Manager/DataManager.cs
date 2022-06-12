@@ -13,6 +13,7 @@ namespace Manager
         public Dictionary<int, UpgradeData> Upgrade = new Dictionary<int, UpgradeData>();
         public Dictionary<int, WeaponData> Weapon = new Dictionary<int, WeaponData>();
         public Dictionary<int, ShopData> Shop = new Dictionary<int, ShopData>();
+        public Dictionary<int, StartStatus> StartStatus = new Dictionary<int, StartStatus>();
         public Dictionary<int, StringData> String = new Dictionary<int, StringData>();
         public Dictionary<int, PathData> Path = new Dictionary<int, PathData>();
 
@@ -25,11 +26,12 @@ namespace Manager
             Upgrade = LoadData<int,UpgradeData>();
             Weapon = LoadData<int,WeaponData>();
             Shop = LoadData<int,ShopData>();
+            StartStatus = LoadData<int, StartStatus>();
             String = LoadData<int,StringData>();
             Path = LoadData<int,PathData>();
         }
-
-
+        
+        
         public string GetText(int key)
         {
             string text = System.String.Empty;
