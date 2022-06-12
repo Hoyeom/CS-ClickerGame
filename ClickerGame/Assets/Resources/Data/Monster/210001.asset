@@ -9,13 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0bacf95941be4e4790af0d6dcf31109c, type: 3}
-  m_Name: 610002
+  m_Script: {fileID: 11500000, guid: 9baa117483f34c6fb74f4df71e778f48, type: 3}
+  m_Name: 210001
   m_EditorClassIdentifier: 
-  ID: 610002
-  IconPath: 920001
-  CostType: 2
-  EngPrice: 0
-  KorPrice: 0
-  RewardType: 1
-  Reward: 1000
+  ID: 210001
+  MonsterType: 1
+  MonsterIcon: 930001
+  Health: 100
+  AttackPower: 10
+  DefencePower: 5
