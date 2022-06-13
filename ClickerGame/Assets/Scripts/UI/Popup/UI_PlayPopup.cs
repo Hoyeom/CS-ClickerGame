@@ -153,6 +153,8 @@ public class UI_PlayPopup : UI_Popup
                     subItem.SetInfo(data);
                 }
                 break;
+
+
         }
     }
     private void TabInit()

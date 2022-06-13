@@ -34,7 +34,7 @@ public class SubItem_Craft : UI_Base
     {
         if (base.Initialize() == false)
             return false;
-
+        
         BindImage(typeof(Images));
         BindText(typeof(Texts));
 
