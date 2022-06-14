@@ -2,10 +2,12 @@
 
 namespace Data
 {
-    public class CraftData : ScriptableObject,ITableSetter
+    public class ItemData : ScriptableObject,ITableSetter
     {
         public int ID;
         public int IconID;
+        public Define.ItemType ItemType;
+        public bool Lock;
         public int IconBorderID;
         public int Level;
         public int AttackPower;

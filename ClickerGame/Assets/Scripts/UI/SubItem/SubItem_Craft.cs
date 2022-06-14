@@ -29,7 +29,7 @@ public class SubItem_Craft : UI_Base
     private Image border;
 
     private TextMeshProUGUI levelText;
-    
+
     public override bool Initialize()
     {
         if (base.Initialize() == false)
@@ -53,9 +53,30 @@ public class SubItem_Craft : UI_Base
         
         return true;
     }
-    
-    public void SetInfo(CraftData data)
+
+    public void SetInfo(ItemData data)
     {
         border.sprite = Managers.Data.LoadPathData<Sprite>(data.IconBorderID);
+        lockIcon.SetActive(data.Lock);
+        
+        if (data.IconID == 0)
+        {
+            levelBorder.SetActive(false);
+            levelText.SetActive(false);
+            notifyIcon.SetActive(false);
+            itemIcon.SetActive(false);
+        }
+        else
+        {
+            levelBorder.SetActive(true);
+            levelText.SetActive(true);
+            itemIcon.SetActive(true);
+
+            levelText.text = data.Level.ToString();
+            itemIcon.sprite = Managers.Data.LoadPathData<Sprite>(data.IconID);
+        }
+        
+       
+        
     }
 }

@@ -9,12 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b05c389ce50434db1669ae7fa8b73a6, type: 3}
-  m_Name: 710001
+  m_Script: {fileID: 11500000, guid: 2aa16529cb3a49b2b24791e9596e078d, type: 3}
+  m_Name: 500001
   m_EditorClassIdentifier: 
-  ID: 710001
-  InventorySlot: 4
-  Coin: 1000
-  AtkPower: 50
-  DefPower: 2
-  Health: 100
+  ID: 500001
+  IconID: 0
+  ItemType: 0
+  Lock: 0
+  IconBorderID: 950002
+  Level: 0
+  AttackPower: 0

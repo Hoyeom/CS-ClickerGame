@@ -27,6 +27,7 @@ public class UI_PlayPopup : UI_Popup
         UpgradeTabButton,
         CraftTabButton,
         ShopTabButton,
+        CraftButton,
     }
 
     enum Texts
@@ -72,6 +73,8 @@ public class UI_PlayPopup : UI_Popup
     private TextMeshProUGUI _tableText;
     private TextMeshProUGUI _coinText;
 
+    private Image _craftButton;
+
     private Dictionary<Define.Tab, Tab> tabs = new Dictionary<Define.Tab, Tab>();
 
     private List<SubItem_Boss> _bosses = new List<SubItem_Boss>();
@@ -91,7 +94,9 @@ public class UI_PlayPopup : UI_Popup
 
         _coinText = GetText((int) Texts.CoinText);
         _coinText.text = 0.ToString();
-        // TODO
+        _craftButton = GetImage((int) Images.CraftButton);
+        _craftButton.gameObject.BindEvent(CraftItem);
+        
         
         TabInit();
         RemoveAllTabContent();
@@ -99,6 +104,27 @@ public class UI_PlayPopup : UI_Popup
         SelectTab();
 
         return true;
+    }
+
+    private void CraftItem()
+    {
+        ItemData item = Managers.Data.
+            Item.
+            Values.
+            FirstOrDefault(data => data.Level == Managers.Game.Player.CraftLevel);
+        
+        if (item != null)
+        {
+            bool temp = Managers.Game.Player.Inventory.AddItem(item);
+            
+            if(temp)
+            {
+                Debug.Log("CraftComplete");
+                return;
+            }
+        }
+
+        Debug.Log("CraftFailed");
     }
 
     private void AddTabContents()
@@ -125,13 +151,20 @@ public class UI_PlayPopup : UI_Popup
                 break;
             case Define.Tab.Craft:
                 _craft.Clear();
+                
+                Managers.Game.Player.Inventory.OnChangeItem -= RefreshInventory;
+                Managers.Game.Player.Inventory.OnChangeItem += RefreshInventory;
+                
                 for (int i = 0; i < Define.MaxInventorySlot; i++)
                 {
-                    SubItem_Craft subItem = 
-                        Managers.UI.MakeSubItem<SubItem_Craft>(root);
-                    subItem.SetInfo(Managers.Data.Craft.First().Value);
+                    SubItem_Craft subItem = Managers.UI.MakeSubItem<SubItem_Craft>(root);
+                    
+                    ItemData item = Managers.Data.Item.First().Value;
                     _craft.Add(subItem);
+                    
+                    Managers.Game.Player.Inventory.InitAddList(item);
                 }
+                
                 break;
             case Define.Tab.Shop:
                 _shops.Clear();
@@ -153,10 +186,15 @@ public class UI_PlayPopup : UI_Popup
                     subItem.SetInfo(data);
                 }
                 break;
-
-
         }
     }
+
+    private void RefreshInventory(int index,ItemData item)
+    {
+        Debug.Log(index);
+        _craft[index].SetInfo(item);
+    }
+    
     private void TabInit()
     {
         _focus = Get<GameObject>((int) GameObjects.TabFocus).transform as RectTransform;

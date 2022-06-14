@@ -11,7 +11,7 @@ namespace Manager
         public Dictionary<int, StatusData> Status =new Dictionary<int, StatusData>();
         public Dictionary<int, MonsterData> Monster = new Dictionary<int, MonsterData>();
         public Dictionary<int, UpgradeData> Upgrade = new Dictionary<int, UpgradeData>();
-        public Dictionary<int, CraftData> Craft = new Dictionary<int, CraftData>();
+        public Dictionary<int, ItemData> Item = new Dictionary<int, ItemData>();
         public Dictionary<int, ShopData> Shop = new Dictionary<int, ShopData>();
         public Dictionary<int, StartStatus> StartStatus = new Dictionary<int, StartStatus>();
         public Dictionary<int, StringData> String = new Dictionary<int, StringData>();
@@ -24,7 +24,7 @@ namespace Manager
             Status = LoadData<int,StatusData>();
             Monster = LoadData<int,MonsterData>();
             Upgrade = LoadData<int,UpgradeData>();
-            Craft = LoadData<int,CraftData>();
+            Item = LoadData<int,ItemData>();
             Shop = LoadData<int,ShopData>();
             StartStatus = LoadData<int, StartStatus>();
             String = LoadData<int,StringData>();

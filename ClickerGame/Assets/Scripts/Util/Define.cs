@@ -55,7 +55,7 @@ public class Define
          Monster = 2,
          _ = 3,
          Upgrade = 4,
-         Craft = 5,
+         Item = 5,
          Shop = 6,
          StartStatus = 7,
          String = 8,
@@ -91,6 +91,12 @@ public class Define
          Shop = 810006,
          AdRemove = 810007,
          AdRemovePrice = 810008
+     }
+     
+     public enum ItemType
+     {
+         None,
+         Weapon,
      }
 
      public static readonly Color ActiveTabColor = new Color(0.3098039f, 0.454902f, 0.9647059f);

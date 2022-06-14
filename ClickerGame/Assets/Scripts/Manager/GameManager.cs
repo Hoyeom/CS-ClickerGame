@@ -1,4 +1,5 @@
 ﻿using System;
+using Content;
 
 namespace Manager
 {
@@ -7,6 +8,8 @@ namespace Manager
         private int coin;
         
         public event Action<int> OnChangeCoin;
+
+        public Player Player { get; private set; } = new Player();
         
         public int Coin
         {
@@ -21,7 +24,8 @@ namespace Manager
 
         public void Initialize()
         {
-            
+            Player = new Player();
+            Player.Initialize();
         }
     }
 }
