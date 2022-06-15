@@ -8,6 +8,7 @@ namespace Data
         public Define.UpgradeType UpgradeType;
         public int IconID;
         public int Price;
+        public int IncreasePrice;
         public int IncreaseStat;
 
         public int GetID() => ID;

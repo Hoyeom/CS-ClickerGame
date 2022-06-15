@@ -11,7 +11,8 @@ namespace Data
         public int AtkPower;
         public int DefPower;
         public int Health;
-        
+        public int CraftLevel;
+
         public int GetID() => ID;
     }
 }

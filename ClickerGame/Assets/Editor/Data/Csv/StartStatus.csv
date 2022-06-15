@@ -1,2 +1,2 @@
-﻿ID,InventorySlot,AddCoin,Coin,AtkPower,DefPower,Health
-710001,4,5,1000,50,2,100
+﻿ID,InventorySlot,AddCoin,Coin,AtkPower,DefPower,Health,CraftLevel
+710001,4,5,1000,50,2,100,1

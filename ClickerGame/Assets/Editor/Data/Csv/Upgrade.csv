@@ -1,4 +1,4 @@
-﻿ID,UpgradeType,IconID,Price,IncreaseStat
-401001,Weapon,940001,5000,5
-401002,Defence,940002,10000,1
-401003,Health,940003,2500,10
+﻿ID,UpgradeType,IconID,Price,IncreasePrice,IncreaseStat
+401001,Weapon,940001,5000,5000,5
+401002,Defence,940002,10000,5000,1
+401003,Health,940003,2500,5000,10

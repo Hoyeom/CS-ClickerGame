@@ -19,3 +19,4 @@ MonoBehaviour:
   AtkPower: 50
   DefPower: 2
   Health: 100
+  CraftLevel: 1

@@ -89,6 +89,11 @@ public class UI_PlayPopup : UI_Popup
         if (base.Initialize() == false)
             return false;
         
+        _bosses = new List<SubItem_Boss>();
+        _craft = new List<SubItem_Craft>();
+        _shops = new List<SubItem_Shop>();
+        _upgrades = new List<SubItem_Upgrade>();
+        
         Bind<GameObject>(typeof(GameObjects));
         BindImage(typeof(Images));
         BindText(typeof(Texts));
@@ -99,7 +104,7 @@ public class UI_PlayPopup : UI_Popup
         _coinText.text = 0.ToString();
         
         Managers.Game.Player.OnChangeCoin += OnChangeCoin;
-        _background.gameObject.BindEvent(Managers.Game.Player.AddCoin);
+        _background.gameObject.BindEvent(Managers.Game.Player.TabToAddCoin);
         
         _craftButton = GetImage((int) Images.CraftButton);
         _craftButton.gameObject.BindEvent(CraftItem);
@@ -109,6 +114,9 @@ public class UI_PlayPopup : UI_Popup
         AddTabContents();
         SelectTab();
 
+        StopAllCoroutines();
+        StartCoroutine(CoAutoSave());
+        
         return true;
     }
 
@@ -175,7 +183,7 @@ public class UI_PlayPopup : UI_Popup
                     
                     Managers.Game.Player.Inventory.InitAddList(item);
                 }
-                
+
                 break;
             case Define.Tab.Shop:
                 _shops.Clear();
@@ -189,6 +197,7 @@ public class UI_PlayPopup : UI_Popup
                 break;
             case Define.Tab.Upgrade:
                 _upgrades.Clear();
+
                 foreach (UpgradeData data in Managers.Data.Upgrade.Values)
                 {
                     SubItem_Upgrade subItem = 
@@ -198,6 +207,8 @@ public class UI_PlayPopup : UI_Popup
                 }
                 break;
         }
+        
+        Managers.Game.Player.RefreshUIData();
     }
 
     private void RefreshInventory(int index,ItemData item)
@@ -263,5 +274,14 @@ public class UI_PlayPopup : UI_Popup
             Define.Tab.Shop => Managers.Data.GetText((int)Define.UITextID.Shop),
         };
         tabs[tab].SetActive(true, _focus);
+    }
+
+    IEnumerator CoAutoSave()
+    {
+        while (true)
+        {
+            Managers.Game.SaveGame();
+            yield return new WaitForSeconds(3);
+        }
     }
 }

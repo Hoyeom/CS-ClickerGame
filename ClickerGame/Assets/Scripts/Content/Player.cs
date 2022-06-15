@@ -1,15 +1,58 @@
 ﻿using System;
 using Manager;
+using UnityEngine;
 
 namespace Content
 {
+    [Serializable]
     public class Player
     {
-        private int _addCoin = 5;
-        private int _coin;
-        private int _atkPower;
-        private int _defPower;
-        private int _health;
+        [SerializeField] private int _addCoin;
+
+        public int AddCoin
+        {
+            get => _addCoin;
+            set => _addCoin = value;
+        }
+
+        [SerializeField] private int _atkPower;
+
+        public int AtkPower
+        {
+            get => _atkPower;
+            set
+            {
+                _atkPower = value;
+                OnChangeAtkPower?.Invoke(_atkPower);
+            }
+        }
+
+        [SerializeField] private int _defPower;
+
+        public int DefPower
+        {
+            get => _defPower;
+            set
+            {
+                _defPower = value;
+                OnChangeDefPower?.Invoke(_defPower);
+            }
+        }
+
+        [SerializeField] private int _health;
+
+        public int Health
+        {
+            get => _health;
+            set
+            {
+                _health = value;
+                OnChangeHealth?.Invoke(_health);
+            }
+        }
+
+        [SerializeField] private int _coin;
+
         public int Coin
         {
             get => _coin;
@@ -19,41 +62,38 @@ namespace Content
                 OnChangeCoin?.Invoke(_coin);
             }
         }
+
         public event Action<int> OnChangeCoin;
+        public event Action<int> OnChangeAtkPower;
+        public event Action<int> OnChangeDefPower;
+        public event Action<int> OnChangeHealth;
 
-        private int _craftLevel = 1;
-
-        public void AddCoin()
+        public void RefreshUIData()
         {
-            Coin += _addCoin;
+            OnChangeHealth?.Invoke(_health);
+            OnChangeAtkPower?.Invoke(_atkPower);
+            OnChangeDefPower?.Invoke(_defPower);
+            OnChangeCoin?.Invoke(_coin);
+            Inventory.RefreshUIData();
         }
-        
+
+        [SerializeField] private int _craftLevel = 1;
+
+        public void TabToAddCoin()
+        {
+            Coin += AddCoin;
+        }
+
         public int CraftLevel
         {
             get => _craftLevel;
-            set
-            {
-                _craftLevel = value;
-            }
+            set { _craftLevel = value; }
         }
 
-        public void SetData(GameData data)
+        public Inventory Inventory
         {
-            _coin = data.Coin;
-            _addCoin = data.AddCoin;
-            _health = data.Health;
-            _atkPower = data.AtkPower;
-            _defPower = data.DefPower;
-            
-            Inventory = new Inventory
-            {
-                Slot = data.InventorySlot,
-                Items = data.ItemData
-            };
+            get => Managers.Game.SaveData.Inventory;
+            set => Managers.Game.SaveData.Inventory = value;
         }
-
-
-        public Inventory Inventory { get; private set; } = new Inventory();
-
     }
 }

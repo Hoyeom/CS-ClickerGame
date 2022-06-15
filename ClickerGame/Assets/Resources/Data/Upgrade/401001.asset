@@ -16,4 +16,5 @@ MonoBehaviour:
   UpgradeType: 0
   IconID: 940001
   Price: 5000
+  IncreasePrice: 5000
   IncreaseStat: 5

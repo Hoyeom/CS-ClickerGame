@@ -31,8 +31,6 @@ public class DataTransformer : EditorWindow
     private static void LoadAllData()
     {
         CreatePath();
-        
-        LoadData<StatusData>(Define.Table.Status,1);
         LoadData<MonsterData>(Define.Table.Monster, 1);
         LoadData<UpgradeData>(Define.Table.Upgrade, 1);
         LoadData<ItemData>(Define.Table.Item, 1);

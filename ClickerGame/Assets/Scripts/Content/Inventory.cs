@@ -7,30 +7,42 @@ using UnityEngine;
 
 namespace Content
 {
+    [Serializable]
     public class Inventory
     {
         private const int LockID = 500000;
         private const int UnLockID = 500001;
         
-        public List<ItemData> Items = new List<ItemData>();
-
+        [NonSerialized] public List<ItemData> Items = new List<ItemData>();
+        public List<int> SaveData = new List<int>();
+        
         public event Action<int, ItemData> OnChangeItem;
-        
-        public int Slot = 4; // TODO StartData 연동
-        
-        
+
+        [SerializeField] private int _slot;
+        public int Slot { get => _slot ; set => _slot = value; }
+
+        private bool _init = false;
         public void InitAddList(ItemData item)
         {
+            if(_init) return;
+            
             Items.Add(item);
+            SaveData.Add(item.GetID());
             OnChangeItem?.Invoke(Items.Count - 1, item);
             
             if (Items.Count + 1 == Define.MaxInventorySlot)
-            {
-                
                 InitLock();
-            }
         }
 
+        public void LoadData()
+        {
+            Items = new List<ItemData>();
+            for (int i = 0; i < SaveData.Count; i++)
+                Items.Add(Managers.Data.Item[SaveData[i]]);
+            InitLock();
+            _init = true;
+        }
+        
         public bool AddItem(ItemData data)
         {
             int? index = FindIndexEmptySlot();
@@ -62,6 +74,7 @@ namespace Content
         private void ChangeItem(int index, ItemData item)
         {
             Items[index] = item;
+            SaveData[index] = item.GetID();
             OnChangeItem?.Invoke((int) index, item);
         }
         
@@ -109,6 +122,12 @@ namespace Content
 
             return value;
         }
-        
+
+        public void RefreshUIData()
+        {
+            for (int i = 0; i < Items.Count; i++)
+                OnChangeItem?.Invoke(i, Items[i]);
+            InitLock();
+        }
     }
 }
