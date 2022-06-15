@@ -23,6 +23,7 @@ public class UI_PlayPopup : UI_Popup
 
     enum Images
     {
+        Background,
         EnemyTabButton,
         UpgradeTabButton,
         CraftTabButton,
@@ -74,7 +75,8 @@ public class UI_PlayPopup : UI_Popup
     private TextMeshProUGUI _coinText;
 
     private Image _craftButton;
-
+    private Image _background;
+    
     private Dictionary<Define.Tab, Tab> tabs = new Dictionary<Define.Tab, Tab>();
 
     private List<SubItem_Boss> _bosses = new List<SubItem_Boss>();
@@ -92,11 +94,15 @@ public class UI_PlayPopup : UI_Popup
         BindText(typeof(Texts));
         Bind<Transform>(typeof(Transforms));
 
+        _background = GetImage((int) Images.Background);
         _coinText = GetText((int) Texts.CoinText);
         _coinText.text = 0.ToString();
+        
+        Managers.Game.Player.OnChangeCoin += OnChangeCoin;
+        _background.gameObject.BindEvent(Managers.Game.Player.AddCoin);
+        
         _craftButton = GetImage((int) Images.CraftButton);
         _craftButton.gameObject.BindEvent(CraftItem);
-        
         
         TabInit();
         RemoveAllTabContent();
@@ -106,6 +112,11 @@ public class UI_PlayPopup : UI_Popup
         return true;
     }
 
+    private void OnChangeCoin(int value)
+    {
+        _coinText.text = value.ToString();
+    }
+    
     private void CraftItem()
     {
         ItemData item = Managers.Data.
@@ -191,7 +202,6 @@ public class UI_PlayPopup : UI_Popup
 
     private void RefreshInventory(int index,ItemData item)
     {
-        Debug.Log(index);
         _craft[index].SetInfo(item);
     }
     

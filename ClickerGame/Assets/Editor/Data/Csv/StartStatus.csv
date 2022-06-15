@@ -1,2 +1,2 @@
-﻿ID,InventorySlot,Coin,AtkPower,DefPower,Health
-710001,4,1000,50,2,100
+﻿ID,InventorySlot,AddCoin,Coin,AtkPower,DefPower,Health
+710001,4,5,1000,50,2,100

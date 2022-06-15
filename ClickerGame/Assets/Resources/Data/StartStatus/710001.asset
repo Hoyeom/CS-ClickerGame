@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 710001
   InventorySlot: 4
+  AddCoin: 5
   Coin: 1000
   AtkPower: 50
   DefPower: 2

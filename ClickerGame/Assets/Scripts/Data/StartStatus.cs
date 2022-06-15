@@ -6,6 +6,7 @@ namespace Data
     {
         public int ID;
         public int InventorySlot;
+        public int AddCoin;
         public int Coin;
         public int AtkPower;
         public int DefPower;
