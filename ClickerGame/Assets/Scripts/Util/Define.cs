@@ -76,7 +76,7 @@ public class Define
 
      public enum UpgradeType
      {
-         Weapon,
+         Attack,
          Defence,
          Health
      }

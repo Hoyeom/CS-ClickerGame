@@ -6,9 +6,9 @@ namespace Data
     {
         public int ID;
         public Define.UpgradeType UpgradeType;
+        public int Level;
         public int IconID;
         public int Price;
-        public int IncreasePrice;
         public int IncreaseStat;
 
         public int GetID() => ID;

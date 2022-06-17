@@ -1,4 +1,5 @@
 ﻿using System;
+using Data;
 using Manager;
 using UnityEngine;
 
@@ -7,60 +8,21 @@ namespace Content
     [Serializable]
     public class Player
     {
-        [SerializeField] private int _addCoin;
-
-        public SubItem_Player _view;
+        [SerializeField] private int _levelID = 0;
+        public int LevelID { get=>_levelID; set => _levelID = value; }
+        public StartStatus Status => Managers.Data.StartStatus[LevelID];
+        
+        private SubItem_Player _view;
         public SubItem_Player View => _view;
+        public int AddCoin => Status.AddCoin;
+        public int AtkPower => Status.AtkPower;
+        public int DefPower => Status.DefPower;
+        public int Health => Status.Health;
+        public float AttackDelay => Status.AtkDelay;
+        public float AttackSpeed => Status.AtkSpeed;
+        public int CraftLevel => Status.CraftLevel;
         
-        public int AddCoin
-        {
-            get => _addCoin;
-            set => _addCoin = value;
-        }
-
-        [SerializeField] private int _atkPower;
-
-        public int AtkPower
-        {
-            get => _atkPower;
-            set
-            {
-                _atkPower = value;
-                OnChangeAtkPower?.Invoke(_atkPower);
-            }
-        }
-
-        public void SetView(SubItem_Player player)
-        {
-            _view = player;
-        }
-        
-        [SerializeField] private int _defPower;
-
-        public int DefPower
-        {
-            get => _defPower;
-            set
-            {
-                _defPower = value;
-                OnChangeDefPower?.Invoke(_defPower);
-            }
-        }
-
-        [SerializeField] private int _health;
-
-        public int Health
-        {
-            get => _health;
-            set
-            {
-                _health = value;
-                OnChangeHealth?.Invoke(_health);
-            }
-        }
-
         [SerializeField] private int _coin;
-
         public int Coin
         {
             get => _coin;
@@ -71,31 +33,30 @@ namespace Content
             }
         }
 
+
+        
+
         public event Action<int> OnChangeCoin;
         public event Action<int> OnChangeAtkPower;
         public event Action<int> OnChangeDefPower;
         public event Action<int> OnChangeHealth;
-
+        
         public void RefreshUIData()
         {
-            OnChangeHealth?.Invoke(_health);
-            OnChangeAtkPower?.Invoke(_atkPower);
-            OnChangeDefPower?.Invoke(_defPower);
-            OnChangeCoin?.Invoke(_coin);
+            OnChangeHealth?.Invoke(Health);
+            OnChangeAtkPower?.Invoke(AtkPower);
+            OnChangeDefPower?.Invoke(DefPower);
+            OnChangeCoin?.Invoke(Coin);
             Inventory.RefreshUIData();
         }
+        public void SetView(SubItem_Player player) => _view = player;
 
-        [SerializeField] private int _craftLevel = 1;
-
+        
+        
+        
         public void TabToAddCoin()
         {
             Coin += AddCoin;
-        }
-
-        public int CraftLevel
-        {
-            get => _craftLevel;
-            set { _craftLevel = value; }
         }
 
         public Inventory Inventory

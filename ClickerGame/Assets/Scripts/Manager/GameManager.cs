@@ -35,7 +35,7 @@ namespace Manager
             if (!LoadGame())
             {
                 StartStatus status = GetStartStatus();
-                UpgradeData weaponData = Managers.Game.GetUpgradeData(Define.UpgradeType.Weapon);
+                UpgradeData weaponData = Managers.Game.GetUpgradeData(Define.UpgradeType.Attack);
                 UpgradeData defenceData = Managers.Game.GetUpgradeData(Define.UpgradeType.Defence);
                 UpgradeData healthData = Managers.Game.GetUpgradeData(Define.UpgradeType.Health);
 
@@ -48,12 +48,8 @@ namespace Manager
                     },
                     Player = new Player()
                     {
-                        AtkPower = status.AtkPower,
-                        Coin = status.Coin,
-                        CraftLevel = status.CraftLevel,
-                        DefPower = status.DefPower,
-                        Health = status.Health,
-                        AddCoin = status.AddCoin,
+                        LevelID = status.GetID(),
+                        Coin = 0,
                     },
                     UpgradeShop = new UpgradeShop()
                     {
@@ -89,6 +85,8 @@ namespace Manager
                 Managers.Game.SaveData = data;
                 data.Inventory.LoadData();
             }
+            
+            Debug.Log(data);
             
             Debug.Log($"Save Game Loaded : {_path}");
             return true;

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 401001
   UpgradeType: 0
+  Level: 1
   IconID: 940001
-  Price: 5000
-  IncreasePrice: 5000
+  Price: 6000
   IncreaseStat: 5

@@ -13,7 +13,8 @@ public class SubItem_Upgrade : UI_Base
     {
         CostText,
         CurrentText,
-        NextText
+        NextText,
+        LevelText
     }
 
     enum Images
@@ -27,6 +28,7 @@ public class SubItem_Upgrade : UI_Base
     private TextMeshProUGUI priceText;
     private TextMeshProUGUI currentText;
     private TextMeshProUGUI nextText;
+    private TextMeshProUGUI levelText;
     
     public override bool Initialize()
     {
@@ -41,9 +43,9 @@ public class SubItem_Upgrade : UI_Base
         priceText = GetText((int) Texts.CostText);
         currentText = GetText((int) Texts.CurrentText);
         nextText = GetText((int) Texts.NextText);
+        levelText = GetText((int) Texts.LevelText);
 
 
-            
         return true;
     }
 
@@ -51,22 +53,23 @@ public class SubItem_Upgrade : UI_Base
     {
         priceText.text = data.Price.ToString();
         nextText.text = data.IncreaseStat.ToString();
+        levelText.text = data.Level.ToString();
         upgradeIcon.sprite = Managers.Data.LoadPathData<Sprite>(data.IconID);
         
         switch (data.UpgradeType)
         {
             case Define.UpgradeType.Health:
-                priceButton.gameObject.BindEvent(() => Managers.Game.UpgradeShop.Health.Upgrade(data.UpgradeType));
+                priceButton.gameObject.BindEvent(() => Managers.Game.UpgradeShop.Health.Upgrade());
                 Managers.Game.UpgradeShop.Health.OnChangePrice += SetPrice;
                 Managers.Game.Player.OnChangeHealth += SetCurrentStatus;
                 break;
             case Define.UpgradeType.Defence:
-                priceButton.gameObject.BindEvent(() => Managers.Game.UpgradeShop.DefPower.Upgrade(data.UpgradeType));
+                priceButton.gameObject.BindEvent(() => Managers.Game.UpgradeShop.DefPower.Upgrade());
                 Managers.Game.UpgradeShop.DefPower.OnChangePrice += SetPrice;
                 Managers.Game.Player.OnChangeDefPower += SetCurrentStatus;
                 break;
-            case Define.UpgradeType.Weapon:
-                priceButton.gameObject.BindEvent(() => Managers.Game.UpgradeShop.AtkPower.Upgrade(data.UpgradeType));
+            case Define.UpgradeType.Attack:
+                priceButton.gameObject.BindEvent(() => Managers.Game.UpgradeShop.AtkPower.Upgrade());
                 Managers.Game.UpgradeShop.AtkPower.OnChangePrice += SetPrice;
                 Managers.Game.Player.OnChangeAtkPower += SetCurrentStatus;
                 break;

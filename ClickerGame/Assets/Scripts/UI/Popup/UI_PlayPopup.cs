@@ -208,7 +208,7 @@ public class UI_PlayPopup : UI_Popup
             case Define.Tab.Upgrade:
                 _upgrades.Clear();
 
-                foreach (UpgradeData data in Managers.Data.Upgrade.Values)
+                foreach (UpgradeData data in Managers.Data.Upgrade.Values.Where((data => data.Level == 0)))
                 {
                     SubItem_Upgrade subItem = 
                         Managers.UI.MakeSubItem<SubItem_Upgrade>(root);

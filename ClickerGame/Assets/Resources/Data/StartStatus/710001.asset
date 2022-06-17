@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: 710001
   m_EditorClassIdentifier: 
   ID: 710001
-  InventorySlot: 4
-  AddCoin: 5
-  Coin: 1000
-  AtkPower: 50
-  DefPower: 2
-  Health: 100
-  CraftLevel: 1
+  Level: 1
+  InventorySlot: 5
+  AddCoin: 10
+  AtkPower: 55
+  AtkDelay: 0.2
+  AtkSpeed: 0.5
+  DefPower: 4
+  Health: 150
+  CraftLevel: 2
