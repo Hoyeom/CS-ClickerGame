@@ -43,6 +43,8 @@ public class UI_PlayPopup : UI_Popup
         UpgradeContent,
         CraftContent,
         ShopContent,
+        PlayerArea,
+        EnemyArea,
     }
 
     private class Tab
@@ -84,6 +86,9 @@ public class UI_PlayPopup : UI_Popup
     private List<SubItem_Shop> _shops = new List<SubItem_Shop>();
     private List<SubItem_Upgrade> _upgrades = new List<SubItem_Upgrade>();
 
+    private Transform _playerArea;
+    private Transform _enemyArea;
+
     public override bool Initialize()
     {
         if (base.Initialize() == false)
@@ -108,6 +113,11 @@ public class UI_PlayPopup : UI_Popup
         
         _craftButton = GetImage((int) Images.CraftButton);
         _craftButton.gameObject.BindEvent(CraftItem);
+
+        _playerArea = Get<Transform>((int) Transforms.PlayerArea);
+        _enemyArea = Get<Transform>((int) Transforms.EnemyArea);
+
+        Managers.Game.Player.SetView(Managers.UI.MakeSubItem<SubItem_Player>(_playerArea));
         
         TabInit();
         RemoveAllTabContent();
@@ -209,6 +219,7 @@ public class UI_PlayPopup : UI_Popup
         }
         
         Managers.Game.Player.RefreshUIData();
+        Managers.Game.UpgradeShop.RefreshUIData();
     }
 
     private void RefreshInventory(int index,ItemData item)

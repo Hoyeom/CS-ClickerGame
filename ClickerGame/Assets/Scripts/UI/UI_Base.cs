@@ -56,7 +56,7 @@ namespace UI
 
             return objects[index] as T;
         }
-
+        
         public static GameObject BindEvent(GameObject go,Action action,Define.UIEvent type = Define.UIEvent.Click)
         {
             UI_EventHandler evt = Utils.GetOrAddComponent<UI_EventHandler>(go);

@@ -9,6 +9,9 @@ namespace Content
     {
         [SerializeField] private int _addCoin;
 
+        public SubItem_Player _view;
+        public SubItem_Player View => _view;
+        
         public int AddCoin
         {
             get => _addCoin;
@@ -27,6 +30,11 @@ namespace Content
             }
         }
 
+        public void SetView(SubItem_Player player)
+        {
+            _view = player;
+        }
+        
         [SerializeField] private int _defPower;
 
         public int DefPower

@@ -53,11 +53,16 @@ namespace Content
                         Debug.Log("체력 업그레이드 완료");
                         break;
                 }
-                _price += _increasePrice;
+                Price += _increasePrice;
                 return;
             }
             
             Debug.Log($"업그레이드 실패: {type}");
+        }
+
+        public void RefreshUIData()
+        {
+            OnChangePrice?.Invoke(Price);
         }
     }
     
@@ -67,5 +72,12 @@ namespace Content
         public Status Health;
         public Status AtkPower;
         public Status DefPower;
+
+        public void RefreshUIData()
+        {
+            Health.RefreshUIData();
+            AtkPower.RefreshUIData();
+            DefPower.RefreshUIData();
+        }
     }
 }
