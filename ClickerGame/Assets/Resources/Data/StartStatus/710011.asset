@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: 710011
   m_EditorClassIdentifier: 
   ID: 710011
+  IconID: 930001
   Level: 11
+  TargetExp: 4500
   InventorySlot: 15
-  AddCoin: 60
+  AddCoin: 4600
   AtkPower: 105
-  AtkDelay: 0.2
-  AtkSpeed: 0.5
   DefPower: 24
   Health: 650
   CraftLevel: 12

@@ -12,31 +12,28 @@ namespace Content
         private UpgradeData Data => Managers.Data.Upgrade[LevelID];
         
         [SerializeField] private int _levelID;
+        public int Level => Data.Level;
         public int Price => Data.Price;
         public int IncreaseStat => Data.IncreaseStat;
-        public int LevelID { get => _levelID; set => _levelID = value; }
+        public int Stat => Data.Stat;
         
-        public event Action<int> OnChangePrice;
+        public int LevelID { get => _levelID; set => _levelID = value; }
 
         public void Upgrade()
         {
+            
             if (Managers.Game.Player.Coin >= Price)
             {
                 Managers.Game.Player.Coin -= Price;
                 
                 LevelID += 1;
                 
-                RefreshUIData();
+                Managers.UI.RefreshUI();
                 
                 return;
             }
 
             Debug.Log($"업그레이드 실패");
-        }
-
-        public void RefreshUIData()
-        {
-            OnChangePrice?.Invoke(Price);
         }
     }
     
@@ -46,12 +43,5 @@ namespace Content
         public Status Health;
         public Status AtkPower;
         public Status DefPower;
-
-        public void RefreshUIData()
-        {
-            Health.RefreshUIData();
-            AtkPower.RefreshUIData();
-            DefPower.RefreshUIData();
-        }
     }
 }

@@ -31,13 +31,21 @@ public class DataTransformer : EditorWindow
     private static void LoadAllData()
     {
         CreatePath();
-        LoadData<MonsterData>(Define.Table.Monster, 1);
+        
+        AssetDatabase.StartAssetEditing();
+        
+        LoadData<EnemyData>(Define.Table.Enemy, 1);
         LoadData<UpgradeData>(Define.Table.Upgrade, 1);
         LoadData<ItemData>(Define.Table.Item, 1);
         LoadData<ShopData>(Define.Table.Shop, 1);
-        LoadData<StartStatus>(Define.Table.StartStatus, 1);
+        LoadData<StartStatusData>(Define.Table.StartStatus, 1);
         LoadData<StringData>(Define.Table.String, 1);
         LoadData<PathData>(Define.Table.Path, 1);
+
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+        
+        AssetDatabase.StopAssetEditing();
     }
 
     private static void LoadData<T>(Define.Table table = Define.Table.None, int fieldLine = 2)
@@ -61,11 +69,9 @@ public class DataTransformer : EditorWindow
             string[] data = reader.ReadLine().Split(',');
             T sO = ScriptableObject.CreateInstance<T>();
             SetData(sO, data, fieldNames);
+
             AssetDatabase.CreateAsset(sO, $"{AssetPath}{tableName}/{sO.GetID().ToString()}.asset");
         }
-
-        AssetDatabase.SaveAssets();
-        AssetDatabase.Refresh();
     }
 
     private static void CreatePath()

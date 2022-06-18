@@ -5,6 +5,7 @@ using Manager;
 using TMPro;
 using UI;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class SubItem_Craft : UI_Base
@@ -22,12 +23,16 @@ public class SubItem_Craft : UI_Base
         LevelText
     }
 
+    public int SlotIndex { get; set; }
+
     private Image notifyIcon;
     private Image lockIcon;
     private Image itemIcon;
     private Image levelBorder;
     private Image border;
 
+    public ItemData Item { get; private set; }
+    
     private TextMeshProUGUI levelText;
 
     public override bool Initialize()
@@ -40,10 +45,14 @@ public class SubItem_Craft : UI_Base
 
         notifyIcon = GetImage((int) Images.NotifyNew);
         lockIcon = GetImage((int) Images.LockIcon);
-        itemIcon = GetImage((int) Images.ItemIcon);
         levelBorder = GetImage((int) Images.LevelBorder);
         levelText = GetText((int) Texts.LevelText);
+        itemIcon = GetImage((int) Images.ItemIcon);
         border = GetComponent<Image>();
+
+        gameObject.BindEvent(DragIcon, Define.UIEvent.Pressed);
+        gameObject.BindEvent(DownIcon, Define.UIEvent.Down);
+        gameObject.BindEvent(UpIcon, Define.UIEvent.Up);
         
         lockIcon.SetActive(true);
         levelBorder.SetActive(false);
@@ -54,11 +63,42 @@ public class SubItem_Craft : UI_Base
         return true;
     }
 
+    private void DownIcon(PointerEventData pointer)
+    {
+        itemIcon.transform.SetParent(Managers.UI.Root.transform.GetChild(0));
+    }
+    
+    private void DragIcon(PointerEventData pointer)
+    {
+        itemIcon.transform.position = Input.mousePosition;
+    }
+
+    private void UpIcon(PointerEventData pointer)
+    {
+        itemIcon.transform.SetParent(transform);
+        itemIcon.transform.SetAsFirstSibling();
+        itemIcon.transform.localPosition = Vector3.zero;
+
+        if (pointer.pointerCurrentRaycast.gameObject.TryGetComponent<SubItem_Craft>(out SubItem_Craft craft))
+        {
+            if(craft.Item.Lock) return;
+            
+            if (this == craft)
+            {
+                Managers.Game.Player.Inventory.EquipWeapon(SlotIndex);
+            }
+            else
+                Managers.Game.Player.Inventory.Craft(SlotIndex, craft.SlotIndex);
+            // Debug.Log(craft.SlotIndex);
+        }
+    }
+    
     public void SetInfo(ItemData data)
     {
-        border.sprite = Managers.Data.LoadPathData<Sprite>(data.IconBorderID);
+        Item = data;
+        border.sprite = Managers.Data.PathIDToData<Sprite>(data.IconBorderID);
         lockIcon.SetActive(data.Lock);
-        
+
         if (data.IconID == 0)
         {
             levelBorder.SetActive(false);
@@ -73,7 +113,7 @@ public class SubItem_Craft : UI_Base
             itemIcon.SetActive(true);
 
             levelText.text = data.Level.ToString();
-            itemIcon.sprite = Managers.Data.LoadPathData<Sprite>(data.IconID);
+            itemIcon.sprite = Managers.Data.PathIDToData<Sprite>(data.IconID);
         }
         
        

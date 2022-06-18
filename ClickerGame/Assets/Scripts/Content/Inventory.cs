@@ -15,11 +15,29 @@ namespace Content
         
         [NonSerialized] public List<ItemData> Items = new List<ItemData>();
         public List<int> SaveData = new List<int>();
+
+        private ItemData _equip;
+        public event Action<ItemData> OnChangeEquip;
+        public ItemData Equip
+        {
+            get=>_equip;
+            set
+            {
+                _equip = value;
+                EquipSaveData = _equip.GetID();
+                OnChangeEquip?.Invoke(_equip);
+            }
+        }
+
+        public int EquipSaveData;
         
         public event Action<int, ItemData> OnChangeItem;
 
         [SerializeField] private int _slot;
-        public int Slot { get => _slot ; set => _slot = value; }
+        public int Slot
+        {
+            get => Managers.Game.Player.StatusData.InventorySlot;
+        }
 
         private bool _init = false;
         public void InitAddList(ItemData item)
@@ -33,12 +51,17 @@ namespace Content
             if (Items.Count + 1 == Define.MaxInventorySlot)
                 InitLock();
         }
-
+        
+        
         public void LoadData()
         {
             Items = new List<ItemData>();
             for (int i = 0; i < SaveData.Count; i++)
                 Items.Add(Managers.Data.Item[SaveData[i]]);
+
+            if (Managers.Data.Item.TryGetValue(EquipSaveData, out ItemData itemData))
+                Equip = itemData;
+            
             InitLock();
             _init = true;
         }
@@ -57,10 +80,23 @@ namespace Content
         }
 
 
+        public void EquipWeapon(int slotIndex)
+        {
+            if (Equip != null)
+                (Equip, Items[slotIndex]) = (Items[slotIndex], Equip);
+            else
+            {
+                Equip = Items[slotIndex];
+                RemoveItem(slotIndex);
+            }
+            
+            RefreshUIData();
+        }
         
         public bool Craft(int slotIndex1, int slotIndex2)
         {
-            bool value = Items[slotIndex1].Level == Items[slotIndex2].Level;
+            bool value = Items[slotIndex1].Level == Items[slotIndex2].Level
+                         && slotIndex1 != slotIndex2;
 
             if (value && Upgrade(slotIndex2))
             {
@@ -80,7 +116,7 @@ namespace Content
         
         public void RemoveItem(int slotIndex)
         { 
-            ChangeItem(slotIndex,Managers.Data.Item.First().Value);
+            ChangeItem(slotIndex, Managers.Data.Item[UnLockID]);
         }
 
         private void InitLock()
@@ -93,9 +129,12 @@ namespace Content
                     ChangeItem(i, Managers.Data.Item[UnLockID]);
             }
         }
+        
+        
 
         private bool IsLockOrEmpty(int slotIndex)
             => Items[slotIndex].Level == 0;
+        
         private bool Upgrade(int slotIndex)
         {
             if (Managers.Data.Item.TryGetValue(Items[slotIndex].ID + 1, out ItemData item))
@@ -127,6 +166,8 @@ namespace Content
         {
             for (int i = 0; i < Items.Count; i++)
                 OnChangeItem?.Invoke(i, Items[i]);
+            if(Equip != null)
+                OnChangeEquip?.Invoke(Equip);
             InitLock();
         }
     }

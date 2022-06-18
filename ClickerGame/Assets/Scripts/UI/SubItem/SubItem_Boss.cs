@@ -23,10 +23,12 @@ public class SubItem_Boss : UI_Base
         DefText
     }
 
+    private EnemyData _enemyData;
     private TextMeshProUGUI _hpText;
     private TextMeshProUGUI _atkText;
     private TextMeshProUGUI _defText;
     private Image mosterIcon;
+    private Image fightButton;
     
     public override bool Initialize()
     {
@@ -41,16 +43,23 @@ public class SubItem_Boss : UI_Base
         _defText = GetText((int) Texts.DefText);
 
         mosterIcon = GetImage((int) Images.MonsterIcon);
+        fightButton = GetImage((int) Images.FightButton);
+        
+        
         
         return true;
     }
 
-    public void SetInfo(MonsterData data)
+    public void SetInfo(EnemyData data)
     {
+        _enemyData = data;
         _hpText.text = data.Health.ToString();
         _atkText.text = data.AttackPower.ToString();
         _defText.text = data.DefencePower.ToString();
         
-        mosterIcon.sprite = Managers.Data.LoadPathData<Sprite>(data.IconID);
+        mosterIcon.sprite = Managers.Data.PathIDToData<Sprite>(data.IconID);
+        fightButton.gameObject.BindEvent((pointer) => Managers.Game.Combat.SpawnEnemy(data));
     }
+
+
 }

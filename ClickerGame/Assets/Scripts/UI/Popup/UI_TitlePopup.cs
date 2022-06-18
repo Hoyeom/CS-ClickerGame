@@ -34,7 +34,7 @@ public class UI_TitlePopup : UI_Popup
         BindText(typeof(Texts));
         
         startButton = Get<GameObject>((int) GameObjects.StartButton)
-            .BindEvent(GameStart, Define.UIEvent.Up)
+            .BindEvent((pointer)=>GameStart(), Define.UIEvent.Up)
             .SetActiveChain(false);
         
         GetText((int)Texts.StartButtonText).text = 
@@ -42,7 +42,7 @@ public class UI_TitlePopup : UI_Popup
 
         touchToPlay = GetText((int) Texts.TouchToPlay);
         touchToPlay.text = Managers.Data.GetText((int) Define.UITextID.TouchToPlay);
-        touchToPlay.gameObject.BindEvent(PopButtons);
+        touchToPlay.gameObject.BindEvent((pointer) => PopButtons());
 
         return true;
     }

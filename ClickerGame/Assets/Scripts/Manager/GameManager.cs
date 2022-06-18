@@ -15,10 +15,12 @@ namespace Manager
         public Inventory Inventory;
         public UpgradeShop UpgradeShop;
     }
+    
+    
 
     public class GameManager
     {
-        public StartStatus GetStartStatus()
+        public StartStatusData GetStartStatus()
             => Managers.Data.StartStatus.First().Value;
 
         public UpgradeData GetUpgradeData(Define.UpgradeType type) =>
@@ -28,13 +30,20 @@ namespace Manager
         private GameData _gameData = new GameData();
         public GameData SaveData { get { return _gameData; } set { _gameData = value; } }
         public Player Player { get => SaveData.Player; set => SaveData.Player = value; }
+        public Combat Combat { get; set; } = new Combat();
         public UpgradeShop UpgradeShop { get => SaveData.UpgradeShop; set=>SaveData.UpgradeShop = value; }
 
+        public Transform PlayerSpawnArea { get; private set; }
+        public Transform EnemySpawnArea { get; private set; }
+
+        public void SetPlayerArea(Transform point) => PlayerSpawnArea = point;
+        public void SetEnemyArea(Transform point) => EnemySpawnArea = point;
+        
         public void Initialize()
         {
             if (!LoadGame())
             {
-                StartStatus status = GetStartStatus();
+                StartStatusData statusData = GetStartStatus();
                 UpgradeData weaponData = Managers.Game.GetUpgradeData(Define.UpgradeType.Attack);
                 UpgradeData defenceData = Managers.Game.GetUpgradeData(Define.UpgradeType.Defence);
                 UpgradeData healthData = Managers.Game.GetUpgradeData(Define.UpgradeType.Health);
@@ -44,11 +53,10 @@ namespace Manager
                     Inventory = new Inventory()
                     {
                         SaveData = new List<int>(),
-                        Slot = status.InventorySlot
                     },
                     Player = new Player()
                     {
-                        LevelID = status.GetID(),
+                        LevelID = statusData.GetID(),
                         Coin = 0,
                     },
                     UpgradeShop = new UpgradeShop()
@@ -60,6 +68,9 @@ namespace Manager
                 };
                 Player.Inventory = SaveData.Inventory;
             }
+            
+            Player.OnChangePlayerLevel += (data) => Managers.UI.RefreshUI();
+            Managers.Game.Combat.Initialize();
         }
         
         #region Save & Load	

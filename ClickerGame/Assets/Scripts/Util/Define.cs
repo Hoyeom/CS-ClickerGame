@@ -6,6 +6,8 @@ using UnityEngine;
 public class Define
 {
     public const int MaxInventorySlot = 20;
+    public const float AttackSpeed = .4f;
+    public const float AttackDelay = .2f;
     
     public enum Scene
     {
@@ -52,7 +54,7 @@ public class Define
      {
          None = 0,
          Status = 1,
-         Monster = 2,
+         Enemy = 2,
          _ = 3,
          Upgrade = 4,
          Item = 5,
@@ -62,7 +64,7 @@ public class Define
          Path = 9
      }
      
-     public enum MonsterType
+     public enum EnemyType
      {
          Unknown,
          Boss

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Manager;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
@@ -21,9 +23,13 @@ namespace UI
         public virtual bool Initialize()
         {
             if(_init) return false;
+
+            Managers.UI.AddUI(this);
             
             return _init = true;
         }
+
+        public virtual void RefreshUI() { }
 
         protected void BindText(Type type) => Bind<TextMeshProUGUI>(type);
         protected void BindImage(Type type) => Bind<Image>(type);
@@ -57,7 +63,7 @@ namespace UI
             return objects[index] as T;
         }
         
-        public static GameObject BindEvent(GameObject go,Action action,Define.UIEvent type = Define.UIEvent.Click)
+        public static GameObject BindEvent(GameObject go,Action<PointerEventData> action,Define.UIEvent type = Define.UIEvent.Click)
         {
             UI_EventHandler evt = Utils.GetOrAddComponent<UI_EventHandler>(go);
 

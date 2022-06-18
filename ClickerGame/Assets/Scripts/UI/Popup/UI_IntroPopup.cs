@@ -20,7 +20,7 @@ public class UI_IntroPopup : UI_Popup
         Bind<GameObject>(typeof(GameObjects));
 
         Get<GameObject>((int) GameObjects.Background)
-            .BindEvent(SkipIntro);
+            .BindEvent((pointer) => SkipIntro());
 
         return true;
     }

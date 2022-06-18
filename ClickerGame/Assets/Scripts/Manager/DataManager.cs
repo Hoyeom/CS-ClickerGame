@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Data;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -8,11 +9,12 @@ namespace Manager
 {
     public class DataManager
     {
-        public Dictionary<int, MonsterData> Monster = new Dictionary<int, MonsterData>();
+        public List<EnemyData> Boss = new List<EnemyData>();
+        public Dictionary<int, EnemyData> Monster = new Dictionary<int, EnemyData>();
         public Dictionary<int, UpgradeData> Upgrade = new Dictionary<int, UpgradeData>();
         public Dictionary<int, ItemData> Item = new Dictionary<int, ItemData>();
         public Dictionary<int, ShopData> Shop = new Dictionary<int, ShopData>();
-        public Dictionary<int, StartStatus> StartStatus = new Dictionary<int, StartStatus>();
+        public Dictionary<int, StartStatusData> StartStatus = new Dictionary<int, StartStatusData>();
         public Dictionary<int, StringData> String = new Dictionary<int, StringData>();
         public Dictionary<int, PathData> Path = new Dictionary<int, PathData>();
 
@@ -20,11 +22,12 @@ namespace Manager
         
         public void Initialize()
         {
-            Monster = LoadData<int,MonsterData>();
+            Monster = LoadData<int,EnemyData>();
+            Boss = Monster.Values.Where(data => data.EnemyType == Define.EnemyType.Boss).ToList();
             Upgrade = LoadData<int,UpgradeData>();
             Item = LoadData<int,ItemData>();
             Shop = LoadData<int,ShopData>();
-            StartStatus = LoadData<int, StartStatus>();
+            StartStatus = LoadData<int, StartStatusData>();
             String = LoadData<int,StringData>();
             Path = LoadData<int,PathData>();
         }
@@ -57,7 +60,7 @@ namespace Manager
             return text;
         }
 
-        public T LoadPathData<T>(int id) where T : Object
+        public T PathIDToData<T>(int id) where T : Object
         {
             if(Path.TryGetValue(id,out PathData data))
                 return Managers.Resource.Load<T>(data.Path);

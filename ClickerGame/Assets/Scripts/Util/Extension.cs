@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UI;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public static class Extension
@@ -11,7 +12,7 @@ public static class Extension
     public static T GetOrAddComponent<T>(this GameObject go) where T : Component 
         => Utils.GetOrAddComponent<T>(go);
 
-    public static GameObject BindEvent(this GameObject go, Action action, Define.UIEvent type = Define.UIEvent.Click)
+    public static GameObject BindEvent(this GameObject go, Action<PointerEventData> action, Define.UIEvent type = Define.UIEvent.Click)
         => UI_Base.BindEvent(go, action, type);
 
     public static void SetActive(this Image image, bool value)

@@ -29,12 +29,15 @@ public class UI_PlayPopup : UI_Popup
         CraftTabButton,
         ShopTabButton,
         CraftButton,
+        DebugCoinButton
     }
 
     enum Texts
     {
         TableText,
-        CoinText
+        CoinText,
+        InfoLevelText,
+        SliderHpText
     }
 
     enum Transforms
@@ -45,6 +48,13 @@ public class UI_PlayPopup : UI_Popup
         ShopContent,
         PlayerArea,
         EnemyArea,
+        Equip,
+    }
+
+    enum Sliders
+    {
+        SliderExp,
+        SliderHp,
     }
 
     private class Tab
@@ -70,14 +80,19 @@ public class UI_PlayPopup : UI_Popup
 
         }
     }
-
-
+    
+    public Slider expSlider;
+    public Slider hpSlider;
+    
     private RectTransform _focus;
     private TextMeshProUGUI _tableText;
     private TextMeshProUGUI _coinText;
+    private TextMeshProUGUI _levelText;
+    private TextMeshProUGUI _hpText;
 
     private Image _craftButton;
     private Image _background;
+    
     
     private Dictionary<Define.Tab, Tab> tabs = new Dictionary<Define.Tab, Tab>();
 
@@ -86,8 +101,7 @@ public class UI_PlayPopup : UI_Popup
     private List<SubItem_Shop> _shops = new List<SubItem_Shop>();
     private List<SubItem_Upgrade> _upgrades = new List<SubItem_Upgrade>();
 
-    private Transform _playerArea;
-    private Transform _enemyArea;
+    private Transform equipContent;
 
     public override bool Initialize()
     {
@@ -102,22 +116,33 @@ public class UI_PlayPopup : UI_Popup
         Bind<GameObject>(typeof(GameObjects));
         BindImage(typeof(Images));
         BindText(typeof(Texts));
+        Bind<Slider>(typeof(Sliders));
         Bind<Transform>(typeof(Transforms));
 
         _background = GetImage((int) Images.Background);
         _coinText = GetText((int) Texts.CoinText);
+        _levelText = GetText((int) Texts.InfoLevelText);
+        _hpText = GetText((int) Texts.SliderHpText);
         _coinText.text = 0.ToString();
-        
+
+        Managers.Game.Player.OnChangePlayerLevel += OnChangeLevel;
         Managers.Game.Player.OnChangeCoin += OnChangeCoin;
-        _background.gameObject.BindEvent(Managers.Game.Player.TabToAddCoin);
+        _background.gameObject.BindEvent((data) => Managers.Game.Player.TabToAddCoin());
         
         _craftButton = GetImage((int) Images.CraftButton);
-        _craftButton.gameObject.BindEvent(CraftItem);
 
-        _playerArea = Get<Transform>((int) Transforms.PlayerArea);
-        _enemyArea = Get<Transform>((int) Transforms.EnemyArea);
+        expSlider = Get<Slider>((int) Sliders.SliderExp);
+        hpSlider = Get<Slider>((int) Sliders.SliderHp);
 
-        Managers.Game.Player.SetView(Managers.UI.MakeSubItem<SubItem_Player>(_playerArea));
+        Managers.Game.Player.OnChangeExp += SetExpSlider;
+        Managers.Game.Player.OnChangeHealth += SetHealthSlider;
+        
+        _craftButton.gameObject.BindEvent((data) => CraftItem());
+
+        Managers.Game.SetPlayerArea(Get<Transform>((int) Transforms.PlayerArea));
+        Managers.Game.SetEnemyArea(Get<Transform>((int) Transforms.EnemyArea));
+
+        Managers.Game.Player.SetView(Managers.UI.MakeSubItem<SubItem_Player>(Managers.Game.PlayerSpawnArea));
         
         TabInit();
         RemoveAllTabContent();
@@ -128,6 +153,11 @@ public class UI_PlayPopup : UI_Popup
         StartCoroutine(CoAutoSave());
         
         return true;
+    }
+
+    private void OnChangeLevel(int cur)
+    {
+        _levelText.text = cur.ToString();
     }
 
     private void OnChangeCoin(int value)
@@ -170,11 +200,14 @@ public class UI_PlayPopup : UI_Popup
         {
             case Define.Tab.Boss:
                 _bosses.Clear();
-                foreach (MonsterData data in Managers.Data.Monster.Values.Where(data => data.MonsterType == Define.MonsterType.Boss))
+                foreach (EnemyData data in Managers.Data.Boss)
                 {
                     SubItem_Boss subItem = 
                         Managers.UI.MakeSubItem<SubItem_Boss>(root);
                     _bosses.Add(subItem);
+                    
+                    
+
                     subItem.SetInfo(data);
                 }
                 break;
@@ -184,16 +217,21 @@ public class UI_PlayPopup : UI_Popup
                 Managers.Game.Player.Inventory.OnChangeItem -= RefreshInventory;
                 Managers.Game.Player.Inventory.OnChangeItem += RefreshInventory;
                 
+                ItemData item = Managers.Data.Item.First().Value;
+                
                 for (int i = 0; i < Define.MaxInventorySlot; i++)
                 {
                     SubItem_Craft subItem = Managers.UI.MakeSubItem<SubItem_Craft>(root);
+                    subItem.SlotIndex = i;
                     
-                    ItemData item = Managers.Data.Item.First().Value;
                     _craft.Add(subItem);
                     
                     Managers.Game.Player.Inventory.InitAddList(item);
                 }
 
+                SubItem_Craft craft = Managers.UI.MakeSubItem<SubItem_Craft>(equipContent);
+                Managers.Game.Player.Inventory.OnChangeEquip += craft.SetInfo;
+                
                 break;
             case Define.Tab.Shop:
                 _shops.Clear();
@@ -218,8 +256,8 @@ public class UI_PlayPopup : UI_Popup
                 break;
         }
         
-        Managers.Game.Player.RefreshUIData();
-        Managers.Game.UpgradeShop.RefreshUIData();
+        Managers.UI.RefreshUI();
+        Managers.Game.Player.RefreshUIData(); ;
     }
 
     private void RefreshInventory(int index,ItemData item)
@@ -262,6 +300,7 @@ public class UI_PlayPopup : UI_Popup
                     break;
             }
 
+            equipContent = Get<Transform>((int) Transforms.Equip);
             tabs[tabType].ButtonImage.gameObject.BindEvent(delegate { SelectTab(tabType); });
         }
     }
@@ -283,10 +322,23 @@ public class UI_PlayPopup : UI_Popup
             Define.Tab.Upgrade => Managers.Data.GetText((int)Define.UITextID.Upgrade),
             Define.Tab.Craft => Managers.Data.GetText((int)Define.UITextID.Craft),
             Define.Tab.Shop => Managers.Data.GetText((int)Define.UITextID.Shop),
+            _ => throw new ArgumentOutOfRangeException(nameof(tab), tab, null)
         };
         tabs[tab].SetActive(true, _focus);
     }
 
+    private void SetExpSlider(int cur,int max)
+    {
+        expSlider.value = (float) cur / max;
+    }
+
+    private void SetHealthSlider(int cur,int max)
+    {
+        hpSlider.value = (float) cur / max;
+        _hpText.text = $"{cur.ToString()}/{max.ToString()}";
+        Debug.Log(_hpText.name);
+    }
+    
     IEnumerator CoAutoSave()
     {
         while (true)

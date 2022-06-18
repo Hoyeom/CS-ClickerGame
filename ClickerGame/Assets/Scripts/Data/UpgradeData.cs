@@ -10,7 +10,7 @@ namespace Data
         public int IconID;
         public int Price;
         public int IncreaseStat;
-
+        public int Stat;
         public int GetID() => ID;
     }
 }

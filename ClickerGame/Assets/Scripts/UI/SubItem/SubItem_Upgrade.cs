@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Content;
 using Data;
 using Manager;
 using TMPro;
@@ -22,6 +24,8 @@ public class SubItem_Upgrade : UI_Base
         UpgradeIcon,
         PriceButton,
     }
+
+    private UpgradeData _data;
 
     private Image upgradeIcon;
     private Image priceButton;
@@ -51,38 +55,52 @@ public class SubItem_Upgrade : UI_Base
 
     public void SetInfo(UpgradeData data)
     {
+        _data = data;
         priceText.text = data.Price.ToString();
         nextText.text = data.IncreaseStat.ToString();
         levelText.text = data.Level.ToString();
-        upgradeIcon.sprite = Managers.Data.LoadPathData<Sprite>(data.IconID);
-        
+        upgradeIcon.sprite = Managers.Data.PathIDToData<Sprite>(data.IconID);
+
+
         switch (data.UpgradeType)
         {
             case Define.UpgradeType.Health:
-                priceButton.gameObject.BindEvent(() => Managers.Game.UpgradeShop.Health.Upgrade());
-                Managers.Game.UpgradeShop.Health.OnChangePrice += SetPrice;
-                Managers.Game.Player.OnChangeHealth += SetCurrentStatus;
+                priceButton.gameObject.BindEvent((pointer) => Managers.Game.UpgradeShop.Health.Upgrade());
                 break;
             case Define.UpgradeType.Defence:
-                priceButton.gameObject.BindEvent(() => Managers.Game.UpgradeShop.DefPower.Upgrade());
-                Managers.Game.UpgradeShop.DefPower.OnChangePrice += SetPrice;
-                Managers.Game.Player.OnChangeDefPower += SetCurrentStatus;
+                priceButton.gameObject.BindEvent((pointer) => Managers.Game.UpgradeShop.DefPower.Upgrade());
                 break;
             case Define.UpgradeType.Attack:
-                priceButton.gameObject.BindEvent(() => Managers.Game.UpgradeShop.AtkPower.Upgrade());
-                Managers.Game.UpgradeShop.AtkPower.OnChangePrice += SetPrice;
-                Managers.Game.Player.OnChangeAtkPower += SetCurrentStatus;
+                priceButton.gameObject.BindEvent((pointer) => Managers.Game.UpgradeShop.AtkPower.Upgrade());
                 break;
         }
     }
 
-    public void SetPrice(int value)
+    public override void RefreshUI()
     {
-        priceText.text = value.ToString();
-    }
-    
-    public void SetCurrentStatus(int value)
-    {
-        currentText.text = value.ToString();
+        switch (_data.UpgradeType)
+        {
+            case Define.UpgradeType.Attack:
+                Status atk = Managers.Game.UpgradeShop.AtkPower;
+                levelText.text = atk.Level.ToString();
+                priceText.text =atk.Price.ToString();
+                nextText.text = atk.IncreaseStat.ToString();
+                currentText.text = Managers.Game.Player.AtkPower.ToString();
+                break;
+            case Define.UpgradeType.Defence:
+                Status def = Managers.Game.UpgradeShop.DefPower;
+                levelText.text = def.Level.ToString();
+                priceText.text = def.Price.ToString();
+                nextText.text = def.IncreaseStat.ToString();
+                currentText.text = Managers.Game.Player.DefPower.ToString();
+                break;
+            case Define.UpgradeType.Health:
+                Status health = Managers.Game.UpgradeShop.Health;
+                levelText.text = health.Level.ToString();
+                priceText.text = health.Price.ToString();
+                nextText.text = health.IncreaseStat.ToString();
+                currentText.text = Managers.Game.Player.MaxHealth.ToString();
+                break;
+        }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -12,15 +13,31 @@ public class SubItem_Player : SubItem_UnitBase
     {
         if (base.Initialize() == false)
             return false;
-        
-        
+
+        AttackSequence = DOTween.Sequence()
+            .Pause()
+            .Append(transform.DOLocalMove(Vector3.right * Screen.width / 2,Define.AttackSpeed))
+            .Insert(Define.AttackSpeed,transform.DOLocalMove(Vector3.zero, Define.AttackDelay))
+            .SetAutoKill(false);
         
         return true;
     }
 
-    public override void Attack()
+    public override void SetInfo()
     {
-        transform.DOLocalMove(Vector3.right * 200, Managers.Game.Player.AttackSpeed)
-            .OnComplete(() => transform.DOLocalMove(Vector3.zero, Managers.Game.Player.AttackDelay));
+        UnitImage.sprite = Managers.Game.Player.Sprite;
+        Managers.Game.Player.OnChangeHealth -= OnChangeHeath;
+        Managers.Game.Player.OnChangeHealth += OnChangeHeath;
+    }
+
+    public override void Attack(Action callback)
+    {
+        AttackSequence.Play()
+            .OnComplete(() =>
+            {
+                Managers.Game.Combat.Enemy.TakeDamage(Managers.Game.Player.AtkPower);
+                callback?.Invoke();
+            })
+            .Restart();
     }
 }
