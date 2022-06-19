@@ -59,7 +59,7 @@ namespace Manager
 
             AudioSource audioSource = _audioSources[(int) type];
             if (path.Contains("Sound/") == false)
-                path = $"Sound/path";
+                path = $"Sound/{path}";
 
             audioSource.volume = volume;
 

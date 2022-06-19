@@ -29,6 +29,8 @@ public class UI_TitlePopup : UI_Popup
     {
         if (base.Initialize() == false)
             return false;
+
+        Managers.Sound.Play(Define.Sound.Bgm, "TitleBgm");
         
         Bind<GameObject>(typeof(GameObjects));
         BindText(typeof(Texts));

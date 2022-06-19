@@ -36,6 +36,7 @@ public class SubItem_EnemyBase : SubItem_UnitBase
         AttackSequence.Play()
             .OnComplete(() =>
             {
+                Managers.Sound.Play(Define.Sound.Effect, "Punch",Random.Range(.95f,1.05f));
                 Managers.Game.Player.TakeDamage(Managers.Game.Combat.Enemy.AtkPower);
                 callback?.Invoke();
             })

@@ -22,3 +22,4 @@ MonoBehaviour:
   DefPower: 18
   Health: 500
   CraftLevel: 9
+  ChargeSpeed: 4.2

@@ -37,7 +37,7 @@ namespace Content
         public int Level => StatusData.Level;
         public int AddCoin => StatusData.AddCoin;
         public int TargetExp => StatusData.TargetExp;
-
+        public float ChargeSpeed => StatusData.ChargeSpeed;
         public override int AtkPower => StatusData.AtkPower + Managers.Game.UpgradeShop.AtkPower.Stat +
                                         (Inventory.Equip != null ? Inventory.Equip.AttackPower : 0);
         public override int DefPower => StatusData.DefPower + Managers.Game.UpgradeShop.DefPower.Stat;
@@ -88,6 +88,7 @@ namespace Content
         public void TabToAddCoin()
         {
             Coin += AddCoin;
+            Managers.Sound.Play(Define.Sound.Effect, "Coin");
         }
 
         public void AddExp(int exp)

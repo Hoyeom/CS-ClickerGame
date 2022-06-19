@@ -6,6 +6,7 @@ using Manager;
 using UI;
 using UI.SubItem;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class SubItem_Player : SubItem_UnitBase
 {
@@ -35,6 +36,7 @@ public class SubItem_Player : SubItem_UnitBase
         AttackSequence.Play()
             .OnComplete(() =>
             {
+                Managers.Sound.Play(Define.Sound.Effect, "Punch",Random.Range(.95f,1.05f));
                 Managers.Game.Combat.Enemy.TakeDamage(Managers.Game.Player.AtkPower);
                 callback?.Invoke();
             })

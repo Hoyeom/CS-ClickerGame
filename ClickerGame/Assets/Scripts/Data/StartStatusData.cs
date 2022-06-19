@@ -15,6 +15,7 @@ namespace Data
         public int DefPower;
         public int Health;
         public int CraftLevel;
+        public float ChargeSpeed;
 
         public int GetID() => ID;
     }

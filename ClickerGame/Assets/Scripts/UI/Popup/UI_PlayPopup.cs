@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Data;
+using DG.Tweening;
 using Manager;
 using TMPro;
 using UI;
@@ -29,7 +30,6 @@ public class UI_PlayPopup : UI_Popup
         CraftTabButton,
         ShopTabButton,
         CraftButton,
-        DebugCoinButton
     }
 
     enum Texts
@@ -55,6 +55,7 @@ public class UI_PlayPopup : UI_Popup
     {
         SliderExp,
         SliderHp,
+        ChargeSlider
     }
 
     private class Tab
@@ -83,7 +84,8 @@ public class UI_PlayPopup : UI_Popup
     
     public Slider expSlider;
     public Slider hpSlider;
-    
+    public Slider chargeSlider;
+
     private RectTransform _focus;
     private TextMeshProUGUI _tableText;
     private TextMeshProUGUI _coinText;
@@ -92,8 +94,10 @@ public class UI_PlayPopup : UI_Popup
 
     private Image _craftButton;
     private Image _background;
-    
-    
+
+    private bool availableCraft = false;
+    private Sequence chargeSequence;
+
     private Dictionary<Define.Tab, Tab> tabs = new Dictionary<Define.Tab, Tab>();
 
     private List<SubItem_Boss> _bosses = new List<SubItem_Boss>();
@@ -102,11 +106,13 @@ public class UI_PlayPopup : UI_Popup
     private List<SubItem_Upgrade> _upgrades = new List<SubItem_Upgrade>();
 
     private Transform equipContent;
-
+    
     public override bool Initialize()
     {
         if (base.Initialize() == false)
             return false;
+
+        Managers.Sound.Play(Define.Sound.Bgm, "InGameBgm");
         
         _bosses = new List<SubItem_Boss>();
         _craft = new List<SubItem_Craft>();
@@ -133,6 +139,15 @@ public class UI_PlayPopup : UI_Popup
 
         expSlider = Get<Slider>((int) Sliders.SliderExp);
         hpSlider = Get<Slider>((int) Sliders.SliderHp);
+        chargeSlider = Get<Slider>((int) Sliders.ChargeSlider);
+
+        chargeSlider.value = 0;
+        
+        chargeSequence = DOTween.Sequence()
+            .InsertCallback(0, () => chargeSlider.value = 0)
+            .Insert(0, chargeSlider.DOValue(1, Managers.Game.Player.ChargeSpeed)
+                .OnComplete(() => availableCraft = true))
+            .SetAutoKill(false);
 
         Managers.Game.Player.OnChangeExp += SetExpSlider;
         Managers.Game.Player.OnChangeHealth += SetHealthSlider;
@@ -154,19 +169,22 @@ public class UI_PlayPopup : UI_Popup
         
         return true;
     }
-
     private void OnChangeLevel(int cur)
     {
         _levelText.text = cur.ToString();
     }
-
     private void OnChangeCoin(int value)
     {
         _coinText.text = value.ToString();
     }
-    
     private void CraftItem()
     {
+        if(!availableCraft) return;
+
+        availableCraft = false;
+        
+        chargeSequence.Restart();
+        
         ItemData item = Managers.Data.
             Item.
             Values.
@@ -178,6 +196,7 @@ public class UI_PlayPopup : UI_Popup
             
             if(temp)
             {
+                Managers.Sound.Play(Define.Sound.Effect, "Craft");
                 Debug.Log("CraftComplete");
                 return;
             }
@@ -185,7 +204,6 @@ public class UI_PlayPopup : UI_Popup
 
         Debug.Log("CraftFailed");
     }
-
     private void AddTabContents()
     {
         MakeSubItem(Define.Tab.Boss);
@@ -234,14 +252,14 @@ public class UI_PlayPopup : UI_Popup
                 
                 break;
             case Define.Tab.Shop:
-                _shops.Clear();
-                foreach (ShopData data in Managers.Data.Shop.Values)
-                {
-                    SubItem_Shop subItem = 
-                        Managers.UI.MakeSubItem<SubItem_Shop>(root);
-                    _shops.Add(subItem);
-                    subItem.SetInfo(data);
-                }
+                // _shops.Clear();
+                // foreach (ShopData data in Managers.Data.Shop.Values)
+                // {
+                //     SubItem_Shop subItem = 
+                //         Managers.UI.MakeSubItem<SubItem_Shop>(root);
+                //     _shops.Add(subItem);
+                //     subItem.SetInfo(data);
+                // }
                 break;
             case Define.Tab.Upgrade:
                 _upgrades.Clear();
@@ -259,12 +277,10 @@ public class UI_PlayPopup : UI_Popup
         Managers.UI.RefreshUI();
         Managers.Game.Player.RefreshUIData(); ;
     }
-
     private void RefreshInventory(int index,ItemData item)
     {
         _craft[index].SetInfo(item);
     }
-    
     private void TabInit()
     {
         _focus = Get<GameObject>((int) GameObjects.TabFocus).transform as RectTransform;
@@ -326,17 +342,14 @@ public class UI_PlayPopup : UI_Popup
         };
         tabs[tab].SetActive(true, _focus);
     }
-
     private void SetExpSlider(int cur,int max)
     {
         expSlider.value = (float) cur / max;
     }
-
     private void SetHealthSlider(int cur,int max)
     {
         hpSlider.value = (float) cur / max;
         _hpText.text = $"{cur.ToString()}/{max.ToString()}";
-        Debug.Log(_hpText.name);
     }
     
     IEnumerator CoAutoSave()
