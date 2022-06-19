@@ -33,7 +33,7 @@ namespace UI
 
         protected void BindText(Type type) => Bind<TextMeshProUGUI>(type);
         protected void BindImage(Type type) => Bind<Image>(type);
-
+        protected void BindInputField(Type type) => Bind<TMP_InputField>(type);
 
         protected void Bind<T>(Type type) where T : Object
         {
@@ -53,6 +53,7 @@ namespace UI
         
         protected TextMeshProUGUI GetText(int index) => Get<TextMeshProUGUI>(index);
         protected Image GetImage(int index) => Get<Image>(index);
+        protected TMP_InputField GetInputField(int index) => Get<TMP_InputField>(index);
         
         protected T Get<T>(int index) where T : Object
         {

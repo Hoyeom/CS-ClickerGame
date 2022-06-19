@@ -37,7 +37,8 @@ public class UI_PlayPopup : UI_Popup
         TableText,
         CoinText,
         InfoLevelText,
-        SliderHpText
+        SliderHpText,
+        UserName
     }
 
     enum Transforms
@@ -91,6 +92,7 @@ public class UI_PlayPopup : UI_Popup
     private TextMeshProUGUI _coinText;
     private TextMeshProUGUI _levelText;
     private TextMeshProUGUI _hpText;
+    private TextMeshProUGUI _userNameText;
 
     private Image _craftButton;
     private Image _background;
@@ -129,8 +131,10 @@ public class UI_PlayPopup : UI_Popup
         _coinText = GetText((int) Texts.CoinText);
         _levelText = GetText((int) Texts.InfoLevelText);
         _hpText = GetText((int) Texts.SliderHpText);
+        _userNameText = GetText((int) Texts.UserName);
         _coinText.text = 0.ToString();
 
+        Managers.Game.Player.OnChangeName += OnChangeName;
         Managers.Game.Player.OnChangePlayerLevel += OnChangeLevel;
         Managers.Game.Player.OnChangeCoin += OnChangeCoin;
         _background.gameObject.BindEvent((data) => Managers.Game.Player.TabToAddCoin());
@@ -168,6 +172,11 @@ public class UI_PlayPopup : UI_Popup
         StartCoroutine(CoAutoSave());
         
         return true;
+    }
+
+    private void OnChangeName(string name)
+    {
+        _userNameText.text = name;
     }
     private void OnChangeLevel(int cur)
     {

@@ -38,11 +38,13 @@ namespace Manager
 
         public void SetPlayerArea(Transform point) => PlayerSpawnArea = point;
         public void SetEnemyArea(Transform point) => EnemySpawnArea = point;
+        public bool NewGame => File.Exists(_path) == false;
         
         public void Initialize()
         {
             if (!LoadGame())
             {
+                
                 StartStatusData statusData = GetStartStatus();
                 UpgradeData weaponData = Managers.Game.GetUpgradeData(Define.UpgradeType.Attack);
                 UpgradeData defenceData = Managers.Game.GetUpgradeData(Define.UpgradeType.Defence);

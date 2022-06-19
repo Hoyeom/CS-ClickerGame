@@ -11,6 +11,9 @@ namespace Content
         [SerializeField] private int _levelID = 0;
 
         [SerializeField] private int _exp;
+        [SerializeField] private string _name;
+        public string Name { get => _name; set { _name = value; OnChangeName?.Invoke(_name); } }
+        public event Action<string> OnChangeName;
         public event Action<int,int> OnChangeExp;
         public int Exp
         {
@@ -75,6 +78,7 @@ namespace Content
             OnChangeCoin?.Invoke(Coin);
             OnChangePlayerLevel?.Invoke(Level);
             OnChangeExp?.Invoke(_exp, TargetExp);
+            OnChangeName?.Invoke(Name);
             Inventory.RefreshUIData();
         }
         
