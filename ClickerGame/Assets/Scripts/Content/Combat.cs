@@ -14,7 +14,7 @@ namespace Content
 
         public Enemy Enemy { get; set; } = new Enemy();
         public Player Player => Managers.Game.Player;
-        private Turn _turn;
+        private Turn _turn = Turn.PlayerTurn;
 
         public void Initialize()
         {

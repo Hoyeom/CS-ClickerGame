@@ -83,9 +83,9 @@ public class UI_PlayPopup : UI_Popup
         }
     }
     
-    public Slider expSlider;
-    public Slider hpSlider;
-    public Slider chargeSlider;
+    private Slider expSlider;
+    private Slider hpSlider;
+    private Slider chargeSlider;
 
     private RectTransform _focus;
     private TextMeshProUGUI _tableText;
@@ -108,6 +108,10 @@ public class UI_PlayPopup : UI_Popup
     private List<SubItem_Upgrade> _upgrades = new List<SubItem_Upgrade>();
 
     private Transform equipContent;
+    private Transform enemyContent;
+    private Transform upgradeContent;
+    private Transform craftContent;
+    private Transform shopContent;
     
     public override bool Initialize()
     {
@@ -166,14 +170,14 @@ public class UI_PlayPopup : UI_Popup
         TabInit();
         RemoveAllTabContent();
         AddTabContents();
+        
         SelectTab();
-
+        
         StopAllCoroutines();
         StartCoroutine(CoAutoSave());
-        
+
         return true;
     }
-
     private void OnChangeName(string name)
     {
         _userNameText.text = name;
@@ -233,8 +237,6 @@ public class UI_PlayPopup : UI_Popup
                         Managers.UI.MakeSubItem<SubItem_Boss>(root);
                     _bosses.Add(subItem);
                     
-                    
-
                     subItem.SetInfo(data);
                 }
                 break;
@@ -296,38 +298,43 @@ public class UI_PlayPopup : UI_Popup
 
         _tableText = GetText((int) Texts.TableText);
 
+        enemyContent = Get<Transform>((int) Transforms.EnemyContent);
+        upgradeContent = Get<Transform>((int) Transforms.UpgradeContent);
+        craftContent =  Get<Transform>((int) Transforms.CraftContent);
+        shopContent = Get<Transform>((int) Transforms.ShopContent);
+
         foreach (Define.Tab tabType in Enum.GetValues(typeof(Define.Tab)))
         {
             tabs.Add(tabType, new Tab());
-
+            
             Tab tab = tabs[tabType];
             switch (tabType)
             {
                 case Define.Tab.Boss:
                     tab.Scroll = Get<GameObject>((int) GameObjects.EnemyList);
                     tab.ButtonImage = GetImage((int) Images.EnemyTabButton);
-                    tab.Content = Get<Transform>((int) Transforms.EnemyContent);
+                    tab.Content = enemyContent;
                     break;
                 case Define.Tab.Upgrade:
                     tab.Scroll = Get<GameObject>((int) GameObjects.UpgradeList);
                     tab.ButtonImage = GetImage((int) Images.UpgradeTabButton);
-                    tab.Content = Get<Transform>((int) Transforms.UpgradeContent);
+                    tab.Content = upgradeContent;
                     break;
                 case Define.Tab.Craft:
                     tab.Scroll = Get<GameObject>((int) GameObjects.CraftList);
                     tab.ButtonImage = GetImage((int) Images.CraftTabButton);
-                    tab.Content = Get<Transform>((int) Transforms.CraftContent);
+                    tab.Content = craftContent;
                     break;
                 case Define.Tab.Shop:
                     tab.Scroll = Get<GameObject>((int) GameObjects.ShopList);
                     tab.ButtonImage = GetImage((int) Images.ShopTabButton);
-                    tab.Content = Get<Transform>((int) Transforms.ShopContent);
+                    tab.Content = shopContent;
                     break;
             }
-
-            equipContent = Get<Transform>((int) Transforms.Equip);
             tabs[tabType].ButtonImage.gameObject.BindEvent(delegate { SelectTab(tabType); });
         }
+
+        equipContent = Get<Transform>((int) Transforms.Equip);
     }
     private void RemoveAllTabContent()
     {
@@ -351,6 +358,7 @@ public class UI_PlayPopup : UI_Popup
         };
         tabs[tab].SetActive(true, _focus);
     }
+    
     private void SetExpSlider(int cur,int max)
     {
         expSlider.value = (float) cur / max;
@@ -360,7 +368,7 @@ public class UI_PlayPopup : UI_Popup
         hpSlider.value = (float) cur / max;
         _hpText.text = $"{cur.ToString()}/{max.ToString()}";
     }
-    
+
     IEnumerator CoAutoSave()
     {
         while (true)

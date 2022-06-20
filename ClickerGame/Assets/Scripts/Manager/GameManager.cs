@@ -74,6 +74,7 @@ namespace Manager
             
             Player.OnChangePlayerLevel += (data) => Managers.UI.RefreshUI();
             Managers.Game.Combat.Initialize();
+            Application.targetFrameRate = 30;
         }
         
         #region Save & Load	

@@ -32,10 +32,10 @@ public class Define
      
      public enum Tab
      {
-         Boss,
-         Upgrade,
-         Craft,
-         Shop,
+         Boss = 0,
+         Upgrade = 1,
+         Craft = 2,
+         Shop = 3,
      }
      
      public enum AssetType
