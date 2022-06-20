@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Manager;
@@ -8,20 +9,23 @@ using UnityEngine.UI;
 
 public class UI_TitlePopup : UI_Popup
 {
-    public enum GameObjects
+    enum GameObjects
     {
         StartButton,
+        SettingButton
     }
 
-    public enum Texts
+    enum Texts
     {
         TitleName,
         TouchToPlay,
         StartButtonText
     }
     
+    
 
     private GameObject startButton;
+    private GameObject settingButton;
     private TextMeshProUGUI touchToPlay;
 
 
@@ -38,6 +42,9 @@ public class UI_TitlePopup : UI_Popup
         startButton = Get<GameObject>((int) GameObjects.StartButton)
             .BindEvent((pointer)=>GameStart(), Define.UIEvent.Up)
             .SetActiveChain(false);
+
+        settingButton = Get<GameObject>((int) GameObjects.SettingButton)
+            .BindEvent((pointer) => Managers.UI.ShowPopupUI<UI_LanguagePopup>());
         
         GetText((int)Texts.StartButtonText).text = 
             Managers.Data.GetText((int) Define.UITextID.StartGame);
@@ -57,6 +64,12 @@ public class UI_TitlePopup : UI_Popup
 
     private void GameStart()
     {
+        if (String.IsNullOrEmpty(Managers.Game.Player.Name))
+        {
+            Managers.UI.ShowPopupUI<UI_NameChangePopup>();
+            return;
+        }
+        
         ClosePopupUI();
         Managers.UI.ShowPopupUI<UI_IntroPopup>();
     }

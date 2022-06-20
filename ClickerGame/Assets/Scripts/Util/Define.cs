@@ -72,8 +72,8 @@ public class Define
      
      public enum Language
      {
-         Eng,
-         Kor
+         Eng = 0,
+         Kor = 1
      }
 
      public enum UpgradeType
@@ -92,7 +92,12 @@ public class Define
          Craft = 810005,
          Shop = 810006,
          AdRemove = 810007,
-         AdRemovePrice = 810008
+         Language = 810008,
+         YouName = 810009,
+         Select = 810010,
+         UserName = 810011,
+         Fight = 810012,
+
      }
      
      public enum ItemType

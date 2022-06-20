@@ -41,7 +41,8 @@ public class SubItem_Boss : UI_Base
         _hpText = GetText((int) Texts.HpText);
         _atkText = GetText((int) Texts.AtkText);
         _defText = GetText((int) Texts.DefText);
-
+        GetText((int) Texts.FightText).text = Managers.Data.GetText((int) Define.UITextID.Fight);
+        
         mosterIcon = GetImage((int) Images.MonsterIcon);
         fightButton = GetImage((int) Images.FightButton);
         

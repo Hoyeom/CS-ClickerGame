@@ -14,6 +14,7 @@ namespace Manager
         public Player Player;
         public Inventory Inventory;
         public UpgradeShop UpgradeShop;
+        public Define.Language Language;
     }
     
     
@@ -97,6 +98,7 @@ namespace Manager
             {
                 Managers.Game.SaveData = data;
                 data.Inventory.LoadData();
+                Managers.Data.Language = data.Language;
             }
             
             Debug.Log(data);

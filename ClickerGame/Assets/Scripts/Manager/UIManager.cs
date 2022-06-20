@@ -33,6 +33,9 @@ namespace Manager
         
         public void Initialize()
         {
+            _popupStack.Clear();
+            _uiBases.Clear();
+            
             InitEventSystem();
         }
 
@@ -61,7 +64,6 @@ namespace Manager
             GameObject prefab = Managers.Resource.Load<GameObject>($"Prefabs/UI/SubItem/{name}");
 
             GameObject go = Managers.Resource.Instantiate(prefab);
-            _uiBases.Add(go.GetComponent<UI_Base>());
             
             if (parent != null)
                 go.transform.SetParent(parent);
@@ -101,7 +103,6 @@ namespace Manager
             GameObject go = Managers.Resource.Instantiate($"UI/Popup/{name}");
             T popup = Utils.GetOrAddComponent<T>(go);
             _popupStack.Push(popup);
-            _uiBases.Add(popup);
 
             if (parent != null)
                 go.transform.SetParent(parent);
@@ -140,6 +141,8 @@ namespace Manager
 
         public void ClosePopupUI(UI_Popup popup)
         {
+            _uiBases.Remove(popup);
+            
             if(_popupStack.Count == 0)
                 return;
 
@@ -156,9 +159,8 @@ namespace Manager
         {
             if (_popupStack.Count == 0)
                 return;
-
+            
             UI_Popup popup = _popupStack.Pop();
-            _uiBases.Remove(popup);
             Managers.Resource.Destroy(popup.gameObject);
             popup = null;
             _order--;

@@ -17,8 +17,8 @@ namespace Manager
         public Dictionary<int, StartStatusData> StartStatus = new Dictionary<int, StartStatusData>();
         public Dictionary<int, StringData> String = new Dictionary<int, StringData>();
         public Dictionary<int, PathData> Path = new Dictionary<int, PathData>();
-
-        public Define.Language Language = Define.Language.Eng;
+        
+        public Define.Language Language { get =>  Managers.Game.SaveData.Language; set => Managers.Game.SaveData.Language = value; }
         
         public void Initialize()
         {
