@@ -80,6 +80,7 @@ namespace Manager
             Canvas canvas = Utils.GetOrAddComponent<Canvas>(go);
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
             canvas.overrideSorting = true;
+            canvas.worldCamera = Camera.main;
 
             if (sort)
             {
