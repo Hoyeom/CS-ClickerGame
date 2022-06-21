@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UI;
@@ -11,28 +12,63 @@ namespace Manager
 {
     public class UIManager
     {
-        private int _order = -20;
+        private const int InitOrder = 20;
+        private int _order = InitOrder;
         private Stack<UI_Popup> _popupStack = new Stack<UI_Popup>();
         private List<UI_Base> _uiBases = new List<UI_Base>();
 
         public UI_Scene SceneUI { get; private set; }
 
         private static readonly string Name = "@UI_Root";
+
+
+        private Transform _highOrderCanvas = null;
+        public Transform HighOrderCanvas
+        {
+            get
+            {
+                if (_highOrderCanvas == null)
+                {
+                    GameObject go =  new GameObject();
+                    go.name = "HighOrderCanvas";
+                    go.transform.SetParent(Root.transform);
+                    
+                    Canvas canvas = Utils.GetOrAddComponent<Canvas>(go);
+                    
+                    
+                    canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+                    canvas.overrideSorting = true;
+                    canvas.sortingOrder = 100;
+
+                    _highOrderCanvas = go.transform;
+                }
+
+                return _highOrderCanvas;
+            }
+        }
         
+        private GameObject _root;
         public GameObject Root
         {
             get
             {
-                GameObject root = GameObject.Find(Name);
-                if (root == null)
-                    root = new GameObject {name = Name};
+                if (_root != null) return _root;
                 
-                return root;
+                _root = GameObject.Find(Name);
+                
+                if(_root == null)
+                    _root = new GameObject {name = Name};
+
+                return _root;
             }
         }
         
+        
+        
         public void Initialize()
         {
+            _order = InitOrder;
+            
             _popupStack.Clear();
             _uiBases.Clear();
             
@@ -106,8 +142,8 @@ namespace Manager
 
             if (parent != null)
                 go.transform.SetParent(parent);
-            else if (SceneUI != null)
-                go.transform.SetParent(SceneUI.transform);
+            // else if (SceneUI != null)
+            //     go.transform.SetParent(SceneUI.transform);
             else
                 go.transform.SetParent(Root.transform);
 

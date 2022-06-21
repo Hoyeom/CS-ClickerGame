@@ -33,7 +33,8 @@ namespace Manager
         public Player Player { get => SaveData.Player; set => SaveData.Player = value; }
         public Combat Combat { get; set; } = new Combat();
         public UpgradeShop UpgradeShop { get => SaveData.UpgradeShop; set=>SaveData.UpgradeShop = value; }
-
+        public bool TryExitGame { get; set; } = false;
+        
         public Transform PlayerSpawnArea { get; private set; }
         public Transform EnemySpawnArea { get; private set; }
 
@@ -43,6 +44,8 @@ namespace Manager
         
         public void Initialize()
         {
+            TryExitGame = false;
+            
             if (!LoadGame())
             {
                 

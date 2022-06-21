@@ -35,6 +35,8 @@ public class SubItem_Craft : UI_Base
     
     private TextMeshProUGUI levelText;
 
+    private ScrollRect _scrollRect;
+
     public override bool Initialize()
     {
         if (base.Initialize() == false)
@@ -63,9 +65,17 @@ public class SubItem_Craft : UI_Base
         return true;
     }
 
+    
+    public void SetScrollRect(ScrollRect scrollRect)
+    {
+        _scrollRect = scrollRect;
+    }
+    
     private void DownIcon(PointerEventData pointer)
     {
-        itemIcon.transform.SetParent(Managers.UI.Root.transform.GetChild(0));
+        _scrollRect.enabled = false;
+        
+        itemIcon.transform.SetParent(Managers.UI.HighOrderCanvas);
     }
     
     private void DragIcon(PointerEventData pointer)
@@ -75,6 +85,8 @@ public class SubItem_Craft : UI_Base
 
     private void UpIcon(PointerEventData pointer)
     {
+        _scrollRect.enabled = true;
+        
         itemIcon.transform.SetParent(transform);
         itemIcon.transform.SetAsFirstSibling();
         itemIcon.transform.localPosition = Vector3.zero;

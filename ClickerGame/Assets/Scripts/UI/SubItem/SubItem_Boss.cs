@@ -51,7 +51,7 @@ public class SubItem_Boss : UI_Base
         return true;
     }
 
-    public void SetInfo(EnemyData data)
+    public SubItem_Boss SetInfo(EnemyData data)
     {
         _enemyData = data;
         _hpText.text = data.Health.ToString();
@@ -60,6 +60,8 @@ public class SubItem_Boss : UI_Base
         
         mosterIcon.sprite = Managers.Data.PathIDToData<Sprite>(data.IconID);
         fightButton.gameObject.BindEvent((pointer) => Managers.Game.Combat.SpawnEnemy(data));
+        
+        return this;
     }
 
 

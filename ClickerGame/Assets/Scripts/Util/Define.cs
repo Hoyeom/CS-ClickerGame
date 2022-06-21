@@ -97,6 +97,9 @@ public class Define
          Select = 810010,
          UserName = 810011,
          Fight = 810012,
+         ExitGame = 810013, 
+         Really = 810014,
+         Exit = 810015,
 
      }
      

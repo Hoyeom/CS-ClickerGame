@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Manager;
 using TMPro;
 using UI.Popup;
+using UI.Scene;
 using UnityEngine;
 
 public class UI_IntroPopup : UI_Popup
@@ -31,6 +32,6 @@ public class UI_IntroPopup : UI_Popup
     private void SkipIntro()
     {
         ClosePopupUI();
-        Managers.UI.ShowPopupUI<UI_PlayPopup>();
+        Managers.UI.ShowSceneUI<UI_PlayScene>();
     }
 }
