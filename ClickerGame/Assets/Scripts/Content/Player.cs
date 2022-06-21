@@ -108,6 +108,7 @@ namespace Content
             if (Managers.Data.StartStatus.ContainsKey(_levelID + 1))
             {
                 LevelID += 1;
+                Inventory.UpgradeItems(Level);
                 Inventory.RefreshUIData();
             }
             else

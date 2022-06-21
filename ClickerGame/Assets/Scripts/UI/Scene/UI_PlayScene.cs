@@ -14,18 +14,31 @@ namespace UI.Scene
             PlayerArea,
             EnemyArea,
         }
+
+        enum GameObjects
+        {
+            Background,
+        }
+
+        private float _saveInterval = 3.0f;
+        private WaitForSeconds saveWait;
         
+
         public override bool Initialize()
         {
             if (base.Initialize() == false)
                 return false;
+
+            saveWait = new WaitForSeconds(_saveInterval);
             
             Managers.Sound.Play(Define.Sound.Bgm, "InGameBgm");
             
+            Bind<GameObject>(typeof(GameObjects));
             Bind<Transform>(typeof(Transforms));
             
             Managers.Game.SetPlayerArea(Get<Transform>((int) Transforms.PlayerArea));
             Managers.Game.SetEnemyArea(Get<Transform>((int) Transforms.EnemyArea));
+            Get<GameObject>((int) GameObjects.Background).BindEvent(data => Managers.Game.Player.TabToAddCoin());
             
             Managers.Game.Player.SetView(Managers.UI.MakeSubItem<SubItem_Player>(Managers.Game.PlayerSpawnArea));
             
@@ -58,7 +71,7 @@ namespace UI.Scene
             while (true)
             {
                 Managers.Game.SaveGame();
-                yield return new WaitForSeconds(3);
+                yield return saveWait;
             }
         }
     }

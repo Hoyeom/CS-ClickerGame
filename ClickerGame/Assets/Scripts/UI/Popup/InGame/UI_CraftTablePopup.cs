@@ -89,6 +89,9 @@ namespace UI.Popup.InGame
             }
             
             SubItem_Craft craft = Managers.UI.MakeSubItem<SubItem_Craft>(_equipContent);
+            craft.SetScrollRect(_scrollRect);
+            craft.Initialize();
+            
             Managers.Game.Player.Inventory.OnChangeEquip += craft.SetInfo;
         }
         private void CraftItem()

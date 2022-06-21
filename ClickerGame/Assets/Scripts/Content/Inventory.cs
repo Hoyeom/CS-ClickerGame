@@ -113,7 +113,7 @@ namespace Content
             SaveData[index] = item.GetID();
             OnChangeItem?.Invoke((int) index, item);
         }
-        
+
         public void RemoveItem(int slotIndex)
         { 
             ChangeItem(slotIndex, Managers.Data.Item[UnLockID]);
@@ -145,7 +145,17 @@ namespace Content
             
             return false;
         }
-        
+
+        private bool EquipUpgrade()
+        {
+            if (Managers.Data.Item.TryGetValue(Equip.ID + 1, out ItemData item))
+            {
+                Equip = item;
+                return true;
+            }
+            return false;
+        }
+
         private int? FindIndexEmptySlot()
         {
             int? value = null;
@@ -169,6 +179,20 @@ namespace Content
             if(Equip != null)
                 OnChangeEquip?.Invoke(Equip);
             InitLock();
+        }
+
+        public void UpgradeItems(int level)
+        {
+            Debug.Log($"Player{level} Item {Equip.Level}");
+            
+            if (Equip.Level <= level)
+                EquipUpgrade();
+            
+            for (int i = 0; i < Items.Count; i++)
+            {
+                if (Items[i].Level <= level)
+                    Upgrade(i);
+            }
         }
     }
 }

@@ -96,12 +96,9 @@ public class SubItem_Craft : UI_Base
             if(craft.Item.Lock) return;
             
             if (this == craft)
-            {
                 Managers.Game.Player.Inventory.EquipWeapon(SlotIndex);
-            }
             else
                 Managers.Game.Player.Inventory.Craft(SlotIndex, craft.SlotIndex);
-            // Debug.Log(craft.SlotIndex);
         }
     }
     
