@@ -13,7 +13,7 @@ namespace Scene
         {
             _scene = Define.Scene.Game;
 
-            Managers.UI.ShowPopupUI<UI_TitlePopup>();
+            Managers.UI.ShowPopupUI<UI_TitlePopup>().Initialize();
         }
     }
 }

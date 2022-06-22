@@ -26,7 +26,8 @@ public class UI_TitlePopup : UI_Popup
 
     private GameObject startButton;
     private GameObject settingButton;
-    private TextMeshProUGUI touchToPlay;
+    private TextMeshProUGUI touchToPlayText;
+    private TextMeshProUGUI startButtonText;
 
 
     public override bool Initialize()
@@ -45,20 +46,22 @@ public class UI_TitlePopup : UI_Popup
 
         settingButton = Get<GameObject>((int) GameObjects.SettingButton)
             .BindEvent((pointer) => Managers.UI.ShowPopupUI<UI_LanguagePopup>());
+
+        startButtonText = GetText((int) Texts.StartButtonText);
+
+        startButtonText.text = Managers.Data.GetText((int) Define.UITextID.StartGame);
+        touchToPlayText = GetText((int) Texts.TouchToPlay);
+        touchToPlayText.text = Managers.Data.GetText((int) Define.UITextID.TouchToPlay);
+        touchToPlayText.gameObject.BindEvent((pointer) => PopButtons());
         
-        GetText((int)Texts.StartButtonText).text = 
-            Managers.Data.GetText((int) Define.UITextID.StartGame);
-
-        touchToPlay = GetText((int) Texts.TouchToPlay);
-        touchToPlay.text = Managers.Data.GetText((int) Define.UITextID.TouchToPlay);
-        touchToPlay.gameObject.BindEvent((pointer) => PopButtons());
-
+        RefreshUI();
+        
         return true;
     }
 
     void PopButtons()
     {
-        touchToPlay.gameObject.SetActive(false);
+        touchToPlayText.gameObject.SetActive(false);
         startButton.SetActive(true);
     }
 
@@ -72,5 +75,13 @@ public class UI_TitlePopup : UI_Popup
         
         ClosePopupUI();
         Managers.UI.ShowPopupUI<UI_IntroPopup>();
+    }
+
+    public override void RefreshUI()
+    {
+        startButtonText.text = Managers.Data.GetText((int) Define.UITextID.StartGame);
+        touchToPlayText = GetText((int) Texts.TouchToPlay);
+        touchToPlayText.text = Managers.Data.GetText((int) Define.UITextID.TouchToPlay);
+        touchToPlayText.gameObject.BindEvent((pointer) => PopButtons());
     }
 }

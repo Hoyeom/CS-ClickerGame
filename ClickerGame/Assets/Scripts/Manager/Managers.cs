@@ -48,11 +48,11 @@ namespace Manager
         
         private static void ManagersInitialize()
         {
+            s_ui.Initialize();
             s_data.Initialize();
             s_game.Initialize();
             s_scene.Initialize();
             s_sound.Initialize();
-            s_ui.Initialize();
         }
 
         public void ManagersClear()

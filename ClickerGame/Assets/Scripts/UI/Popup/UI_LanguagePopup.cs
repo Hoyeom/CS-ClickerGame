@@ -53,6 +53,9 @@ public class UI_LanguagePopup : UI_Popup
         titleText.text = Managers.Data.GetText((int) Define.UITextID.Language);
         
         titleText = GetText((int) Texts.TitleText);
+        
+        SetFocus(Managers.Data.Language);
+        
         RefreshUI();
         
         return true;
@@ -60,18 +63,6 @@ public class UI_LanguagePopup : UI_Popup
 
     public override void RefreshUI()
     {
-        InitFocus();
-    }
-
-    private void InitFocus()
-    {
-        SetFocus(Managers.Data.Language);
-    }
-
-    private void SetFocus(Define.Language language)
-    {
-        Managers.Data.Language = language;
-        
         switch (Managers.Data.Language)
         {
             case Define.Language.Eng:
@@ -84,5 +75,10 @@ public class UI_LanguagePopup : UI_Popup
         
         titleText.text = Managers.Data.GetText((int) Define.UITextID.Language);
         focus.transform.localPosition = Vector3.zero;
+    }
+
+    private void SetFocus(Define.Language language)
+    {
+        Managers.Data.Language = language;
     }
 }

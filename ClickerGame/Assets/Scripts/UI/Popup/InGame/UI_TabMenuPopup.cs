@@ -87,13 +87,15 @@ namespace UI.Popup.InGame
         private void SelectTab(Define.Tab tab)
         {
             Tab = tab;
+            
+            foreach (UI_TableBase table in _tableBases.Values) 
+                table.gameObject.SetActive(false);
+            
+            _tableBases[Tab].gameObject.SetActive(true);
         }
 
         public override void RefreshUI()
         {
-            foreach (UI_TableBase table in _tableBases.Values) 
-                table.gameObject.SetActive(false);
-            
             _enemyTabButton.image.color = Define.DefaultTabColor;
             _upgradeTabButton.image.color = Define.DefaultTabColor;
             _craftTabButton.image.color = Define.DefaultTabColor;
@@ -125,56 +127,8 @@ namespace UI.Popup.InGame
                     break;
             }
             
-            _tableBases[Tab].gameObject.SetActive(true);
-            
             _focus.SetParent(parent);
             _focus.anchoredPosition = Vector2.zero;
         }
-
-
-        /*private void TabInit()
-        {
-            _focus = Get<GameObject>((int) GameObjects.TabFocus).transform as RectTransform;
-
-            _tableText = GetText((int) Texts.TableText);
-
-            enemyContent = Get<Transform>((int) Transforms.EnemyContent);
-            upgradeContent = Get<Transform>((int) Transforms.UpgradeContent);
-            craftContent =  Get<Transform>((int) Transforms.CraftContent);
-            shopContent = Get<Transform>((int) Transforms.ShopContent);
-
-            foreach (Define.Tab tabType in Enum.GetValues(typeof(Define.Tab)))
-            {
-                tabs.Add(tabType, new Tab());
-            
-                Tab tab = tabs[tabType];
-                switch (tabType)
-                {
-                    case Define.Tab.Boss:
-                        tab.Scroll = Get<GameObject>((int) GameObjects.EnemyList);
-                        tab.ButtonImage = GetImage((int) Images.EnemyTabButton);
-                        tab.Content = enemyContent;
-                        break;
-                    case Define.Tab.Upgrade:
-                        tab.Scroll = Get<GameObject>((int) GameObjects.UpgradeList);
-                        tab.ButtonImage = GetImage((int) Images.UpgradeTabButton);
-                        tab.Content = upgradeContent;
-                        break;
-                    case Define.Tab.Craft:
-                        tab.Scroll = Get<GameObject>((int) GameObjects.CraftList);
-                        tab.ButtonImage = GetImage((int) Images.CraftTabButton);
-                        tab.Content = craftContent;
-                        break;
-                    case Define.Tab.Shop:
-                        tab.Scroll = Get<GameObject>((int) GameObjects.ShopList);
-                        tab.ButtonImage = GetImage((int) Images.ShopTabButton);
-                        tab.Content = shopContent;
-                        break;
-                }
-                tabs[tabType].ButtonImage.gameObject.BindEvent(delegate { SelectTab(tabType); });
-            }
-
-            equipContent = Get<Transform>((int) Transforms.Equip);
-        }*/
     }
 }

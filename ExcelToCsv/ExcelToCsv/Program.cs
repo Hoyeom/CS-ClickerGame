@@ -7,22 +7,23 @@ namespace ExcelToCsv
 {
     internal class Program
     {
-        private static string tablePath = null;
-        private static string csvPath = null;
+        private static string _tablePath = null;
+        private static string _csvPath = null;
+        private const int CsvUtf8Format = 62;
         
         public static void Main(string[] args)
         {
             InitPath();
 
-            if(!Directory.Exists(tablePath))
-                Console.WriteLine($"Missing Directory: {tablePath}");
+            if(!Directory.Exists(_tablePath))
+                Console.WriteLine($"Missing Directory: {_tablePath}");
 
-            CreatePath(csvPath);
+            CreatePath(_csvPath);
 
             OpenExcel(out Excel.Workbook xlWorkBook);
             
             foreach (Excel.Worksheet sheet in xlWorkBook.Worksheets)
-                SaveSheet(sheet, csvPath);
+                SaveSheet(sheet, _csvPath);
             
             xlWorkBook.Close(false);
         }
@@ -32,15 +33,15 @@ namespace ExcelToCsv
         {
             Directory.SetCurrentDirectory($"{Directory.GetCurrentDirectory()}/Assets");
             
-            tablePath = $"{Directory.GetCurrentDirectory()}/Editor/Data/Excel/";
-            csvPath = $"{Directory.GetCurrentDirectory()}/Editor/Data/Csv/";
+            _tablePath = $"{Directory.GetCurrentDirectory()}/Editor/Data/Excel/";
+            _csvPath = $"{Directory.GetCurrentDirectory()}/Editor/Data/Csv/";
         }
 
         private static void OpenExcel(out Excel.Workbook xlWorkBook)
         {
             Excel.Application xlApp = new Excel.ApplicationClass();
             
-            xlWorkBook = xlApp.Workbooks.Open($"{tablePath}ExcelData.xlsx");
+            xlWorkBook = xlApp.Workbooks.Open($"{_tablePath}ExcelData.xlsx");
 
             xlApp.Visible = true;
             xlApp.DisplayAlerts = false;
@@ -54,7 +55,7 @@ namespace ExcelToCsv
 
             sheet.Select();
 
-            sheet.SaveAs(sheetPath, 62);
+            sheet.SaveAs(sheetPath, CsvUtf8Format); // 62 = CSV UTF-8
         }
 
         private static void CreatePath(string path)

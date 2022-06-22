@@ -5,7 +5,6 @@ using System.Reflection;
 using Data;
 using UnityEditor;
 using UnityEngine;
-using Debug = UnityEngine.Debug;
 
 public class DataTransformer : EditorWindow
 {
@@ -17,7 +16,7 @@ public class DataTransformer : EditorWindow
 
     private static readonly string Format = ".csv";
 
-    [MenuItem("Parser/ExcelToCsv")]
+    [MenuItem("Parser/Excel To Csv")]
     private static void ExcelToCsv()
     {
         Process p = new Process();
@@ -27,7 +26,7 @@ public class DataTransformer : EditorWindow
         p.Start();
     }
     
-    [MenuItem("Parser/LoadAllData")]
+    [MenuItem("Parser/Load All Data")]
     private static void LoadAllData()
     {
         CreatePath();
@@ -47,7 +46,6 @@ public class DataTransformer : EditorWindow
         
         AssetDatabase.StopAssetEditing();
     }
-
     private static void LoadData<T>(Define.Table table = Define.Table.None, int fieldLine = 2)
         where T : ScriptableObject, ITableSetter
     {
@@ -73,7 +71,6 @@ public class DataTransformer : EditorWindow
             AssetDatabase.CreateAsset(sO, $"{AssetPath}{tableName}/{sO.GetID().ToString()}.asset");
         }
     }
-
     private static void CreatePath()
     {
         if (!Directory.Exists(TablePath))
@@ -82,7 +79,6 @@ public class DataTransformer : EditorWindow
         if (!Directory.Exists(SavePath))
             Directory.CreateDirectory(SavePath);
     }
-
     private static void SetData(UnityEngine.Object obj, string[] data, string[] fieldNames)
     {
         for (int i = 0; i < fieldNames.Length; i++)

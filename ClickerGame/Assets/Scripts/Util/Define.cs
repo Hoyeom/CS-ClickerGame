@@ -38,10 +38,7 @@ public class Define
          Shop = 3,
      }
      
-     public enum AssetType
-     {
-         Sprite
-     }
+ 
      
      public enum Cost
      {

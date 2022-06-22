@@ -34,7 +34,7 @@ RectTransform:
   m_Children:
   - {fileID: 3312534820548304982}
   m_Father: {fileID: 3312534819672430581}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -248,8 +248,8 @@ RectTransform:
   m_Children:
   - {fileID: 3312534819557975948}
   - {fileID: 3312534820512127219}
-  - {fileID: 3312534819736653122}
   - {fileID: 3312534819304726484}
+  - {fileID: 3312534819736653122}
   - {fileID: 8265183106802891548}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -348,7 +348,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3312534819672430581}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -471,7 +471,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0

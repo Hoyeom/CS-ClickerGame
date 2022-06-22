@@ -18,8 +18,8 @@ namespace Manager
         public Dictionary<int, StringData> String = new Dictionary<int, StringData>();
         public Dictionary<int, PathData> Path = new Dictionary<int, PathData>();
         
-        public Define.Language Language { get =>  Managers.Game.SaveData.Language; set => Managers.Game.SaveData.Language = value; }
-        
+        public Define.Language Language { get =>  Managers.Game.SaveData.Language; set { Managers.Game.SaveData.Language = value; Managers.UI.RefreshUI(); } }
+
         public void Initialize()
         {
             Monster = LoadData<int,EnemyData>();
@@ -54,9 +54,7 @@ namespace Manager
                 if (string.IsNullOrEmpty(text))
                     text = data.Eng;
             }
-            
 
-            
             return text;
         }
 
