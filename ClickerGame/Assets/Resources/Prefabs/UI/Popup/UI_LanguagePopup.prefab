@@ -498,7 +498,7 @@ GameObject:
   - component: {fileID: 351716910825757631}
   - component: {fileID: 351716910825757568}
   - component: {fileID: 351716910825757569}
-  - component: {fileID: 351716910825757570}
+  - component: {fileID: 6843212278031603850}
   - component: {fileID: 2224652325862925332}
   m_Layer: 0
   m_Name: UI_LanguagePopup
@@ -573,7 +573,7 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 0
---- !u!114 &351716910825757570
+--- !u!114 &6843212278031603850
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Data;
+using DG.Tweening;
 using Manager;
 using TMPro;
 using UI;
@@ -30,11 +31,12 @@ public class SubItem_Boss : UI_Base
     private Image mosterIcon;
     private Image fightButton;
     
+    
     public override bool Initialize()
     {
         if (base.Initialize() == false)
             return false;
-        
+
         BindImage(typeof(Images));
         BindText(typeof(Texts));
 
