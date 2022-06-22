@@ -37,7 +37,12 @@ namespace UI.Popup.InGame
         private TextMeshProUGUI _tableText;
         
         private Define.Tab _tab = Define.Tab.Boss;
-        private Define.Tab Tab { get => _tab; set { _tab = value; Managers.UI.RefreshUI(); } }
+        private Define.Tab Tab { get => _tab; set {
+        {
+            Define.Tab temp = _tab;
+            _tab = value; 
+            if (_tab != temp) Managers.UI.RefreshUI();
+        } } }
 
         private Dictionary<Define.Tab, UI_TableBase> _tableBases = new Dictionary<Define.Tab, UI_TableBase>();
 
