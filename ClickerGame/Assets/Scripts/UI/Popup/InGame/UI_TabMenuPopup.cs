@@ -14,7 +14,7 @@ namespace UI.Popup.InGame
             TabFocus,
         }
 
-        enum Buttons
+        enum Images
         {
             EnemyTabButton,
             UpgradeTabButton,
@@ -27,12 +27,14 @@ namespace UI.Popup.InGame
             TableText,
         }
 
+        
+        
         private RectTransform _focus;
         
-        private Button _enemyTabButton;
-        private Button _upgradeTabButton;
-        private Button _craftTabButton;
-        private Button _shopTabButton;
+        private Image _enemyTabButton;
+        private Image _upgradeTabButton;
+        private Image _craftTabButton;
+        private Image _shopTabButton;
 
         private TextMeshProUGUI _tableText;
         
@@ -40,8 +42,9 @@ namespace UI.Popup.InGame
         private Define.Tab Tab { get => _tab; set {
         {
             Define.Tab temp = _tab;
-            _tab = value; 
-            if (_tab != temp) Managers.UI.RefreshUI();
+            _tab = value;
+            if (_tab != temp) 
+                Managers.UI.RefreshUI();
         } } }
 
         private Dictionary<Define.Tab, UI_TableBase> _tableBases = new Dictionary<Define.Tab, UI_TableBase>();
@@ -50,16 +53,16 @@ namespace UI.Popup.InGame
         {
             if (base.Initialize() == false)
                 return false;
-            
+
             Bind<RectTransform>(typeof(RectTransforms));
-            Bind<Button>(typeof(Buttons));
+            BindImage(typeof(Images));
             BindText(typeof(Texts));
 
             _focus = Get<RectTransform>((int) RectTransforms.TabFocus);
-            _enemyTabButton = Get<Button>((int) Buttons.EnemyTabButton);
-            _upgradeTabButton = Get<Button>((int) Buttons.UpgradeTabButton);
-            _craftTabButton = Get<Button>((int) Buttons.CraftTabButton);
-            _shopTabButton = Get<Button>((int) Buttons.ShopTabButton);
+            _enemyTabButton = GetImage((int) Images.EnemyTabButton);
+            _upgradeTabButton = GetImage((int) Images.UpgradeTabButton);
+            _craftTabButton = GetImage((int) Images.CraftTabButton);
+            _shopTabButton = GetImage((int) Images.ShopTabButton);
 
             _tableText = GetText((int) Texts.TableText);
             
@@ -70,14 +73,15 @@ namespace UI.Popup.InGame
             
             _tableBases.Clear();
             
-            _tableBases.Add(Define.Tab.Boss,Managers.UI.ShowPopupUI<UI_EnemyTablePopup>());
-            _tableBases.Add(Define.Tab.Upgrade,Managers.UI.ShowPopupUI<UI_UpgradeTablePopup>());
-            _tableBases.Add(Define.Tab.Craft,Managers.UI.ShowPopupUI<UI_CraftTablePopup>());
-            _tableBases.Add(Define.Tab.Shop,Managers.UI.ShowPopupUI<UI_ShopTablePopup>());
-            
+            _tableBases.Add(Define.Tab.Boss, Managers.UI.ShowPopupUI<UI_EnemyTablePopup>());
+            _tableBases.Add(Define.Tab.Upgrade, Managers.UI.ShowPopupUI<UI_UpgradeTablePopup>());
+            _tableBases.Add(Define.Tab.Craft, Managers.UI.ShowPopupUI<UI_CraftTablePopup>());
+            _tableBases.Add(Define.Tab.Shop, Managers.UI.ShowPopupUI<UI_ShopTablePopup>());
+
             foreach (UI_TableBase table in _tableBases.Values)
+            {
                 table.Initialize();
-            
+            }
             
             SelectTab(Define.Tab.Boss);
             
@@ -87,19 +91,19 @@ namespace UI.Popup.InGame
         private void SelectTab(Define.Tab tab)
         {
             Tab = tab;
-            
-            foreach (UI_TableBase table in _tableBases.Values) 
-                table.gameObject.SetActive(false);
-            
-            _tableBases[Tab].gameObject.SetActive(true);
         }
 
         public override void RefreshUI()
         {
-            _enemyTabButton.image.color = Define.DefaultTabColor;
-            _upgradeTabButton.image.color = Define.DefaultTabColor;
-            _craftTabButton.image.color = Define.DefaultTabColor;
-            _shopTabButton.image.color = Define.DefaultTabColor;
+            foreach (UI_TableBase table in _tableBases.Values) 
+                table.SetActive(false);
+            
+            _tableBases[Tab].SetActive(true);
+            
+            _enemyTabButton.color = Define.DefaultTabColor;
+            _upgradeTabButton.color = Define.DefaultTabColor;
+            _craftTabButton.color = Define.DefaultTabColor;
+            _shopTabButton.color = Define.DefaultTabColor;
             
             Transform parent = null;
             
@@ -107,22 +111,22 @@ namespace UI.Popup.InGame
             {
                 case Define.Tab.Boss:
                     parent = _enemyTabButton.transform;
-                    _enemyTabButton.image.color = Define.ActiveTabColor;
+                    _enemyTabButton.color = Define.ActiveTabColor;
                     _tableText.text = Managers.Data.GetText((int) Define.UITextID.Boss);
                     break;
                 case Define.Tab.Upgrade:
                     parent = _upgradeTabButton.transform;
-                    _upgradeTabButton.image.color = Define.ActiveTabColor;
+                    _upgradeTabButton.color = Define.ActiveTabColor;
                     _tableText.text = Managers.Data.GetText((int) Define.UITextID.Upgrade);
                     break;
                 case Define.Tab.Craft:
                     parent = _craftTabButton.transform;
-                    _craftTabButton.image.color = Define.ActiveTabColor;
+                    _craftTabButton.color = Define.ActiveTabColor;
                     _tableText.text = Managers.Data.GetText((int) Define.UITextID.Craft);
                     break;
                 case Define.Tab.Shop:
                     parent = _shopTabButton.transform;
-                    _shopTabButton.image.color = Define.ActiveTabColor;
+                    _shopTabButton.color = Define.ActiveTabColor;
                     _tableText.text = Managers.Data.GetText((int) Define.UITextID.Shop);
                     break;
             }
@@ -130,5 +134,7 @@ namespace UI.Popup.InGame
             _focus.SetParent(parent);
             _focus.anchoredPosition = Vector2.zero;
         }
+
+
     }
 }

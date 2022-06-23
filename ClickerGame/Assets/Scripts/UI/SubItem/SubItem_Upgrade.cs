@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Content;
 using Data;
+using DG.Tweening;
 using Manager;
 using TMPro;
 using UI;
@@ -25,6 +26,8 @@ public class SubItem_Upgrade : UI_Base
         PriceButton,
     }
 
+    private DOTweenAnimation _doTweenAnimation;
+    
     private UpgradeData _data;
 
     private Image upgradeIcon;
@@ -38,6 +41,8 @@ public class SubItem_Upgrade : UI_Base
     {
         if (base.Initialize() == false)
             return false;
+
+        _doTweenAnimation = GetComponent<DOTweenAnimation>();
         
         BindText(typeof(Texts));
         BindImage(typeof(Images));
@@ -102,5 +107,10 @@ public class SubItem_Upgrade : UI_Base
                 currentText.text = Managers.Game.Player.MaxHealth.ToString();
                 break;
         }
+    }
+    
+    public void TweenRestart()
+    {
+        _doTweenAnimation.DORestart();
     }
 }

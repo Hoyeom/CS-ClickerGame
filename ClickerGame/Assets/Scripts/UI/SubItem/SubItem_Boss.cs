@@ -24,6 +24,8 @@ public class SubItem_Boss : UI_Base
         DefText
     }
 
+    private DOTweenAnimation _doTweenAnimation;
+
     private EnemyData _enemyData;
     private TextMeshProUGUI _hpText;
     private TextMeshProUGUI _atkText;
@@ -37,6 +39,8 @@ public class SubItem_Boss : UI_Base
         if (base.Initialize() == false)
             return false;
 
+        _doTweenAnimation = GetComponent<DOTweenAnimation>();
+        
         BindImage(typeof(Images));
         BindText(typeof(Texts));
 
@@ -66,5 +70,9 @@ public class SubItem_Boss : UI_Base
         return this;
     }
 
-
+    public void TweenRestart()
+    {
+        _doTweenAnimation.DORestart();
+    }
+    
 }

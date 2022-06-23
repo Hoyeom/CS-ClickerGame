@@ -61,7 +61,7 @@ namespace UI.Popup.InGame
             
 
             _craftButton.gameObject.BindEvent((data) => CraftItem());
-            
+
             return true;
         }
 
@@ -114,13 +114,14 @@ namespace UI.Popup.InGame
                 if(temp)
                 {
                     Managers.Sound.Play(Define.Sound.Effect, "Craft");
-                    Debug.Log("CraftComplete");
+                    // Debug.Log("CraftComplete");
                     return;
                 }
             }
 
-            Debug.Log("CraftFailed");
+            // Debug.Log("CraftFailed");
         }
+
         private void RefreshInventory(int index,ItemData item)
         {
             _subItems[index].SetInfo(item);
