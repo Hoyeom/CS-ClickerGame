@@ -17,6 +17,7 @@ namespace UI.Popup.InGame
 
         private Transform _content;
         protected Transform Content => _content;
+        public bool IsActive { get; private set; }
 
         protected virtual void SetLayoutGroup() { }
 
@@ -42,9 +43,18 @@ namespace UI.Popup.InGame
                 Destroy(_content.GetChild(i).gameObject);
         }
         
-        public virtual void SetActive(bool value)
+        public virtual bool SetActive(bool value)
         {
+            if (!IsActive)
+            {
+                IsActive = value;
+                _canvas.enabled = value;
+                return true;
+            }
+
+            IsActive = value;
             _canvas.enabled = value;
+            return false;
         }
     }
 }

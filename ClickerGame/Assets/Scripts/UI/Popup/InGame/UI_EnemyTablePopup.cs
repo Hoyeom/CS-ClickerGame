@@ -39,13 +39,17 @@ namespace UI.Popup.InGame
             _layoutGroup.enabled = false;
         }
 
-        public override void SetActive(bool value)
+        public override bool SetActive(bool value)
         {
-            base.SetActive(value);
-            if (!value) return;
-            
-            foreach (SubItem_Boss subItem in _subItems)
-                subItem.TweenRestart();
+            if (base.SetActive(value))
+            {
+                foreach (SubItem_Boss subItem in _subItems)
+                    subItem.TweenRestart();
+                
+                return true;
+            }
+
+            return false;
         }
     }
 }

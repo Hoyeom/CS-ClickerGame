@@ -95,10 +95,15 @@ namespace UI.Popup.InGame
 
         public override void RefreshUI()
         {
-            foreach (UI_TableBase table in _tableBases.Values) 
-                table.SetActive(false);
+            foreach (UI_TableBase table in _tableBases.Values)
+            {
+                if(table != _tableBases[Tab])
+                    table.SetActive(false);
+                else
+                    _tableBases[Tab].SetActive(true);
+            }
             
-            _tableBases[Tab].SetActive(true);
+
             
             _enemyTabButton.color = Define.DefaultTabColor;
             _upgradeTabButton.color = Define.DefaultTabColor;
