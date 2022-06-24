@@ -9,9 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d78737b45a64ea1808bc000c7fbb00e, type: 3}
-  m_Name: 810007
+  m_Script: {fileID: 11500000, guid: 0bacf95941be4e4790af0d6dcf31109c, type: 3}
+  m_Name: 610002
   m_EditorClassIdentifier: 
-  ID: 810007
-  Eng: Add Gold
-  Kor: "\uACE8\uB4DC \uCD94\uAC00"
+  ID: 610002
+  TitleTextID: 820004
+  IconID: 920002
+  Price: 0
+  CostType: 2
+  RewardType: 1
+  PriceTextID: 820002
+  Reward: 200000
