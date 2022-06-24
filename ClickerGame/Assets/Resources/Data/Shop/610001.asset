@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: 610001
   m_EditorClassIdentifier: 
   ID: 610001
-  IconID: 910007
-  CostType: 0
-  EngPrice: 399
-  KorPrice: 4900
-  RewardType: 2
-  Reward: 0
+  TitleTextID: 810007
+  IconID: 920002
+  Price: 0
+  CostType: 2
+  RewardType: 1
+  PriceTextID: 820002
+  Reward: 100000

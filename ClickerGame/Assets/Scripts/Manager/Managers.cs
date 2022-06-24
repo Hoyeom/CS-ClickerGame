@@ -14,7 +14,9 @@ namespace Manager
         private static SceneManagerEx s_scene = new SceneManagerEx();
         private static SoundManager s_sound = new SoundManager();
         private static DataManager s_data = new DataManager();
+        private static AdsManager s_ads = new AdsManager();
         private static UIManager s_ui = new UIManager();
+        
 
         public static GameManager Game { get { Initialize(); return s_game; } }
         
@@ -22,6 +24,7 @@ namespace Manager
         public static SceneManagerEx Scene { get { Initialize(); return s_scene; } }
         public static SoundManager Sound {get { Initialize(); return s_sound; }}
         public static DataManager Data {get { Initialize(); return s_data; }}
+        public static AdsManager Ads {get {Initialize(); return s_ads; }}
         public static UIManager UI { get { Initialize(); return s_ui; } }
         
         
@@ -49,6 +52,7 @@ namespace Manager
         private static void ManagersInitialize()
         {
             s_ui.Initialize();
+            s_ads.Initialize();
             s_data.Initialize();
             s_game.Initialize();
             s_scene.Initialize();

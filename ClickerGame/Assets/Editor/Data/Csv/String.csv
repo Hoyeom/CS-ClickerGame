@@ -5,7 +5,7 @@
 810004,Upgrade,강화
 810005,Craft,제작
 810006,Shop,상점
-810007,Ad Remove,광고 제거
+810007,Add Gold,골드 추가
 810008,Language,언어
 810009,You Name,당신 이름
 810010,Select,결정
@@ -14,3 +14,5 @@
 810013,ExitGame,게임 종료
 810014,Really?,진짜?
 810015,Exit,나가기
+820001,USD $<size=120%><#21bf82>3.99,KRW \<size=120%><#21bf82>4.9k
+820002,Show Ad,광고 보기

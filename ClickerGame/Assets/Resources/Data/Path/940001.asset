@@ -13,5 +13,4 @@ MonoBehaviour:
   m_Name: 940001
   m_EditorClassIdentifier: 
   ID: 940001
-  AssetType: 0
   Path: Art/Sprite/Upgrade/AttackPower

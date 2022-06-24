@@ -156,7 +156,7 @@ SpriteAtlas:
   - Icon_WhiteIcon_Close
   - SliderGroup_UserInfo_Frame
   - InputField_Icon_Username
-  - itemicon_coin_gold_star
+  - Coin
   - Btn_IconButton_Circle_90
   - Btn_MenuButton_Rectangle01
   - Pictoicon_cart

@@ -12,7 +12,7 @@ namespace Manager
 {
     public class UIManager
     {
-        private const int InitOrder = 20;
+        private const int InitOrder = -40;
         private int _order = InitOrder;
         private Stack<UI_Popup> _popupStack = new Stack<UI_Popup>();
         private List<UI_Base> _uiBases = new List<UI_Base>();
@@ -38,7 +38,7 @@ namespace Manager
                     
                     canvas.renderMode = RenderMode.ScreenSpaceOverlay;
                     canvas.overrideSorting = true;
-                    canvas.sortingOrder = 100;
+                    canvas.sortingOrder = -1;
 
                     _highOrderCanvas = go.transform;
                 }
@@ -89,7 +89,7 @@ namespace Manager
             }
             else
             {
-                canvas.sortingOrder = 0;
+                canvas.sortingOrder = InitOrder - 10;
             }
         }
         

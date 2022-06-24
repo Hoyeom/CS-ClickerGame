@@ -1,3 +1,2 @@
-﻿ID,IconID,CostType,EngPrice,KorPrice,RewardType,Reward
-610001,910007,Cash,399,4900,Ads,0
-610002,920001,Ads,0,0,Coin,1000
+﻿ID,TitleTextID,IconID,CostType,Price,RewardType,PriceTextID,Reward
+610001,810007,920002,Ads,0,Coin,820002,100000
