@@ -107,6 +107,15 @@ namespace Content
             return value;
         }
 
+        public void ChangeSlot(int slotIndex1, int slotIndex2)
+        {
+            Debug.Log("ChangeSlot");
+            if (!Items[slotIndex1].Lock || !Items[slotIndex2])
+                (Items[slotIndex1], Items[slotIndex2]) = (Items[slotIndex2], Items[slotIndex1]);
+            
+            RefreshUIData();
+        }
+        
         private void ChangeItem(int index, ItemData item)
         {
             Items[index] = item;

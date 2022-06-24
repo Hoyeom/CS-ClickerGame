@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b05c389ce50434db1669ae7fa8b73a6, type: 3}
+  m_Name: 710183
+  m_EditorClassIdentifier: 
+  ID: 710183
+  IconID: 930001
+  Level: 183
+  TargetExp: 73300
+  InventorySlot: 20
+  AddCoin: 73400
+  AtkPower: 965
+  DefPower: 368
+  Health: 9250
+  CraftLevel: 184
+  ChargeSpeed: 0.3

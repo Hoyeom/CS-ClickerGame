@@ -91,14 +91,16 @@ public class SubItem_Craft : UI_Base
         itemIcon.transform.SetAsFirstSibling();
         itemIcon.transform.localPosition = Vector3.zero;
 
-        if (pointer.pointerCurrentRaycast.gameObject.TryGetComponent<SubItem_Craft>(out SubItem_Craft craft))
+        if (pointer.pointerCurrentRaycast.gameObject.TryGetComponent<SubItem_Craft>(out SubItem_Craft pointerItem))
         {
-            if(craft.Item.Lock) return;
+            if(pointerItem.Item.Lock) return;
             
-            if (this == craft)
+            if (this == pointerItem)
                 Managers.Game.Player.Inventory.EquipWeapon(SlotIndex);
-            else
-                Managers.Game.Player.Inventory.Craft(SlotIndex, craft.SlotIndex);
+            else if (!Managers.Game.Player.Inventory.Craft(SlotIndex, pointerItem.SlotIndex))
+            {
+                Managers.Game.Player.Inventory.ChangeSlot(SlotIndex, pointerItem.SlotIndex);
+            }
         }
     }
     
