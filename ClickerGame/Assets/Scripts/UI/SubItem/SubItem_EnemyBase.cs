@@ -27,8 +27,8 @@ public class SubItem_EnemyBase : SubItem_UnitBase
     public override void SetInfo()
     {
         UnitImage.sprite = Managers.Game.Combat.Enemy.Sprite;
-        Managers.Game.Combat.Enemy.OnChangeHealth -= OnChangeHeath;
-        Managers.Game.Combat.Enemy.OnChangeHealth += OnChangeHeath;
+        Managers.Game.Combat.Enemy.OnChangeHealth -= SetHealthSlider;
+        Managers.Game.Combat.Enemy.OnChangeHealth += SetHealthSlider;
     }
 
     public override void Attack(System.Action callback)

@@ -11,22 +11,20 @@ namespace Content
             PlayerTurn,
             EnemyTurn,
         }
-
-        public Enemy Enemy { get; set; } = new Enemy();
-        public Player Player => Managers.Game.Player;
+        public Enemy Enemy { get; private set; } = new Enemy();
+        private Player Player => Managers.Game.Player;
+        
         private Turn _turn = Turn.PlayerTurn;
-
+        
         public void Initialize()
         {
             Enemy = new Enemy();
             _turn = Turn.PlayerTurn;
         }
-
-        public void OnStart()
+        private void OnStart()
         {
             Managers.Game.Player.Attack(TurnEnd);
         }
-
         private void TurnEnd()
         {
             if (Enemy.IsDead)
@@ -46,20 +44,22 @@ namespace Content
                 return;
             }
 
-            if (_turn == Turn.PlayerTurn)
+            switch (_turn)
             {
-                _turn = Turn.EnemyTurn;
-
-                Enemy.Attack(TurnEnd);
-            }
-            else if (_turn == Turn.EnemyTurn)
-            {
-                _turn = Turn.PlayerTurn;
-
-                Managers.Game.Player.Attack(TurnEnd);
+                case Turn.PlayerTurn:
+                    
+                    _turn = Turn.EnemyTurn;
+                    Enemy.Attack(TurnEnd);
+                    
+                    break;
+                case Turn.EnemyTurn:
+                    
+                    _turn = Turn.PlayerTurn;
+                    Player.Attack(TurnEnd);
+                    
+                    break;
             }
         }
-
         public void SpawnEnemy(EnemyData data)
         {
             SubItem_EnemyBase temp = null;

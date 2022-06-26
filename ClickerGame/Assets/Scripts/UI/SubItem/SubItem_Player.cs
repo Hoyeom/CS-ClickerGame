@@ -27,8 +27,8 @@ public class SubItem_Player : SubItem_UnitBase
     public override void SetInfo()
     {
         UnitImage.sprite = Managers.Game.Player.Sprite;
-        Managers.Game.Player.OnChangeHealth -= OnChangeHeath;
-        Managers.Game.Player.OnChangeHealth += OnChangeHeath;
+        Managers.Game.Player.OnChangeHealth -= SetHealthSlider;
+        Managers.Game.Player.OnChangeHealth += SetHealthSlider;
     }
 
     public override void Attack(Action callback)

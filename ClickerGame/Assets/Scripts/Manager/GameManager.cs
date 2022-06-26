@@ -9,7 +9,7 @@ using UnityEngine;
 namespace Manager
 {
     [Serializable]
-    public class GameData
+    public class SaveData
     {
         public Player Player;
         public Inventory Inventory;
@@ -28,8 +28,8 @@ namespace Manager
             Managers.Data.Upgrade.Values.FirstOrDefault(data => data.UpgradeType == type);
 
 
-        private GameData _gameData = new GameData();
-        public GameData SaveData { get { return _gameData; } set { _gameData = value; } }
+        private SaveData _saveData = new SaveData();
+        public SaveData SaveData { get { return _saveData; } set { _saveData = value; } }
         public Player Player { get => SaveData.Player; set => SaveData.Player = value; }
         public Combat Combat { get; set; } = new Combat();
         public UpgradeShop UpgradeShop { get => SaveData.UpgradeShop; set=>SaveData.UpgradeShop = value; }
@@ -40,7 +40,7 @@ namespace Manager
 
         public void SetPlayerArea(Transform point) => PlayerSpawnArea = point;
         public void SetEnemyArea(Transform point) => EnemySpawnArea = point;
-        public bool NewGame => File.Exists(_path) == false;
+        public bool NewGame => File.Exists(_savePath) == false;
         
         public void Initialize()
         {
@@ -48,13 +48,12 @@ namespace Manager
             
             if (!LoadGame())
             {
-                
                 StartStatusData statusData = GetStartStatus();
                 UpgradeData weaponData = Managers.Game.GetUpgradeData(Define.UpgradeType.Attack);
                 UpgradeData defenceData = Managers.Game.GetUpgradeData(Define.UpgradeType.Defence);
                 UpgradeData healthData = Managers.Game.GetUpgradeData(Define.UpgradeType.Health);
 
-                Managers.Game.SaveData = new GameData()
+                Managers.Game.SaveData = new SaveData()
                 {
                     Inventory = new Inventory()
                     {
@@ -81,35 +80,34 @@ namespace Manager
         }
         
         #region Save & Load	
-        public string _path = Application.persistentDataPath + "/SaveData.json";
+        public string _savePath = Application.persistentDataPath + "/SaveData.json";
 
         public void SaveGame()
         {
             string jsonStr = JsonUtility.ToJson(Managers.Game.SaveData);
-            File.WriteAllText(_path, jsonStr);
-            Debug.Log($"Save Game Completed : {_path}");
+            File.WriteAllText(_savePath, jsonStr);
+            Debug.Log($"Save Game Completed : {_savePath}");
         }
 
-        public bool LoadGame()
+        private bool LoadGame()
         {
-            if (File.Exists(_path) == false)
+            if (File.Exists(_savePath) == false)
                 return false;
 
-            string fileStr = File.ReadAllText(_path);
-            GameData data = JsonUtility.FromJson<GameData>(fileStr);
+            string saveText = File.ReadAllText(_savePath);
+            SaveData saveData = JsonUtility.FromJson<SaveData>(saveText);
             
-            if (data != null)
+            if (saveData != null)
             {
-                Managers.Game.SaveData = data;
-                data.Inventory.LoadData();
-                Managers.Data.Language = data.Language;
+                SaveData = saveData;
+                saveData.Inventory.LoadData();
+                Managers.Data.Language = saveData.Language;
             }
-            
-            Debug.Log(data);
-            
-            Debug.Log($"Save Game Loaded : {_path}");
+
+            Debug.Log($"Save Game Loaded : {_savePath}");
             return true;
         }
+        
         #endregion
     }
 }

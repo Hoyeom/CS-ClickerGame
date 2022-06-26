@@ -34,7 +34,7 @@ namespace UI.SubItem
             return true;
         }
 
-        public void OnChangeHeath(int cur, int max)
+        public void SetHealthSlider(int cur, int max)
         {
             HealthImage.fillAmount = (float) cur / max;
         }

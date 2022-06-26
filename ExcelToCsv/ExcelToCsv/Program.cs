@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using Excel = Microsoft.Office.Interop.Excel;
 
@@ -27,16 +26,13 @@ namespace ExcelToCsv
             
             xlWorkBook.Close(false);
         }
-
-        
         private static void InitPath()
         {
             Directory.SetCurrentDirectory($"{Directory.GetCurrentDirectory()}/Assets");
             
-            _tablePath = $"{Directory.GetCurrentDirectory()}/Editor/Data/Excel/";
+            _tablePath = $"{Directory.GetCurrentDirectory()}/Editor/Data/Excel/"; 
             _csvPath = $"{Directory.GetCurrentDirectory()}/Editor/Data/Csv/";
         }
-
         private static void OpenExcel(out Excel.Workbook xlWorkBook)
         {
             Excel.Application xlApp = new Excel.ApplicationClass();
@@ -46,7 +42,6 @@ namespace ExcelToCsv
             xlApp.Visible = true;
             xlApp.DisplayAlerts = false;
         }
-
         private static void SaveSheet(Excel.Worksheet sheet,string savePath)
         {
             if(sheet.Name.Contains("_")) return;
@@ -57,7 +52,6 @@ namespace ExcelToCsv
 
             sheet.SaveAs(sheetPath, CsvUtf8Format); // 62 = CSV UTF-8
         }
-
         private static void CreatePath(string path)
         {
             if (!Directory.Exists(path))

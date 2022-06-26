@@ -91,6 +91,8 @@ public class SubItem_Craft : UI_Base
         itemIcon.transform.SetAsFirstSibling();
         itemIcon.transform.localPosition = Vector3.zero;
 
+        if(pointer == null) return;
+        
         if (pointer.pointerCurrentRaycast.gameObject.TryGetComponent<SubItem_Craft>(out SubItem_Craft pointerItem))
         {
             if(pointerItem.Item.Lock) return;
