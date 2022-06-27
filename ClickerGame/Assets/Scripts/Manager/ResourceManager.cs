@@ -39,7 +39,7 @@ namespace Manager
                 dataName = dataName.Remove(index, 4);
 
             dataDic = new Dictionary<int, T>();
-            
+
             return Addressables.LoadAssetsAsync<T>($"Data/{dataName}", sO => dataDic.Add(sO.GetID(), sO));
         }
         
