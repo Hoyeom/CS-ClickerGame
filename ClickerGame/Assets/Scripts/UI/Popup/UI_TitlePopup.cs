@@ -67,14 +67,8 @@ public class UI_TitlePopup : UI_Popup
 
     private void GameStart()
     {
-        if (String.IsNullOrEmpty(Managers.Game.Player.Name))
-        {
-            Managers.UI.ShowPopupUI<UI_NameChangePopup>();
-            return;
-        }
-        
         ClosePopupUI();
-        Managers.UI.ShowPopupUI<UI_IntroPopup>();
+        Managers.UI.ShowPopupUI<UI_LoadingPopup>();
     }
 
     public override void RefreshUI()

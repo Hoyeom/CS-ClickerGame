@@ -7,7 +7,7 @@ using UI.Popup;
 using UI.Scene;
 using UnityEngine;
 
-public class UI_IntroPopup : UI_Popup
+public class UI_LoadingPopup : UI_Popup
 {
     enum GameObjects
     {
@@ -20,12 +20,14 @@ public class UI_IntroPopup : UI_Popup
         if (base.Initialize() == false)
             return false;
 
+        Managers.Game.Initialize();
+        
         Bind<GameObject>(typeof(GameObjects));
 
         Get<GameObject>((int) GameObjects.Background)
             .BindEvent((pointer) => SkipIntro());
-
-
+        
+        
         return true;
     }
 

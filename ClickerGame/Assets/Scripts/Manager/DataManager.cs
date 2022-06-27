@@ -22,6 +22,8 @@ namespace Manager
 
         public void Initialize()
         {
+            // Managers.Resource.AsyncLoadData(Monster);
+            
             Monster = LoadData<int,EnemyData>();
             Boss = Monster.Values.Where(data => data.EnemyType == Define.EnemyType.Boss).ToList();
             Upgrade = LoadData<int,UpgradeData>();

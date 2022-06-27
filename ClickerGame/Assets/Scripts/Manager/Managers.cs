@@ -54,7 +54,7 @@ namespace Manager
             s_ui.Initialize();
             s_ads.Initialize();
             s_data.Initialize();
-            s_game.Initialize();
+            // s_game.Initialize();
             s_scene.Initialize();
             s_sound.Initialize();
         }

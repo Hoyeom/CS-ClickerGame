@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using Data;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using Object = UnityEngine.Object;
 
 namespace Manager
@@ -26,6 +29,20 @@ namespace Manager
             return Resources.Load<T>(path);
         }
 
+        public AsyncOperationHandle<IList<T>> AsyncLoadData<T>(Dictionary<int,T> dataDic) where T : ScriptableObject, ITableSetter
+        {
+            string dataName = typeof(T).Name;
+
+            int index = dataName.IndexOf("Data");
+
+            if (index > 0)
+                dataName = dataName.Remove(index, 4);
+
+            dataDic = new Dictionary<int, T>();
+            
+            return Addressables.LoadAssetsAsync<T>($"Data/{dataName}", sO => dataDic.Add(sO.GetID(), sO));
+        }
+        
         public T[] LoadData<T>() where T : ScriptableObject,ITableSetter
         {
             string dataName = typeof(T).Name;
@@ -36,7 +53,7 @@ namespace Manager
                 dataName = dataName.Remove(index, 4);
             
             // Debug.Log($"Complete Load {dataName}");
-            
+
             return Resources.LoadAll<T>($"Data/{dataName}");
         }
 

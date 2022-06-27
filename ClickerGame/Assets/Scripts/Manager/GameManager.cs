@@ -45,38 +45,13 @@ namespace Manager
         public void Initialize()
         {
             TryExitGame = false;
+            Application.targetFrameRate = 30;
             
-            if (!LoadGame())
-            {
-                StartStatusData statusData = GetStartStatus();
-                UpgradeData weaponData = Managers.Game.GetUpgradeData(Define.UpgradeType.Attack);
-                UpgradeData defenceData = Managers.Game.GetUpgradeData(Define.UpgradeType.Defence);
-                UpgradeData healthData = Managers.Game.GetUpgradeData(Define.UpgradeType.Health);
-
-                Managers.Game.SaveData = new SaveData()
-                {
-                    Inventory = new Inventory()
-                    {
-                        SaveData = new List<int>(),
-                    },
-                    Player = new Player()
-                    {
-                        LevelID = statusData.GetID(),
-                        Coin = 0,
-                    },
-                    UpgradeShop = new UpgradeShop()
-                    {
-                        AtkPower = new Status(weaponData),
-                        DefPower = new Status(defenceData),
-                        Health = new Status(healthData),
-                    }
-                };
-                Player.Inventory = SaveData.Inventory;
-            }
+            ClearOrLoadGame();
             
             Player.OnChangePlayerLevel += (data) => Managers.UI.RefreshUI();
             Managers.Game.Combat.Initialize();
-            Application.targetFrameRate = 30;
+
         }
         
         #region Save & Load	
@@ -87,6 +62,12 @@ namespace Manager
             string jsonStr = JsonUtility.ToJson(Managers.Game.SaveData);
             File.WriteAllText(_savePath, jsonStr);
             Debug.Log($"Save Game Completed : {_savePath}");
+        }
+
+        public void ClearOrLoadGame()
+        {
+            if (!LoadGame())
+                SaveClear();
         }
 
         private bool LoadGame()
@@ -106,6 +87,34 @@ namespace Manager
 
             Debug.Log($"Save Game Loaded : {_savePath}");
             return true;
+        }
+
+        private void SaveClear()
+        {
+            StartStatusData statusData = GetStartStatus();
+            UpgradeData weaponData = Managers.Game.GetUpgradeData(Define.UpgradeType.Attack);
+            UpgradeData defenceData = Managers.Game.GetUpgradeData(Define.UpgradeType.Defence);
+            UpgradeData healthData = Managers.Game.GetUpgradeData(Define.UpgradeType.Health);
+
+            Managers.Game.SaveData = new SaveData()
+            {
+                Inventory = new Inventory()
+                {
+                    SaveData = new List<int>(),
+                },
+                Player = new Player()
+                {
+                    LevelID = statusData.GetID(),
+                    Coin = 0,
+                },
+                UpgradeShop = new UpgradeShop()
+                {
+                    AtkPower = new Status(weaponData),
+                    DefPower = new Status(defenceData),
+                    Health = new Status(healthData),
+                }
+            };
+            Player.Inventory = SaveData.Inventory;
         }
         
         #endregion

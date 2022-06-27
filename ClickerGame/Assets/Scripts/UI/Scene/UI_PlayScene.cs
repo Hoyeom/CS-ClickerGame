@@ -51,6 +51,9 @@ namespace UI.Scene
             StopAllCoroutines();
             StartCoroutine(CoAutoSave());
             
+            if (String.IsNullOrEmpty(Managers.Game.Player.Name))
+                Managers.UI.ShowPopupUI<UI_NameChangePopup>();
+            
             return true;
         }
 
