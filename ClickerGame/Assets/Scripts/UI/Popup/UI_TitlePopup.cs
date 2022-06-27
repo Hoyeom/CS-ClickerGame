@@ -49,9 +49,9 @@ public class UI_TitlePopup : UI_Popup
 
         startButtonText = GetText((int) Texts.StartButtonText);
 
-        startButtonText.text = Managers.Data.GetText((int) Define.UITextID.StartGame);
+        startButtonText.text = Managers.Data.GetText((int) Define.UITextID.StartGame,(text => startButtonText.text = text));
         touchToPlayText = GetText((int) Texts.TouchToPlay);
-        touchToPlayText.text = Managers.Data.GetText((int) Define.UITextID.TouchToPlay);
+        touchToPlayText.text = Managers.Data.GetText((int) Define.UITextID.TouchToPlay,(text => touchToPlayText.text = text));
         touchToPlayText.gameObject.BindEvent((pointer) => PopButtons());
         
         RefreshUI();

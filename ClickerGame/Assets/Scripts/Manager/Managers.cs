@@ -51,9 +51,10 @@ namespace Manager
         
         private static void ManagersInitialize()
         {
+            s_resource.Initialize();
+            s_data.Initialize();
             s_ui.Initialize();
             s_ads.Initialize();
-            s_data.Initialize();
             // s_game.Initialize();
             s_scene.Initialize();
             s_sound.Initialize();

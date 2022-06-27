@@ -10,15 +10,30 @@ namespace Manager
 {
     public class ResourceManager
     {
-        private AsyncOperationHandle _loadHandle;
+        private Dictionary<Type, AsyncOperationHandle> _loadHandle = new Dictionary<Type, AsyncOperationHandle>();
 
-        public void AsyncDataLoad<T>(Action<List<T>> completeCallback) where T : ScriptableObject, ITableSetter
+        public void Initialize()
+        {
+            _loadHandle = new Dictionary<Type, AsyncOperationHandle>();
+        }
+        
+        public void AsyncDataLoad<T>(Action<Dictionary<int,T>> completeCallback) where T : ScriptableObject, ITableSetter
         {
             GetDataPath<T>(out string path);
-            AsyncOperationHandle<IList<T>> f = Addressables.LoadAssetsAsync<T>(path, (result) => { });
             
-            _loadHandle = Addressables.DownloadDependenciesAsync(path);
-            _loadHandle.Completed += Addressables.Release;
+            Dictionary<int, T> dictionary = new Dictionary<int, T>();
+            
+            AsyncOperationHandle<IList<T>> loadHandle = Addressables.LoadAssetsAsync<T>(path, (T result) => { dictionary.Add(result.GetID(), result); });
+
+            _loadHandle.Add(typeof(T), loadHandle);
+            
+            loadHandle.Completed += (AsyncOperationHandle<IList<T>> handle)=>
+            {
+                completeCallback.Invoke(dictionary);
+                Addressables.Release(handle);
+                _loadHandle.Remove(typeof(T));
+                Debug.Log($"{path} Complete");
+            };
         }
         public Object Load(string path)
         {
@@ -37,19 +52,7 @@ namespace Manager
 
             return Resources.Load<T>(path);
         }
-        public AsyncOperationHandle<IList<T>> AsyncLoadData<T>(Dictionary<int,T> dataDic) where T : ScriptableObject, ITableSetter
-        {
-            string dataName = typeof(T).Name;
 
-            int index = dataName.IndexOf("Data");
-
-            if (index > 0)
-                dataName = dataName.Remove(index, 4);
-
-            dataDic = new Dictionary<int, T>();
-
-            return Addressables.LoadAssetsAsync<T>($"Data/{dataName}", sO => dataDic.Add(sO.GetID(), sO));
-        }
         public T[] LoadData<T>() where T : ScriptableObject,ITableSetter
         {
             GetDataPath<T>(out string path);
