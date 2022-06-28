@@ -1,4 +1,5 @@
 ﻿using Manager;
+using UI.Popup;
 
 namespace Scene
 {
@@ -13,7 +14,9 @@ namespace Scene
         {
             _scene = Define.Scene.Game;
 
-            Managers.UI.ShowPopupUI<UI_TitlePopup>().Initialize();
+            Managers.UI.ShowPopupUI<UI_LoadingPopup>().Initialize();
+
+            // Managers.UI.ShowPopupUI<UI_TitlePopup>().Initialize();
         }
     }
 }

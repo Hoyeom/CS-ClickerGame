@@ -19,15 +19,12 @@ namespace Manager
         public Dictionary<int, StringData> String = new Dictionary<int, StringData>();
         public Dictionary<int, PathData> Path = new Dictionary<int, PathData>();
         
-        private Dictionary<int, Coroutine> _dicCoroutine = new Dictionary<int, Coroutine>();
-        
         public Define.Language Language { get =>  Managers.Game.SaveData.Language; set { Managers.Game.SaveData.Language = value; Managers.UI.RefreshUI(); } }
 
         
         public void Initialize()
         {
-            _dicCoroutine.Clear();
-            
+
             // Managers.Resource.AsyncLoadData(Monster);
             Managers.Resource.AsyncDataLoad<EnemyData>(data =>
             {
@@ -58,17 +55,8 @@ namespace Manager
             String.TryGetValue(key, out StringData data);
 
             if (data == null)
-            {
-                if (!_dicCoroutine.ContainsKey(key))
-                {
-                    Debug.Log($"{key}사용");
-                    _dicCoroutine.Add(key, Managers.Instance.StartCoroutine(CoTryGetText(key, callback)));
-                }
-                
-                // throw new Exception($"Fail GetValue, Key: {key.ToString()}, Language: {Language}");
-                return null;
-            }
-
+                throw new Exception($"Fail GetValue, Key: {key.ToString()}, Language: {Language}");
+            
             SelectLanguage(data, out text);
             
             return text;
@@ -83,21 +71,7 @@ namespace Manager
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
-        
-        IEnumerator CoTryGetText(int key,Action<string> callback)
-        {
-            string temp = null;
-            while (string.IsNullOrEmpty(temp))
-            {
-                if (String.TryGetValue(key, out StringData data))
-                    SelectLanguage(data, out temp);
 
-                yield return null;
-            }
-            
-            callback.Invoke(temp);
-        }
-        
         public T PathIDToData<T>(int id) where T : Object
         {
             if(Path.TryGetValue(id,out PathData data))

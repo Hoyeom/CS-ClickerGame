@@ -37,7 +37,7 @@ MonoBehaviour:
     m_Id: 1c8140d3c4cb13a4589eabdc4271d2cc
   m_RemoteCatalogLoadPath:
     m_Id: 0c990db59bdd5a14e836c6151f264f49
-  m_ContentStateBuildPath: 
+  m_ContentStateBuildPath: Test
   m_BuildAddressablesWithPlayerBuild: 0
   m_overridePlayerVersion: 
   m_GroupAssets:
@@ -77,7 +77,7 @@ MonoBehaviour:
       - m_Id: 1c8140d3c4cb13a4589eabdc4271d2cc
         m_Value: ServerData/[BuildTarget]
       - m_Id: 0c990db59bdd5a14e836c6151f264f49
-        m_Value: http://[PrivateIpAddress]:[HostingServicePort]
+        m_Value: https://tabhero-bucket.s3.amazonaws.com/[BuildTarget]
     m_ProfileEntryNames:
     - m_Id: 97a5de0d5fa56b24899dcf3fdb88569a
       m_Name: BuildTarget

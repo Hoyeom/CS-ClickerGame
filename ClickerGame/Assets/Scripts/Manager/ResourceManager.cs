@@ -12,8 +12,18 @@ namespace Manager
     {
         private Dictionary<Type, AsyncOperationHandle> _loadHandle = new Dictionary<Type, AsyncOperationHandle>();
 
+        private int _loadMaxCount = 0;
+
+        public float GetLoadProgress()
+        {
+            return (((float) _loadHandle.Count / _loadMaxCount) * -1) + 1;
+        }
+
+        public bool CompleteLoad => _loadHandle.Count <= 0;
+        
         public void Initialize()
         {
+            _loadMaxCount = 0;
             _loadHandle = new Dictionary<Type, AsyncOperationHandle>();
         }
         
@@ -23,9 +33,14 @@ namespace Manager
             
             Dictionary<int, T> dictionary = new Dictionary<int, T>();
             
-            AsyncOperationHandle<IList<T>> loadHandle = Addressables.LoadAssetsAsync<T>(path, (T result) => { dictionary.Add(result.GetID(), result); });
+            AsyncOperationHandle<IList<T>> loadHandle = Addressables.LoadAssetsAsync<T>(path, (T result) =>
+            {
+                dictionary.Add(result.GetID(), Object.Instantiate(result));
+            });
 
             _loadHandle.Add(typeof(T), loadHandle);
+
+            _loadMaxCount = Mathf.Max(_loadMaxCount, _loadHandle.Count);
             
             loadHandle.Completed += (AsyncOperationHandle<IList<T>> handle)=>
             {

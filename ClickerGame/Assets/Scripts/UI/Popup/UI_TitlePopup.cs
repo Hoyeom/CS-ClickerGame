@@ -68,7 +68,7 @@ public class UI_TitlePopup : UI_Popup
     private void GameStart()
     {
         ClosePopupUI();
-        Managers.UI.ShowPopupUI<UI_LoadingPopup>();
+        Managers.UI.ShowPopupUI<UI_IntroPopup>();
     }
 
     public override void RefreshUI()

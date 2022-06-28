@@ -1,39 +1,42 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using Manager;
-using TMPro;
-using UI.Popup;
-using UI.Scene;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class UI_LoadingPopup : UI_Popup
+namespace UI.Popup
 {
-    enum GameObjects
+    public class UI_LoadingPopup : UI_Popup
     {
-        Background,
-    }
+        enum Sliders
+        {
+            LoadingSlider
+        }
 
+        private Slider _loadingBar;
+        
+        public override bool Initialize()
+        {
+            if (base.Initialize() == false)
+                return false;
+            
+            Bind<Slider>(typeof(Sliders));
 
-    public override bool Initialize()
-    {
-        if (base.Initialize() == false)
+            _loadingBar = Get<Slider>((int) Sliders.LoadingSlider);
+            _loadingBar.value = 0;
+            
             return false;
+        }
 
-        Managers.Game.Initialize();
-        
-        Bind<GameObject>(typeof(GameObjects));
+        private void Update()
+        {
+            _loadingBar.value = Managers.Resource.GetLoadProgress();
 
-        Get<GameObject>((int) GameObjects.Background)
-            .BindEvent((pointer) => SkipIntro());
-        
-        
-        return true;
-    }
-
-    private void SkipIntro()
-    {
-        ClosePopupUI();
-        Managers.UI.ShowSceneUI<UI_PlayScene>();
+            if (Managers.Resource.CompleteLoad)
+            {
+                ClosePopupUI();
+                Managers.UI.ShowPopupUI<UI_TitlePopup>();
+            }
+            
+        }
     }
 }
