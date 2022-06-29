@@ -37,7 +37,7 @@ public class DataTransformer : EditorWindow
         LoadData<UpgradeData>(Define.Table.Upgrade, 1);
         LoadData<ItemData>(Define.Table.Item, 1);
         LoadData<ShopData>(Define.Table.Shop, 1);
-        LoadData<StartStatusData>(Define.Table.StartStatus, 1);
+        LoadData<StatusData>(Define.Table.Status, 1);
         LoadData<StringData>(Define.Table.String, 1);
         LoadData<PathData>(Define.Table.Path, 1);
 

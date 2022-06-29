@@ -103,7 +103,7 @@ MonoBehaviour:
     - Data/Item
     - Data/Path
     - Data/Shop
-    - Data/StartStatus
+    - Data/Status
     - Data/String
     - Data/Upgrade
   m_SchemaTemplates: []

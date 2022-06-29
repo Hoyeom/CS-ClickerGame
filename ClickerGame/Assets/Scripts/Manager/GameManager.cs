@@ -21,12 +21,8 @@ namespace Manager
 
     public class GameManager
     {
-        public StartStatusData GetStartStatus()
-            => Managers.Data.StartStatus.First().Value;
-
-        public UpgradeData GetUpgradeData(Define.UpgradeType type) =>
-            Managers.Data.Upgrade.Values.FirstOrDefault(data => data.UpgradeType == type);
-
+        public StatusData GetStartStatus() => Managers.Data.Status.First().Value;
+        public UpgradeData GetUpgradeData(Define.UpgradeType type) => Managers.Data.Upgrade.Values.FirstOrDefault(data => data.UpgradeType == type);
 
         private SaveData _saveData = new SaveData();
         public SaveData SaveData { get { return _saveData; } set { _saveData = value; } }
@@ -91,7 +87,7 @@ namespace Manager
 
         private void SaveClear()
         {
-            StartStatusData statusData = GetStartStatus();
+            StatusData statusData = GetStartStatus();
             UpgradeData weaponData = Managers.Game.GetUpgradeData(Define.UpgradeType.Attack);
             UpgradeData defenceData = Managers.Game.GetUpgradeData(Define.UpgradeType.Defence);
             UpgradeData healthData = Managers.Game.GetUpgradeData(Define.UpgradeType.Health);

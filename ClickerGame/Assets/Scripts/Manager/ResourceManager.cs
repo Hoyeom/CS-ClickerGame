@@ -37,11 +37,12 @@ namespace Manager
             GetDataPath<T>(out string path);
             
             Dictionary<int, T> dictionary = new Dictionary<int, T>();
-            
-            AsyncOperationHandle<IList<T>> loadHandle = Addressables.LoadAssetsAsync<T>(path, (T result) =>
-            {
-                dictionary.Add(result.GetID(), Object.Instantiate(result));
-            });
+
+            AsyncOperationHandle<IList<T>> loadHandle =
+                Addressables.LoadAssetsAsync<T>(path, (T result) =>
+                {
+                    dictionary.Add(result.GetID(), Object.Instantiate(result));
+                });
 
             _loadHandle.Add(typeof(T), loadHandle);
 
@@ -56,6 +57,7 @@ namespace Manager
                 Debug.Log($"{path} Complete");
             };
         }
+        
         public Object Load(string path)
         {
             PathNullException(path);

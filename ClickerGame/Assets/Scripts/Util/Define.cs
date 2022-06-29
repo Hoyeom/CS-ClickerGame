@@ -50,13 +50,13 @@ public class Define
      public enum Table
      {
          None = 0,
-         Status = 1,
+         _ = 1,
          Enemy = 2,
-         _ = 3,
+         __ = 3,
          Upgrade = 4,
          Item = 5,
          Shop = 6,
-         StartStatus = 7,
+         Status = 7,
          String = 8,
          Path = 9
      }

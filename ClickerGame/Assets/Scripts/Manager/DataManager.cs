@@ -15,7 +15,7 @@ namespace Manager
         public Dictionary<int, UpgradeData> Upgrade = new Dictionary<int, UpgradeData>();
         public Dictionary<int, ItemData> Item = new Dictionary<int, ItemData>();
         public Dictionary<int, ShopData> Shop = new Dictionary<int, ShopData>();
-        public Dictionary<int, StartStatusData> StartStatus = new Dictionary<int, StartStatusData>();
+        public Dictionary<int, StatusData> Status = new Dictionary<int, StatusData>();
         public Dictionary<int, StringData> String = new Dictionary<int, StringData>();
         public Dictionary<int, PathData> Path = new Dictionary<int, PathData>();
         
@@ -24,27 +24,27 @@ namespace Manager
         
         public void Initialize()
         {
-
-            // Managers.Resource.AsyncLoadData(Monster);
-            Managers.Resource.AsyncDataLoad<EnemyData>(data =>
+            ResourceManager resource = Managers.Resource;
+            
+            resource.AsyncDataLoad<EnemyData>(completeCallback: (Dictionary<int, EnemyData> callbackData) =>
             {
-                Monster = data;
+                Monster = callbackData;
                 Boss = Monster.Values.Where(data => data.EnemyType == Define.EnemyType.Boss).ToList();
             });
 
-            Managers.Resource.AsyncDataLoad<UpgradeData>(data => Upgrade = data);
-            Managers.Resource.AsyncDataLoad<ItemData>(data => Item = data);
-            Managers.Resource.AsyncDataLoad<ShopData>(data => Shop = data);
-            Managers.Resource.AsyncDataLoad<StartStatusData>(data => StartStatus = data);
-            Managers.Resource.AsyncDataLoad<StringData>(data => String = data);
-            Managers.Resource.AsyncDataLoad<PathData>(data => Path = data);
+            resource.AsyncDataLoad<UpgradeData>(completeCallback: (Dictionary<int, UpgradeData> callbackData) => Upgrade = callbackData);
+            resource.AsyncDataLoad<ItemData>(completeCallback: (Dictionary<int, ItemData> callbackData) => Item = callbackData);
+            resource.AsyncDataLoad<ShopData>(completeCallback: (Dictionary<int, ShopData> callbackData) => Shop = callbackData);
+            resource.AsyncDataLoad<StatusData>(completeCallback: (Dictionary<int, StatusData> callbackData) => Status = callbackData);
+            resource.AsyncDataLoad<StringData>(completeCallback: (Dictionary<int, StringData> callbackData) => String = callbackData);
+            resource.AsyncDataLoad<PathData>(completeCallback: (Dictionary<int, PathData> callbackData) => Path = callbackData);
 
             // Monster = LoadData<int,EnemyData>();
             // Boss = Monster.Values.Where(data => data.EnemyType == Define.EnemyType.Boss).ToList();
             // Upgrade = LoadData<int,UpgradeData>();
             // Item = LoadData<int,ItemData>();
             // Shop = LoadData<int,ShopData>();
-            // StartStatus = LoadData<int, StartStatusData>();
+            // Status = LoadData<int, StatusData>();
             // String = LoadData<int,StringData>();
             // Path = LoadData<int,PathData>();
         }

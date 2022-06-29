@@ -64,7 +64,7 @@ namespace Content
                 OnChangePlayerLevel?.Invoke(Level);
             }
         }
-        public StartStatusData StatusData => Managers.Data.StartStatus[LevelID];
+        public StatusData StatusData => Managers.Data.Status[LevelID];
         public SubItem_Player View => _view;
         public int Level => StatusData.Level;
         public int AddCoin => StatusData.AddCoin;
@@ -113,7 +113,7 @@ namespace Content
         private void LevelUp()
         {
             Exp = 0;
-            if (Managers.Data.StartStatus.ContainsKey(_levelID + 1))
+            if (Managers.Data.Status.ContainsKey(_levelID + 1))
             {
                 LevelID += 1;
                 Inventory.UpgradeItems(Level);
