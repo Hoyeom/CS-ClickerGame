@@ -12,12 +12,17 @@ namespace Manager
     {
         private Dictionary<Type, AsyncOperationHandle> _loadHandle = new Dictionary<Type, AsyncOperationHandle>();
 
+        public event Action OnCompleteDataLoad;
+        
         private int _loadMaxCount = 0;
 
         public float GetLoadProgress()
         {
             return (((float) _loadHandle.Count / _loadMaxCount) * -1) + 1;
         }
+        
+        public int LoadMaxCount => _loadMaxCount;
+        public int LoadCurCount => _loadMaxCount - _loadHandle.Count;
 
         public bool CompleteLoad => _loadHandle.Count <= 0;
         
@@ -47,6 +52,7 @@ namespace Manager
                 completeCallback.Invoke(dictionary);
                 Addressables.Release(handle);
                 _loadHandle.Remove(typeof(T));
+                OnCompleteDataLoad?.Invoke();
                 Debug.Log($"{path} Complete");
             };
         }
