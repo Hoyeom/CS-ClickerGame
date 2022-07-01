@@ -48,6 +48,7 @@ namespace UI
                 else
                     objects[i] = Utils.FindChild<T>(gameObject, names[i], true);
             }
+            
         }
 
         
