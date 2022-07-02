@@ -54,8 +54,10 @@ public class UI_TitlePopup : UI_Popup
         touchToPlayText.text = Managers.Data.GetText((int) Define.UITextID.TouchToPlay,(text => touchToPlayText.text = text));
         touchToPlayText.gameObject.BindEvent((pointer) => PopButtons());
         
-        RefreshUI();
+        Managers.Game.Initialize();
         
+        RefreshUI();
+
         return true;
     }
 

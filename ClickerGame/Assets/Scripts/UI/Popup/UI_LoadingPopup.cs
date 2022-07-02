@@ -20,11 +20,14 @@ namespace UI.Popup
 
         private Slider _loadingBar;
         private TextMeshProUGUI _loadingText;
+        private bool isComplete = false;
         
         public override bool Initialize()
         {
             if (base.Initialize() == false)
                 return false;
+
+            isComplete = false;
             
             Bind<Slider>(typeof(Sliders));
             BindText(typeof(Texts));
@@ -48,8 +51,9 @@ namespace UI.Popup
             _loadingText.text =
                 $"Data Load({resource.LoadCurCount.ToString()}/{resource.LoadMaxCount.ToString()}) {(resource.GetLoadProgress() * 100) :F1}%";
             
-            if (Managers.Resource.CompleteLoad)
+            if (!isComplete && Managers.Resource.CompleteLoad)
             {
+                isComplete = true;
                 ClosePopupUI();
                 Managers.UI.ShowPopupUI<UI_TitlePopup>();
             }

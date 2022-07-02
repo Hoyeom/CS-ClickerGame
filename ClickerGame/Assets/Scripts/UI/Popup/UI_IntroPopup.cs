@@ -20,8 +20,6 @@ public class UI_IntroPopup : UI_Popup
         if (base.Initialize() == false)
             return false;
 
-        Managers.Game.Initialize();
-        
         Bind<GameObject>(typeof(GameObjects));
 
         Get<GameObject>((int) GameObjects.Background)
